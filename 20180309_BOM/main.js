@@ -66,3 +66,50 @@ console.log( screen.colorDepth );   // 24
 console.log( screen.pixelDepth );   // 24
 console.log( screen.height );       // 720
 console.log( screen.width );        // 1280
+
+
+// Location对象
+console.log(location.hash);
+console.log(location.host);
+console.log(location.hostname);
+console.log(location.pathname);
+console.log(location.port);
+console.log(location.protocol);
+console.log(location.search);
+
+var Reload = document.querySelector(".reload");
+Reload.onclick = function(){
+    location.reload();
+}
+
+var Assign = document.querySelector(".assign");
+Assign.onclick = function(){
+    location.assign("http://www.runoob.com/jsref/met-loc-assign.html")
+}
+
+var Replace = document.querySelector(".replace");
+Replace.onclick = function(){
+    location.replace('http://www.runoob.com/jsref/met-loc-replace.html')
+}
+var Href = document.querySelector(".href");
+Href.onclick = function(){
+    location.href="http://www.runoob.com/jsref/met-loc-replace.html"
+}
+
+console.log(window.history.length);
+window.history.back();
+
+var Back = document.querySelector(".back");
+Back.onclick = function(){
+    window.history.back();
+}
+
+var Forward = document.querySelector(".forward");
+Forward.onclick = function(){
+    window.history.forward();
+}
+
+console.log(window.history);
+console.log(window.location);
+console.log(window.navigator);
+console.log(window.screen);

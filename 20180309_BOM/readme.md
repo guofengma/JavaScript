@@ -10,6 +10,8 @@
         - [1.1.6. window对象方法](#116-window对象方法)
     - [1.2. Navigator对象](#12-navigator对象)
     - [1.3. Screen对象](#13-screen对象)
+    - [1.4. Location对象](#14-location对象)
+    - [1.5. History对象](#15-history对象)
 
 <!-- /TOC -->
 
@@ -142,7 +144,8 @@ console.log(navigator.appCodeName);     // Mozilla
 console.log(navigator.appName);         // Netscape
 console.log(navigator.appVersion);      // 
 console.log(navigator.cookieEnabled)    // true
-console.log(navigator.platform)
+console.log(navigator.platform);
+console.log(navigator.userAgent);
 ```
 
 ## 1.3. Screen对象
@@ -165,3 +168,54 @@ console.log( screen.pixelDepth );   // 24
 console.log( screen.height );       // 720
 console.log( screen.width );        // 1280
 ```
+
+## 1.4. Location对象
+
+    Location对象包含有关当前URL信息.
+    Location对象是window对象的一部分,可以通过window.Location属性对其进行访问.
+    
+    注意：没有应用于Location对象的公开标准,不过所有浏览器都支持该对象.
+
+    Location对象属性
+    hash        返回一个URL的锚部分,地址#后的部分
+    host        返回一个URL的主机名和端口
+    hostname    返回URL的主机名
+    href        返回完整的URL
+    port        返回一个URL服务器使用的端口号
+    search      返回一个URL的查询部分 ?后面的部分
+
+    Location对象方法
+    assign()    载入一个新文档
+    reload()    重新载入当前文档
+    replace()   可用一个新文档取代当前文档
+    
+    reload()方法用于刷新当前文档,类似于浏览器上的刷新页面按钮,如果把该方法的参数设置为true,那么无论文档的最后修改
+    日期是什么,它都会绕过缓存,从服务器上重新下载该文档.
+    
+    
+    location.assign() 和 location.replace() location.href 区别
+    location.assign(url)跳转到指定页面后可以返回,而location.replace()指定的url代替当前的页面,无法退回上一级页面.
+    location.href方法也能够用于跳转页面,和location.assign()功能一样.
+
+    综上所知,location.href=url 和 location.assign(url)两者功能一样,并且能够返回上一级.而location.replace(url)能够
+    跳转到指定页面,但无法返回上一级.location.reload()方法无法和前三者一样发生页面跳转,只能刷新当前页面.
+
+    前面学过的a标签也是能够发生页面跳转的,所以现在知道的让页面发生跳转由四种方法:
+        <a href="http://www.baidu.com"></a>
+        location.href("http://www.baidu.com")
+        location.replace("http://www.baidu.com")
+        location.assign("http://www.baidu.com")
+
+## 1.5. History对象
+
+    History对象包含用户(在浏览器窗口中)访问过的URL.History对象是window对象的一部分,可通过window.history属性对其进行访问.
+
+    注意：没有应用于History对象的公开标准,不过所有浏览器都支持该对象.
+
+    History对象属性
+    length      返回历史列表中的网址数
+
+    History对象方法
+    back()      加载history列表中的前一个URL
+    forward()   加载history列表中的下一个URL
+    go()        加载history列表中的某个具体页面
