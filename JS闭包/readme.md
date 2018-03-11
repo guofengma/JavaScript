@@ -129,3 +129,5 @@ var nba = {
 }
 console.log( nba.getPlayerFunc()() );   // Kyrie Irving
 ```
+
+[闭包](http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html)
