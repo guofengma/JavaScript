@@ -1,0 +1,54 @@
+#box{
+    width: 100px;
+    height: 100px;
+    background-color:#f00;
+}
+
+#box:hover:active{
+    background-color:#00f;
+}
+
+#item{
+    width: 100px;
+    height: 100px;
+    background-color:#f0f!important;
+}
+
+.text2{
+    text-transform:uppercase;
+    text-transform:lowercase;
+    text-transform:capitalize;
+}
+
+.text3:first-letter{
+    color:#f00;
+    font-size:30px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    height:100%;
+    position:fixed;
+}
+ 
+li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+ 
+/* 鼠标移动到选项上修改背景颜色 */
+li a:not(.active):hover {
+    background-color: #555;
+    color: white;
+}
+
+.active {
+    background-color: #4CAF50;
+    color: white;
+}
