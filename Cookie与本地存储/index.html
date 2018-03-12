@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cookie与本地存储</title>
+</head>
+<body>
+    
+    <p><input type="button" value="存值"></p>
+    <p><input type="button" value="取值"></p>
+    <p><input type="button" value="删除单条值"></p>
+    <p><input type="button" value="清除值"></p>
+    <p><input type="button" value="取值"></p>
+    
+    <script>
+        
+        document.cookie = "userName=Irving; age=26; expires=7;path=/";
+        var y = document.cookie;
+        console.log(y);
+        
+        document.cookie = "user=; expires=Thu,01 Jan 1970 00:00:00 GMT";
+        console.log(document.cookie);
+        
+        var a = "kyrie";
+        console.log( a.split() );
+
+        var b = "  kyrie ";
+        console.log(b.length);  // 8
+        console.log( b.trim().length ); // 5
+
+        var c = "Lebron James";
+        console.log(c.substring(1));    // ebron James
+        console.log(c.substring(1,9));  // ebron Ja
+        
+        
+        var Button = document.getElementsByTagName("input");
+        
+        Button[0].onclick = function(){
+
+            var player1 = {};
+            player1.name = "Kyrie Irving";
+            player1.age = 26;
+            player1.team = 'Cavalier';
+            localStorage.setItem( 'playerinfo1',JSON.stringify(player1) );
+
+            var player2 = {};
+            player2.name = "Lebron James";
+            player2.age = 33;
+            player2.team = "Cavalier";
+            localStorage.setItem ('playerinfo2',JSON.stringify(player2));
+        }
+        
+        Button[1].onclick = function(){
+            console.log( JSON.parse( localStorage.getItem('playerinfo1')) );
+            console.log( JSON.parse( localStorage.getItem('playerinfo2') ) );
+        }
+
+        Button[2].onclick = function(){
+            localStorage.removeItem( 'playerinfo1' );
+        }
+
+        Button[3].onclick = function(){
+            localStorage.clear();
+        }
+
+        Button[4].onclick = function(){
+            console.log( JSON.parse( localStorage.getItem('playerinfo1')) );
+            console.log( JSON.parse( localStorage.getItem('playerinfo2')) );            
+        }
+
+    </script>
+</body>
+</html>
