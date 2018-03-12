@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>同源策略及跨域</title>
+</head>
+<body>
+    
+    <p><input type="text" name="keywords" class="keyword"></p>
+    <input type="button" value="搜索" onclick="search()">
+
+    <script>
+        
+        var Script = document.createElement("script");
+        
+        function search(){
+            var KeyWord = document.querySelector('.keyword').value;
+            var url = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=%E5%91%A8&json=1&p=3&sid=1444_21119_18560_17001_20929&req=2&csor=1&pwd=KeyWord"+"&cb=callback"
+            Script.src = url;
+            document.body.appendChild(Script);
+        }
+
+        function callback(data){
+            console.log(data.s);
+        }
+    
+
+    </script>
+</body>
+</html>
