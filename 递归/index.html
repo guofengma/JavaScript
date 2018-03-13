@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>递归</title>
+</head>
+<body>
+    
+    <script>
+        
+        // 求10的阶乘
+        // 第一步 10*9 
+        // 第二部 上面的积 * 8
+        // 第三部  第二步的积 * 7
+        // ····
+        // 上面的积 * 1
+
+        function m1(n){
+            if(n <= 1 ){
+                return 1;
+            }
+            return m1(n-1) * n
+            
+        }
+        var a = m1(10);
+        console.log(a);
+        
+        // 求 1 + 2 +3 +···100 的和
+        function m2(n){
+            if(n <= 1){
+                return 1
+            }
+            return m2(n-1) + n
+        }
+        var b = m2(100);
+        console.log(b);
+        
+    </script>
+</body>
+</html>
