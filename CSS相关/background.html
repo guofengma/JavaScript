@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>background</title>
+    <style>
+        html,body{
+            padding: 0;
+            margin: 0;
+        }
+        #img{
+            width:861px;
+            height:538px;
+            background:url("./gd.jpg") no-repeat center center;
+            background-attachment:fixed;
+        }   
+
+        #box{
+            width: 100px;
+            height: 100px;
+            background-color:#f00;
+            position:absolute;
+            animation:run 3s linear 0s infinite alternate;
+        }
+        /* #box:hover{
+            animation-play-state:paused;
+        } */
+        @keyframes run{
+            0%{
+                left:0;
+            }
+            100%{
+                left:200px;
+            }
+        }
+
+        input:checked+#box{
+            animation-play-state:paused;
+        }
+        input{
+            display:none;
+        }
+        label[for='pause']{
+            display:block;
+            height:25px;
+            width:100px;
+            text-align:center;
+            color:#fff;
+            background-color:#000;
+            border-radius:5px;
+            margin-bottom:10px;
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <div id="img"></div>
+    
+
+    <label for="pause">开始/暂停</label>
+    <input type="checkbox" id="pause">
+    <div id="box"></div>
+
+</body>
+</html>

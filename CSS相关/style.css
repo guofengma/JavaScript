@@ -52,3 +52,22 @@ li a:not(.active):hover {
     background-color: #4CAF50;
     color: white;
 }
+
+#box1{
+    width: 100px;
+    height: 100px;
+    background-color:#f00;
+    position:absolute;
+    left:0;
+    animation:run 3s linear 0s 4 alternate;
+}
+
+@keyframes run{
+    0% {
+        left:0;
+    }
+    100% {
+        left:500px;
+    }
+}
+

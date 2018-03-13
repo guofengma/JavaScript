@@ -8,6 +8,9 @@
 - [6. CSS轮廓(outline)](#6-css轮廓outline)
 - [7. Display与Visibility](#7-display与visibility)
 - [8. 伪元素](#8-伪元素)
+- [9. Animation](#9-animation)
+- [10. Background](#10-background)
+- [11. 学到的新属性](#11-学到的新属性)
 
 <!-- /TOC -->
 
@@ -146,4 +149,117 @@
     可用于添加一个小图片等.
 
 
-    
+# 9. Animation
+
+    animation属性是一个简写属性,用于设置六个动画属性：
+
+        animation-name                  绑定到选择器的 keyframe名称                  
+        animation-duration              完成动画所花费的时间
+        animation-timing-function       规定动画的速度曲线
+                                        linear  动画从头到尾速度都是相同的
+                                        ease    低速开始,然后加快,在结束前变慢
+                                        ease-in 低速开始
+                                        ease-out 低速结束
+        animation-delay                 动画开始之前的延迟
+        animation-iteration-count       规定动画播放的次数
+                                        n   定义播放次数的数值
+                                        infinite 规定动画应该无限次播放
+        animation-direction             normal  默认值,动画正常播放
+                                        alternate 动画应该轮流反向播放.
+
+
+    以下是一个简单的效果实现,box在页面上往返运动 4次.
+    注意： 0%{left:0;} ; 这里就不要加分号了.
+```css
+#box1{
+    width: 100px;
+    height: 100px;
+    background-color:#f00;
+    position:absolute;
+    left:0;
+    animation:run 3s linear 0s 4 alternate;
+}
+
+@keyframes run{
+    0% {
+        left:0;
+    }
+    100% {
+        left:500px;
+    }
+}
+```
+
+# 10. Background
+
+    使用简写属性时,属性值的顺序为：
+    background-color
+    background-image
+    background-repeat
+    background-attachment   图片不随内容的滚动而滚动 默认是scroll,(会随着页面的内容滚动,fixed不随页面滚动).
+    background-position
+
+# 11. 学到的新属性
+
+    animation-play-state:paused;
+
+                        running：指定正在运行的动画
+
+    下面是一个一直往返运动的box, 设置hover时 暂停动画.
+```css
+#box{
+    width: 100px;
+    height: 100px;
+    background-color:#f00;
+    position:absolute;
+    animation:run 3s linear 0s infinite alternate;
+}
+#box:hover{
+    animation-play-state:paused;
+}
+@keyframes run{
+    0%{
+        left:0;
+    }
+    100%{
+        left:200px;
+    }
+}
+```
+    下面对上面的动画做一个变通,当点击一个按钮的时候,开始或暂停动画.
+```html
+<style>
+    input:checked+#box{
+        animation-play-state:paused;
+    }
+</style>
+
+<input type="checkbox" >开始/暂停
+<div id="box"></div>
+```
+
+    如果对 点击的 按钮样式不满意,可以通过 label 来稍微装饰一下点击的按钮.
+```html
+<style>
+    input:checked+#box{
+        animation-play-state:paused;
+    }
+    input{
+        display:none;
+    }
+    label[for='pause']{
+        display:block;
+        height:25px;
+        width:100px;
+        text-align:center;
+        color:#fff;
+        background-color:#000;
+        border-radius:5px;
+        margin-bottom:10px;
+    }
+</style>
+
+<label for="pause">开始/暂停</label>
+<input type="checkbox" id="pause">
+<div id="box"></div>
+```
