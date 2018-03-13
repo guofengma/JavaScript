@@ -11,6 +11,7 @@
 - [9. Animation](#9-animation)
 - [10. Background](#10-background)
 - [11. 学到的新属性](#11-学到的新属性)
+- [12. transfrom](#12-transfrom)
 
 <!-- /TOC -->
 
@@ -201,6 +202,7 @@
 
 # 11. 学到的新属性
 
+
     animation-play-state:paused;
 
                         running：指定正在运行的动画
@@ -263,3 +265,68 @@
 <input type="checkbox" id="pause">
 <div id="box"></div>
 ```
+
+    backface-visibility 
+    该属性定义当元素不面向屏幕时是否可见.如果在旋转元素不希望看到其背面时,该属性很有用.
+```css
+    .img{
+        width: 430px;
+        height: 270px;
+        background:url("./gd.jpg") no-repeat;
+        background-size:430px 270px;
+        /* 给一个旋转属性 正数是向后面选装, */
+        transform:rotateX(40deg);
+        /* 设置backface-visibility:hidden时,旋转过来的背面是不可见的 */
+        backface-visibility:hidden;
+    }
+```
+
+    background-blend-mode:normal
+    background-blend-mode 属性定义了背景层的混合模式,注意：背景图片和 颜色的不同搭配.
+```css
+    .img{
+        width: 430px;
+        height: 270px;
+        background:#f00 url("./gd.jpg") no-repeat;
+        background-size:430px 270px;
+        background-blend-mode:darken;
+    }
+```
+
+
+    border-collapse:collapse;
+    border-collapse 属性设置表格的边框是否被合并为一个单一的边框,还是像在标准的HTML中那样分开显示.
+
+
+    caption-side属性
+    指定表格标题的位置:top/bottom
+
+
+    word-wrap/word-break
+
+    word-wrap:break-word;    允许长的内容换行
+    word-break:break-all;    允许在单词内换行
+
+# 12. transfrom
+
+    Transform属性应用于元素的 2D或3D 转换,这个属性允许你将元素旋转 缩放 移动 倾斜等.
+
+    translate()
+        translate(100px);   向右移动100px
+        translateX(100px);  向右移动100px
+        translateY(100px);  向下移动100px
+        translate(100px,100px)  向右向下移动100px
+
+    rotate()
+        旋转
+        rotate(10deg);      绕Z轴旋转10deg(顺时针旋转)
+        rotateX(10deg);     绕X轴旋转,向正度数是向后放旋转
+        rotateY(10deg);     绕Y轴旋转,从左往右旋转
+
+    scale() 增加或减少的大小
+        scale(2)            宽和高都增大2倍
+        scale(1,2)          宽方法倍数不变,高放大2倍
+
+    skew() 倾斜的角度
+        skewX(10deg)        只在X轴倾斜
+        skewY(10deg)        只在Y轴倾斜

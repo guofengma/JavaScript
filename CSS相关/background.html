@@ -53,6 +53,40 @@
             margin-bottom:10px;
         }
         
+        .box{
+            appearance:button;
+        }
+        .img{
+            width: 430px;
+            height: 270px;
+            background:#f00 url("./gd.jpg") no-repeat;
+            margin-top:100px;
+            background-size:430px 270px;
+            background-blend-mode:darken;
+        }
+
+        .text{
+            word-wrap:break-word;
+        }
+        .container{
+            width: 100px;
+            height: 100px;
+            border:1px solid #000;
+        }
+
+        .item{
+            width: 100px;
+            height: 100px;
+            background-color:#f00;
+            margin-top:100px;
+            /* transform:translate(100px,100px);
+            transform:rotateY(10deg); */
+            /* transform:scale(1,2); */
+            transform:skew(10deg,0);
+            text-align:center;
+            line-height:100px;
+            color:#000;
+        }
     </style>
 </head>
 <body>
@@ -63,6 +97,15 @@
     <label for="pause">开始/暂停</label>
     <input type="checkbox" id="pause">
     <div id="box"></div>
+    
+    <div class="box">按钮</div>
 
+    <div class="img"></div>
+
+    <div class="container">
+        <p class="text">KyrieIrvingKyrieIrvingKyrieIrvingKyrieIrvingKyrieIrvingKyrieIrvingKyrieIrving</p>
+    </div>
+
+    <div class="item">Hello World</div>
 </body>
 </html>
