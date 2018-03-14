@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery及AJAX</title>
+    <style>
+        html,body{
+            padding: 0;
+            margin: 0;
+        }
+        .box4{
+            width: 100px;
+            height: 10px;
+            background-color:#f00;
+            position:absolute;
+            left:20px;
+            top:300px;
+        }
+        .container{
+            width: 500px;
+            height: 500px;
+            position:relative;
+            margin-left:100px;
+            border:1px solid #000;
+        }
+        .box5{
+            width: 40px;
+            height: 40px;
+            position:absolute;
+            left:100px;
+            top:100px;
+            background-color:#00f;
+        }
+        .box6{
+            width: 40px;
+            height: 40px;
+            position:absolute;
+            left:100px;
+            top:100px;
+            background-color:#ff0;
+        }
+
+        .box7{
+            width: 100px;
+            height: 100px;
+            padding: 10px;
+            margin: 10px;
+            border:2px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <ul class="list">
+        <li class="item1"></li>
+        <li class="item2"></li>
+        <li class="item3"></li>
+        <li class="item4"></li>
+        <li class="item5"></li>
+        <li class="item6"></li>
+        <li class="item7"></li>
+        <li class="item8"></li>
+        <li class="item9"></li>
+        <li class="item10"></li>
+    </ul>
+    <ul>
+        <li>John</li>
+        <li>Karl</li>
+        <li>Brandon</li>
+    </ul>
+    <ul>
+        <li>Glen</li>
+        <li>Tane</li>
+        <li>Ralph</li>
+    </ul>
+
+    <div class="box1"></div>
+    <div class="box2"></div>
+    <div class="box3"></div>
+
+    <div class="box4"></div>
+
+    <div class="container">
+        <div class="box5"></div>
+        <div class="box6"></div>
+    </div>
+
+    <div class="box7"></div>
+
+    <ol class="list1">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ol>
+    <ol class="list2">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ol>
+
+    <script src="./jquery-3.3.1.js"></script>
+    <script>
+
+        console.log($(".list li:odd"));
+        console.log($(".list li:even"));
+        console.log($(".list li:eq(5)"));
+        console.log($('.list li:gt(5)'));
+        console.log($(".list li:eq(1):parent"));
+
+        console.log($("ul li:first-child"));
+        console.log($("ul li:first"));
+
+        // $.ajax(url,settings)
+        $.get("http://h6.duchengjiu.top/shop/api_cat.php", function (str) {
+            console.log(str);
+        })
+
+        $.ajax({
+            url: "http://h6.duchengjiu.top/shop/api_goods.php",
+            "type": "GET",
+            "data": {
+                "cat_id": 55,
+                "pagesize": 20
+            },
+            "dataType": "json",
+            "success": function (str) {
+                console.log(str.data);
+                for (i = 0; i < str.data.length; i++) {
+                    console.log(str.data[i].goods_thumb);
+                    var Img = document.createElement("img");
+                    Img.src = str.data[i].goods_thumb;
+                    document.body.appendChild(Img);
+                }
+            }
+        })
+        $("ul.list li:gt(6)").addClass("box");
+        $("ul.list li:lt(6)").addClass("abc")
+
+        $(".box1").html("<h1>Hello World</h1>");
+        $(".box2").text("<h1>Hello World</h1>");        
+        $(".box3").val("Hello World");
+        
+        console.log( $(".box4").offset() );
+        
+        console.log( $(".box5").offset() );
+        console.log( $(".box6").position() );        
+        
+        console.log( $(".box7").width(),$(".box7").height() );
+
+        console.log( $(".box7").innerWidth(),$(".box7").innerHeight() );        
+        
+        $(".box7").innerHeight(200);
+
+        console.log( $(".box7").outerHeight() )
+
+        $(".list1").append("<li>4</li>");
+        $(".list2").prepend("<li>4</li>");
+        $(".list1").before("<li>4</li>");
+        $(".list2").before("<li>4</li>");        
+    </script>
+</body>
+
+</html>
