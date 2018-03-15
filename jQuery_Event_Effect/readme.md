@@ -2,6 +2,7 @@
 
 - [1. 事件](#1-事件)
 - [2. 效果](#2-效果)
+- [3. 事件对象](#3-事件对象)
 
 <!-- /TOC -->
 
@@ -58,6 +59,37 @@ $(".item1").hover(
     }
 )
 ```
+
+    blur()
+    当元素失去焦点时触发 blur 事件.
+    这个函数会调用执行绑定到 blur 事件的所有函数,包括浏览器的默认行为.可通过返回false来防止触发浏览器的默认行为.
+    
+
+    change()
+    当元素的值发生改变时,会发生change事件.
+    该事件仅使用于 文本域,以及 textarea 和 select元素.
+    
+    dblclick()
+    当双击元素时,会发生 dblclick事件
+
+    focus()
+    当元素获得焦点时,触发focus事件
+    
+
+    keydown()
+    当键盘或按钮被按下时,发生keydown事件.
+    
+
+    keypress()
+    当键盘或按钮被按下时,发生keypress事件.keypress事件与keydown类似.当按钮被按下时,会发生该事件.它发生在当前获得
+    焦点的元素上.
+
+    resize()
+    当调整浏览器窗口的大小时,发生resize事件
+
+    scroll()
+    当用户滚动指定的元素时,会发生scroll事件.
+    scroll事件适用于所有可滚动的元素和window对象(浏览器窗口)
 
 # 2. 效果
 
@@ -141,5 +173,52 @@ $(".item6").animate({
 })
 ```
 
-    stop([clearQueue],[jump toEnd])
+    stop(stopAll,goToEnd)
     停止所有在指定元素上正在运行的动画.
+
+        stopAll:可选.规定是否停止被选元素的所有加入队列的动画,允许任何排入队列的动画向后执行
+        goToEnd:可选,规定是否允许完成当前的动画,该参数只能在设置了stopAll参数时使用.
+```js
+$(".start").click(function(){
+    $(".item8").slideDown(3000);
+});
+
+$(".stop").click(function(){
+    $(".item8").stop(true,true);
+})
+```
+
+    delay(duration,[queueName])
+    设置一个延时来推迟执行队列中之后的项目
+
+# 3. 事件对象
+
+    event.currentTarget
+    在事件冒泡阶段中的当前DOM元素
+
+
+    event.isDefaultPrevented()
+    根据事件对象中是否调用过 event.preventDefault() 方法来返回一个布尔值
+
+
+    event.isProgationStopped()
+    根据事件对象中是否调用过 event.stopPropagation() 方法来返回一个布尔值.
+
+    event.preventDefault()
+    阻止默认事件的触发
+
+    event.stopPropagation()
+    防止事件冒泡到DOM树上,也就是不触发的任何前辈元素上的事件处理函数.
+
+
+    event.target
+    最初触发事件的DOM元素.
+    这是注册事件时的对象,或者它的子元素.通常用于比较 event.target 和 this 来确定事件是不是由于冒泡而触发的.经常用于事件冒泡时
+    处理事件委托.
+
+    event.timeStamp
+    这个属性返回事件触发时距离 1970年 1月1 日的毫秒数
+    这可以很方便的检测某个jQuery函数的性能.
+
+    event.which
+    针对键盘和鼠标事件,这个属性能确定你到底按的是哪个键或按钮

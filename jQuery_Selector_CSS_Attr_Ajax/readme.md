@@ -78,7 +78,11 @@
     success         请求成功后的回调函数.
     type            (默认："GET"),请求方式("POST"或"GET").
     data            发送到服务器的数据.将自动转换为请求字符串格式.GET请求中将附加在URL后.
-
+    cache           jQuery1.2新功能,设置为false将不缓存此页面
+    contentType     发送信息至服务器时内容编码类型.默认值适合大多数情况.如果你明确地传递了一个content-type给$.ajax(),那么他必定会
+                    发送给服务器(即使没有数据要发送)
+    url             发送请求的地址
+                    
 ```js
 $.ajax({
     url:"http://h6.duchengjiu.top/shop/api_goods.php",
@@ -108,6 +112,15 @@ $.get("http://h6.duchengjiu.top/shop/api_cat.php",function(str){
 })
 ```
 
+    $.post(url,[data],[callback],[type])
+    通过远程HTTP POST请求载入信息
+    这是一个简单的 POST 请求功能以取代复杂的 $.ajax.请求成功时可调用回调函数.
+
+        url:发送请求的地址
+        data:待发送的key/value参数
+        callback:发送成功时回调函数
+        type:返回内容格式
+        
 ## 1.3. 属性
 
     设置或返回被选元素的属性值.
@@ -122,7 +135,6 @@ $("img").attr({ src: "test.jpg", alt: "Test Image" });
 
     removeAttr(name)
     从每一个匹配的元素中删除一个属性
-
 
     addClass()
     为每个匹配的元素添加指定的类名

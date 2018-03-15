@@ -22,7 +22,7 @@
             height: 100px;
             background-color:#f0f;
         }
-        .item6{
+        .item7{
             width: 100px;
             height: 100px;
             background-color:#00f;
@@ -31,41 +31,55 @@
             top:500px;
             opacity:0.3;
         }
+        .item8{
+            width: 100px;
+            height: 400px;
+            background-color:#f00;
+            display:none;
+        }
     </style>
 </head>
 <body>
     <button class="box1">点击1</button>
     <button class="box2">点击2</button>
     <button class="box3">点击3</button>
-    <button class="box4">点击4</button>
-    <button class="box5">点击5</button>
-
+    <button class="box4">点击4</button>    
+    
     <p><button class="item1">Hello</button></p>
     <div class="item2"></div>
     <div class="item3"></div>   
     <div class="item4"></div>
     <div class="item5"></div>
-
+    
     <div class="item6"></div>
+    
+    <button class="box4">点击结束动画</button>
+    <div class="item7"></div>
+
+    <button class="start">点击开始动画</button>
+    <button class="stop">点击结束动画</button>
+    <div class="item8"></div>
+    
+
     <script src="./jquery-3.3.1.js"></script>
     <script>
         
-        $(".box1").one("click",function(){
-            console.log("只能点击一次");
-        });
+        // $(".box1").one("click",function(){
+        //     console.log("只能点击一次");
+        // });
 
-        $(".box2").on("mousedown mouseup",function(){
-            console.log("我被点击了");
-        })
+        // $(".box2").on("mousedown mouseup",function(){
+        //     console.log("我被点击了");
+        // })
         
-        $(".item1").hover(
-            function(){
-                $(this).addClass("hover");
-            },
-            function(){
-                $(this).removeClass("hover");
-            }
-        )
+        // $(".item1").hover(
+        //     function(){
+        //         $(this).addClass("hover");
+        //     },
+        //     function(){
+        //         $(this).removeClass("hover");
+        //     }
+        // )
         
         // $(".box3").toggle("slow");
             
@@ -86,17 +100,55 @@
         //     console.log("fadeIn");
         // })
 
-        $(".item5").fadeTo(1000,0.2,function(){
-            console.log("效果切换完成了");
+        // $(".item5").fadeTo(1000,0.2,function(){
+        //     console.log("效果切换完成了");
+        // });
+        
+        // $(".item6").animate({
+        //     left:"400px",
+        //     top:"600px",
+        //     opacity:'1'
+        // },2000,function(){
+        //     console.log("动画完成了");
+        // })
+        
+        // $(".item7").animate({
+        //     left:200,
+        //     top:600,
+        //     opacity:1
+        // },3000,function(){
+        //     console.log("动画完成了");
+        // })
+
+        // $(".box4").click(function(){
+        //     $(".item7").stop(false,true);
+        // })
+            
+        $(".start").click(function(){
+            $(".item8").slideDown(3000);
+        });
+
+        $(".stop").click(function(){
+            $(".item8").stop(false);
+        })
+
+        $(window).resize(function(){
+            console.log("窗口大小改变了");
+        })
+
+        $(document).scroll(function(){
+            console.log("浏览器滚动了");
         });
         
-        $(".item6").animate({
-            left:"400px",
-            top:"600px",
-            opacity:'1'
-        },2000,function(){
-            console.log("动画完成了");
+        $(".box4").click(function(event){
+            console.log(event);
+            console.log( event.currentTarget == this );
+            console.log( event.target == this );
         })
+        
+        
+
+
 
     </script>
 </body>
