@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Jquery事件对象及效果</title>
+    <style>
+        .item2{
+            width: 100px;
+            height: 100px;
+            background-color:#f00;
+            display:none;
+        }
+        .item3{
+            width: 100px;
+            height: 200px;
+            background-color:#00f;
+        }
+        .item4,.item5{
+            width: 100px;
+            height: 100px;
+            background-color:#f0f;
+        }
+        .item6{
+            width: 100px;
+            height: 100px;
+            background-color:#00f;
+            position:absolute;
+            left:100px;
+            top:500px;
+            opacity:0.3;
+        }
+    </style>
+</head>
+<body>
+    <button class="box1">点击1</button>
+    <button class="box2">点击2</button>
+    <button class="box3">点击3</button>
+    <button class="box4">点击4</button>
+    <button class="box5">点击5</button>
+
+    <p><button class="item1">Hello</button></p>
+    <div class="item2"></div>
+    <div class="item3"></div>   
+    <div class="item4"></div>
+    <div class="item5"></div>
+
+    <div class="item6"></div>
+    <script src="./jquery-3.3.1.js"></script>
+    <script>
+        
+        $(".box1").one("click",function(){
+            console.log("只能点击一次");
+        });
+
+        $(".box2").on("mousedown mouseup",function(){
+            console.log("我被点击了");
+        })
+        
+        $(".item1").hover(
+            function(){
+                $(this).addClass("hover");
+            },
+            function(){
+                $(this).removeClass("hover");
+            }
+        )
+        
+        // $(".box3").toggle("slow");
+            
+        // $(".item2").slideDown(1000,function(){
+        //     console.log("动画完成了1");
+        // });
+        // $(".item2").slideUp(1000,function(){
+        //     console.log("动画完成了2");
+        // });
+        // $(".item3").slideToggle(1000,function(){
+        //     console.log("123");
+        // })
+        
+        // $(".item4").fadeOut(1000,function(){
+        //     console.log("fadeOut");
+        // })
+        // $(".item4").fadeIn(1000,function(){
+        //     console.log("fadeIn");
+        // })
+
+        $(".item5").fadeTo(1000,0.2,function(){
+            console.log("效果切换完成了");
+        });
+        
+        $(".item6").animate({
+            left:"400px",
+            top:"600px",
+            opacity:'1'
+        },2000,function(){
+            console.log("动画完成了");
+        })
+
+    </script>
+</body>
+</html>

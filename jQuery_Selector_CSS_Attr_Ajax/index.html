@@ -92,9 +92,9 @@
     <div class="box7"></div>
 
     <ol class="list1">
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
+        <li class="item1">1</li>
+        <li class="item2">2</li>
+        <li class="item3">3</li>
     </ol>
     <ol class="list2">
         <li>1</li>
@@ -102,8 +102,23 @@
         <li>3</li>
     </ol>
 
+    <ol class="list3">
+        <li><a href=""></a></li>
+        <li><a href=""></a></li>
+        <li><a href=""></a></li>
+        <li><a href=""></a></li>
+        <li><a href=""></a></li>
+    </ol>
+
     <script src="./jquery-3.3.1.js"></script>
     <script>
+        console.log( $(".list3").children() );
+        console.log( $(".list3").children("a") );
+        console.log( $(".list1 .item1").parent() );
+        console.log( $(".list3").children() );
+        console.log( $(".list3").find("a") );
+
+        console.log( $(".list").siblings() );
 
         console.log($(".list li:odd"));
         console.log($(".list li:even"));
@@ -160,7 +175,17 @@
         $(".list1").append("<li>4</li>");
         $(".list2").prepend("<li>4</li>");
         $(".list1").before("<li>4</li>");
-        $(".list2").before("<li>4</li>");        
+        $(".list2").before("<li>4</li>");     
+
+        console.log( $(".list1 li").eq(1) );
+        console.log( $(".list1 li").get(1) );
+        console.log( $(".list1 li").first() );        
+        console.log( $(".list1 li").hasClass("item1") );
+        $(".list1 .item1").addClass("box1");
+        $(".list1 .item2").removeClass("item2");
+        $(".list1").not($(".item3"));
+        console.log( $(".list2").children() );
+
     </script>
 </body>
 
