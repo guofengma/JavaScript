@@ -49,6 +49,30 @@ console.log(ages.filter(checkAdult));   // [20, 30, 22]
 console.log(ages);  // [20,30,16,22,18,13,15];
 ```
 
+    every()
+    该方法用于检测数组所有元素是否都符合指定条件(通过函数提供)
+    every()方法使用指定函数检测数组中的所有元素：
+        如果数组中检测到有一个元素不满足,则整个表达式返回false,且剩余的元素不会再进行检测.
+        如果所有元素都满足条件,则返回true.
+
+    注意：
+        every()不会对空数组进行检测
+        every()不会改变原始数组
+
+
+    array.every(function(currentValue,index,arr),thisValue);
+        currentValue    必须,当前元素的值
+        index           可选,当前元素的索引值
+        thisValue       可选.对象作为该执行回调时使用,传递给函数.用作this的值.
+```js
+var ages = [20,15,18,19,22,30,25];
+
+function checkAge(currentValue,index,arr){
+    return currentValue >= 15;
+}
+console.log( ages.every(checkAge) );    // true
+```
+        
     forEach()
     该方法用于调用数组的每个元素,并将元素传递给回调函数
 
