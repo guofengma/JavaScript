@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组方法</title>
+</head>
+<body>
+    
+
+    <script>
+    
+        var a = ['kyrie','wade','bosh'];
+        var b = ['Lebron'];
+        console.log(a.concat(b));
+        console.log(a);
+        
+        console.log(a.fill("kobe"));
+        console.log(a);
+
+        var ages = [20,30,16,22,18,13,15];
+        function checkAdult(age){
+            return age >= 20;
+        }
+        console.log(ages.filter(checkAdult));   // [20, 30, 22]
+        console.log(ages);  // [20,30,16,22,18,13,15];
+        
+        var player = ['kyrie','lebron','kobe','wade'];
+        console.log(player.includes('curry'));  // false
+        console.log(player.includes('kyrie'));  // true
+        console.log(player.includes('kyrie','lebron')); // true
+        console.log(player.includes('kyrie','james'));  // true
+        console.log(player.includes('wade','wade'));  // true                    
+
+        console.log(player.indexOf('lebron'));  // 1
+        console.log(player.indexOf('curry'));   // -1
+
+        console.log(player.join());     // kyrie,lebron,kobe,wade
+        console.log(typeof player.join());  // string
+        console.log(player);    //  ["kyrie", "lebron", "kobe", "wade"]
+        
+        var fruits=["Banana","Orange","Apple","Mango","Banana","Orange","Apple"];
+        console.log(fruits.lastIndexOf("Banana"));  // 4
+        console.log(fruits.indexOf("Banana"));  // 0  
+        
+        var numbers = [4,9,25,36,81];
+        console.log( numbers.map(Math.sqrt) );  // [2, 3, 5, 6, 9]
+        console.log( numbers);
+        
+        console.log(numbers.pop())  // 81;
+        console.log(numbers);   // [4, 9, 25, 36]
+        
+        var c = ['奔驰','宝马',"奥迪"];
+        console.log(c.push("宾利"));
+        console.log(c);
+
+        var number = [7,8,8,7,9,11];
+        function getTotal(total,num){
+            return total + num;
+        }
+        console.log(number.reduce(getTotal));   // 50
+
+        var message = ["Hello","World"];
+        console.log(message.reverse()); // ['World','Hello']
+        console.log(message);   //  ['World','Hello']
+        
+        var msg = ['Kyrie','Irving','Lebron','James'];
+        console.log(msg.shift());   // kyrie
+        console.log(msg);   // ["Irving", "Lebron", "James"]
+        
+        var website = ['baidu','alibaba','google','qq'];
+        console.log(website.slice(0,3));    //  ["baidu", "alibaba", "google"]
+        console.log(website);   //  ["baidu", "alibaba", "google", "qq"]
+        
+        console.log( website.slice(-2) );   // ["google", "qq"]
+        console.log(website.slice(-2,-1));  // ["google"]
+        console.log(website.slice(-2,-3));  // []
+
+        var points = [40,100,1,5,25,10];
+        console.log( points.sort(function(a,b){return a- b}) );
+        console.log(points);    // [1, 5, 10, 25, 40, 100]
+        
+        var singer = ["周杰伦","王力宏","林俊杰","五月天","潘玮柏"];
+        
+        // singer.splice(2,0,"孙燕姿","SHE");
+        // console.log(singer);
+        
+        // singer.splice(2,2,"HeBe","哈林");
+        // console.log(singer);    // ["周杰伦", "王力宏", "HeBe", "哈林", "潘玮柏"]
+
+        console.log( singer.toString() );   // 周杰伦,王力宏,林俊杰,五月天,潘玮柏
+        console.log( singer.join() );   // 周杰伦,王力宏,林俊杰,五月天,潘玮柏
+
+        var fruits = ["Banana", "Orange", "Apple", "Mango"];
+        console.log(fruits.unshift("Lemon","Pineapple"));   // 6
+        console.log(fruits);    // ["Lemon", "Pineapple", "Banana", "Orange", "Apple", "Mango"]
+        
+        
+        // function getRepeat(array){
+        //     var newArray = array.sort(function(a,b){return a-b});
+        //     for(i = 0; i < newArray.length; i++){
+        //         if(newArray[i] == newArray[i+1]){
+        //             newArray.splice(i,1);
+        //             getRepeat(array);
+        //         }
+        //     }
+        //     return newArray;
+        // }
+        // var f = getRepeat([1,1,3,5,5,3,8,9,2,7,2,2,5,5,3,7,3,9,2,5,10]);
+        // console.log(f);
+        
+        function getRepeat(array){
+            // 先给原数组排序
+            var array1 = array.sort(function(a,b){return a - b});
+            // 定义一个新数组,新数组存取要去重的数组的第一项
+            var newArray = [ array1[0] ];
+            // 然后循环判断
+            for(let i = 0; i < array1.length; i++){
+                // 如果原始数组的每一项 都 不等于 新数组的第 n项
+                if(array1[i] !== newArray[newArray.length -1]){
+                    // 则往新数组中添加 不相同的元素
+                    newArray.push(array1[i]);
+                }
+            }
+            return newArray;
+        }
+        var g = getRepeat([1,1,2,2,3,3,5,2,3]);
+        console.log(g); // [1,2,3];
+        
+        var url = "http://www.baidu.com#";
+
+        var newUrl = url.substring(0,url.length - 1);
+        console.log(newUrl);
+        
+        // var Aurl = url.split("");
+        // Aurl.pop();
+        // console.log(Aurl.join(""));
+        
+        var Aurl = url.split("");
+        Aurl.reverse().shift();
+        console.log(Aurl.reverse().join(""));
+        
+
+        var array = ['kyrie','lebron','wade','kobe'];
+        console.log(array.join(","));       // kyrie,lebron,wade,kobe
+        console.log(array.toString());      // kyrie,lebron,wade,kobe
+
+        console.log(array.join(";"));       // kyrie;lebron;wade;kobe
+        console.log(array.toString(";"))    // kyrie,lebron,wade,kobe
+
+        console.log(array.join("&"));       // kyrie&lebron&wade&kobe
+        console.log(array.toString("&"));   // kyrie,lebron,wade,kobe
+
+    </script>
+</body>
+</html>
