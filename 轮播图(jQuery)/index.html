@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播图</title>
+    <!-- <link rel="stylesheet" href="./css/style.css"> -->
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ol,ul{
+            list-style:none;
+        }
+        ul{
+            height:348px;
+            width:4960px;
+            left:-620px;            
+        }
+        ul li,ol li{
+            float:left;
+            display:block;
+        }
+        .banner{
+            position:absolute;
+        }
+        .circles{
+            position:absolute;
+            bottom:10px;
+            width:114px;
+            height:8px;
+            right:10px;
+        }
+        ol li{
+            width: 8px;
+            height: 8px;
+            border-radius:50%;
+            background-color:#fff;
+            margin-right:11px;
+        }
+        #container{
+            width: 620px;
+            height: 348px;
+            border:1px solid #000;
+            margin:0 auto;
+            position:relative;
+            overflow:hidden;
+        }
+        img{
+            width: 620px;
+            height: 348px;
+        }
+        .left-btn,.right-btn{
+            width: 20px;
+            height: 50px;
+            background:url("./img/btn.png") no-repeat;
+            position:absolute;
+            top:50%;
+            margin-top:-25px;
+        }
+        .right-btn{
+            right:5px;
+            background-position:5px -200px;
+        }
+        .left-btn{
+            left:5px;
+        }
+        .circles .current{
+            background-color:#408ed6;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <ul class="banner">
+            <li><img src="./img/6.jpg" alt=""></li>                 
+            <li><img src="./img/1.jpg" alt=""></li>
+            <li><img src="./img/2.jpg" alt=""></li>
+            <li><img src="./img/3.jpg" alt=""></li>
+            <li><img src="./img/4.jpg" alt=""></li>
+            <li><img src="./img/5.jpg" alt=""></li>
+            <li><img src="./img/6.jpg" alt=""></li>     
+            <li><img src="./img/1.jpg" alt=""></li>                 
+        </ul>
+        <div class="left-btn"></div>
+        <div class="right-btn"></div>
+        <ol class="circles">
+            <li class="current"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>                
+        </ol>
+    </div>
+
+    <script src="./js/jquery-3.3.1.js"></script>
+    <script>
+        
+        $(document).ready(function(){
+            
+            // 定义一个信号量,表示图片的序号,刚开始的默认状态要展示第一张图片
+            // 2200ms后展示第二张图片
+            var index = 1;
+            
+            // 经过蓝色小按钮,按钮改变颜色
+            $(".circles li").mouseover(function(){
+                $(".circles li").each(function(){
+                    $(this).removeClass("current");
+                })
+                $(this).addClass("current");
+            });
+            
+            function move(){
+
+                // 图片切换时,对应的 按钮 改变颜色
+                $(".circles li").each(function(){
+                    $(this).removeClass("current");
+                })
+                $(".circles li").eq(index).addClass("current");
+                
+                index++;
+                
+                if(index > 7){
+                    // 这里是关键点,当执行到第7张图片的时候(index=8),马上把ul的left状态改为 初始状态.
+                    // 把ul的left值改为初始状态的时候不要用animate(因为这样会右动画效果),直接用css修改即可
+                    index = 1;
+                    $(".banner").css({"left":-620});
+                    move();
+                }
+                $(".banner").animate({"left":index*-620},400);
+
+            }
+            var t = setInterval(move,2500);
+            
+            // 鼠标放置于图片上时 暂停播放动画,鼠标离开后开始动画
+            $(".banner li img").hover(
+                function(){
+                    clearInterval(t);
+                },
+                function(){
+                    setInterval(move,2000)
+                }
+            )
+        })
+
+    </script>
+</body>
+</html>

@@ -110,8 +110,18 @@
         <li><a href=""></a></li>
     </ol>
 
+    <p class="text">1</p>
+    <p class="text">2</p>
+    <p class="text">3</p>
+    <p class="text">4</p>
+    <p class="text">5</p>
+
+
     <script src="./jquery-3.3.1.js"></script>
     <script>
+
+        $("p.text").eq(1).css({color:"#f00"});
+        
         console.log( $(".list3").children() );
         console.log( $(".list3").children("a") );
         console.log( $(".list1 .item1").parent() );
