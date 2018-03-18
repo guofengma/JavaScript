@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播图(改变图片的透明度)</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        #container{
+            width: 700px;
+            height: 393px;
+            position:relative;
+            margin:0 auto;
+        }
+        img {   
+            width: 700px;
+        }
+        .banner{
+            list-style: none;
+            width:700px;
+            height:393px;
+            position:relative;
+        }
+        .banner li{
+            position:absolute;
+            opacity:0;
+            left:0;
+            top:0;
+        }
+        .banner li p{
+            color:#fff;
+            font-size:20px;
+            position:absolute;
+            bottom:10px;
+            left:0;
+            text-indent:2em;
+        }
+        .banner .current{
+            opacity:1;
+        }
+
+        /* 左右点击按钮 */
+        .left-btn,.right-btn{
+            width:20px;
+            height:50px;
+            background:url("./img/btn.png") no-repeat;
+            position:absolute;
+            top:50%;
+            margin-top:-20px;
+            cursor:pointer;
+        }
+        .right-btn{
+            right:0;
+            background-position:0 -200px;
+        }
+        .circles{
+            height:10px;
+            position:absolute;
+            width:130px;
+            bottom:10px;
+            list-style:none;
+            left:70%;
+        }
+        .circles li{
+            width: 10px;
+            height: 10px;
+            border-radius:50%;
+            background-color:#fff;
+            margin: 0 8px;
+            float:left;
+            cursor:pointer;
+        }
+        .circles .active{
+            background-color:purple!important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+        <ul class="banner">
+            <li class="current">
+                <img src="./img/1.jpg" alt="">
+                <p>哈登32+11+8保罗里程碑 火箭擒鹈鹕迎四连胜</p>
+            </li>
+            <li>
+                <img src="./img/2.jpg" alt="">
+                <p>詹姆斯获生涯第70次三双 骑士胜公牛</p>                
+            </li>
+            <li>
+                <img src="./img/3.jpg" alt="">
+                <p>勇闯天涯superX  无畏者驾到</p>                
+            </li>
+            <li>
+                <img src="./img/4.jpg" alt="">
+                <p>社区-火箭已具备总冠军气质？</p>                
+            </li>
+            <li>
+                <img src="./img/5.jpg" alt="">
+                <p>中超-上港客场5-2富力 武磊上演大四喜</p>                
+            </li>
+        </ul>
+        <div class="left-btn"></div>
+        <div class="right-btn"></div>
+        
+        <ul class="circles">
+            <li class="active"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>            
+        </ul>
+    </div>
+    <script src="./main.js"></script>
+</body>
+
+</html>
