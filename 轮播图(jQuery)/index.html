@@ -5,83 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>轮播图</title>
-    <!-- <link rel="stylesheet" href="./css/style.css"> -->
-    <style>
-        *{
-            padding: 0;
-            margin: 0;
-        }
-        ol,ul{
-            list-style:none;
-        }
-        ul{
-            height:348px;
-            width:4960px;
-            left:-620px;            
-        }
-        ul li,ol li{
-            float:left;
-            display:block;
-        }
-        .banner{
-            position:absolute;
-        }
-        .circles{
-            position:absolute;
-            bottom:10px;
-            width:114px;
-            height:8px;
-            right:10px;
-        }
-        ol li{
-            width: 8px;
-            height: 8px;
-            border-radius:50%;
-            background-color:#fff;
-            margin-right:11px;
-        }
-        #container{
-            width: 620px;
-            height: 348px;
-            border:1px solid #000;
-            margin:0 auto;
-            position:relative;
-            overflow:hidden;
-        }
-        img{
-            width: 620px;
-            height: 348px;
-        }
-        .left-btn,.right-btn{
-            width: 20px;
-            height: 50px;
-            background:url("./img/btn.png") no-repeat;
-            position:absolute;
-            top:50%;
-            margin-top:-25px;
-        }
-        .right-btn{
-            right:5px;
-            background-position:5px -200px;
-        }
-        .left-btn{
-            left:5px;
-        }
-        .circles .current{
-            background-color:#408ed6;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <div id="container">
         <ul class="banner">
-            <li><img src="./img/6.jpg" alt=""></li>                 
+            <li><img src="./img/5.jpg" alt=""></li>            
             <li><img src="./img/1.jpg" alt=""></li>
             <li><img src="./img/2.jpg" alt=""></li>
             <li><img src="./img/3.jpg" alt=""></li>
             <li><img src="./img/4.jpg" alt=""></li>
             <li><img src="./img/5.jpg" alt=""></li>
-            <li><img src="./img/6.jpg" alt=""></li>     
             <li><img src="./img/1.jpg" alt=""></li>                 
         </ul>
         <div class="left-btn"></div>
@@ -92,7 +26,6 @@
             <li></li>
             <li></li>
             <li></li>
-            <li></li>                
         </ol>
     </div>
 
@@ -101,49 +34,75 @@
         
         $(document).ready(function(){
             
-            // 定义一个信号量,表示图片的序号,刚开始的默认状态要展示第一张图片
-            // 2200ms后展示第二张图片
+            var x = $(".banner li img").innerWidth();
             var index = 1;
-            
-            // 经过蓝色小按钮,按钮改变颜色
-            $(".circles li").mouseover(function(){
-                $(".circles li").each(function(){
-                    $(this).removeClass("current");
-                })
-                $(this).addClass("current");
-            });
-            
+            var t = setInterval(move,2000);
+            // 定义一个 自右向左的运动
             function move(){
 
-                // 图片切换时,对应的 按钮 改变颜色
-                $(".circles li").each(function(){
-                    $(this).removeClass("current");
-                })
-                $(".circles li").eq(index).addClass("current");
-                
                 index++;
-                
-                if(index > 7){
-                    // 这里是关键点,当执行到第7张图片的时候(index=8),马上把ul的left状态改为 初始状态.
-                    // 把ul的left值改为初始状态的时候不要用animate(因为这样会右动画效果),直接用css修改即可
-                    index = 1;
-                    $(".banner").css({"left":-620});
-                    move();
-                }
-                $(".banner").animate({"left":index*-620},400);
-
+                // 注意逻辑顺序,是先加1后再运动
+                $(".banner").animate({left:-index*x},400,function(){
+                    // 当运动到第6张照片的时候(也就是显示第一张照片了)
+                    // 修改index为初始状态.
+                    if(index >= 6){
+                        index = 1;
+                        // 并瞬间改变 banner 的 left 值,也修改为初始状态.
+                        $(".banner").css({left:-x});
+                    }
+                    // 给相对应的图片 按钮 改变颜色.(问题:在图片滚动完后 第一个按钮 没有改变样式的问题)
+                    $(".circles li").removeClass("current");
+                    $(".circles li").eq(index-1).addClass("current");
+                })
             }
-            var t = setInterval(move,2500);
-            
-            // 鼠标放置于图片上时 暂停播放动画,鼠标离开后开始动画
-            $(".banner li img").hover(
+
+            // 点击小圆点,跳转到相对应的图片
+            $(".circles li").click(function(){
+                // 先关闭定时器
+                clearInterval(t);
+                $(".banner").animate({left:($(this).index()+1)*-x},400);
+                // 获取当前点击的小按钮序号
+                index = $(this).index();
+                $(".circles li").removeClass("current");
+                $(".circles li").eq(index).addClass("current");
+                t = setInterval(move,2000);
+            });
+
+            // 点击右按钮时,图片滚动
+            $(".right-btn").click(function(){
+                clearInterval(t);
+                index++;
+                $(".banner").animate({left:index*-x},400,function(){
+                    if(index >= 6){
+                        index = 1;
+                        $(".banner").css({left:-x});
+                    }
+                    $(".circles li").removeClass("current");
+                    $(".circles li").eq(index-1).addClass("current");
+                })
+            })
+            // 鼠标经过 轮播图 暂停
+            $(".banner").hover(
                 function(){
                     clearInterval(t);
                 },
                 function(){
-                    setInterval(move,2000)
+                    t = setInterval(move,2000);
                 }
             )
+            
+            $(".left-btn").click(function(){
+                clearInterval(t);
+                index--;
+                $(".banner").animate({left:index*-x},400,function(){
+                    if(index <= 1){
+                        index = 6;
+                        $(".banner").css({left:-index*x})
+                    }
+                    $(".circles li").removeClass("current");
+                    $(".circles li").eq(index-1).addClass("current");
+                })
+            })
         })
 
     </script>
