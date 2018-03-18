@@ -10,7 +10,6 @@
 <body>
     <div id="container">
         <ul class="banner">
-            <li><img src="./img/5.jpg" alt=""></li>            
             <li><img src="./img/1.jpg" alt=""></li>
             <li><img src="./img/2.jpg" alt=""></li>
             <li><img src="./img/3.jpg" alt=""></li>
@@ -30,81 +29,6 @@
     </div>
 
     <script src="./js/jquery-3.3.1.js"></script>
-    <script>
-        
-        $(document).ready(function(){
-            
-            var x = $(".banner li img").innerWidth();
-            var index = 1;
-            var t = setInterval(move,2000);
-            // 定义一个 自右向左的运动
-            function move(){
-
-                index++;
-                // 注意逻辑顺序,是先加1后再运动
-                $(".banner").animate({left:-index*x},400,function(){
-                    // 当运动到第6张照片的时候(也就是显示第一张照片了)
-                    // 修改index为初始状态.
-                    if(index >= 6){
-                        index = 1;
-                        // 并瞬间改变 banner 的 left 值,也修改为初始状态.
-                        $(".banner").css({left:-x});
-                    }
-                    // 给相对应的图片 按钮 改变颜色.(问题:在图片滚动完后 第一个按钮 没有改变样式的问题)
-                    $(".circles li").removeClass("current");
-                    $(".circles li").eq(index-1).addClass("current");
-                })
-            }
-
-            // 点击小圆点,跳转到相对应的图片
-            $(".circles li").click(function(){
-                // 先关闭定时器
-                clearInterval(t);
-                $(".banner").animate({left:($(this).index()+1)*-x},400);
-                // 获取当前点击的小按钮序号
-                index = $(this).index();
-                $(".circles li").removeClass("current");
-                $(".circles li").eq(index).addClass("current");
-                t = setInterval(move,2000);
-            });
-
-            // 点击右按钮时,图片滚动
-            $(".right-btn").click(function(){
-                clearInterval(t);
-                index++;
-                $(".banner").animate({left:index*-x},400,function(){
-                    if(index >= 6){
-                        index = 1;
-                        $(".banner").css({left:-x});
-                    }
-                    $(".circles li").removeClass("current");
-                    $(".circles li").eq(index-1).addClass("current");
-                })
-            })
-            // 鼠标经过 轮播图 暂停
-            $(".banner").hover(
-                function(){
-                    clearInterval(t);
-                },
-                function(){
-                    t = setInterval(move,2000);
-                }
-            )
-            
-            $(".left-btn").click(function(){
-                clearInterval(t);
-                index--;
-                $(".banner").animate({left:index*-x},400,function(){
-                    if(index <= 1){
-                        index = 6;
-                        $(".banner").css({left:-index*x})
-                    }
-                    $(".circles li").removeClass("current");
-                    $(".circles li").eq(index-1).addClass("current");
-                })
-            })
-        })
-
-    </script>
+    <script src="./js/main.js"></script>
 </body>
 </html>
