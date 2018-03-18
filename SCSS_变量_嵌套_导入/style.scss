@@ -1,0 +1,13 @@
+aside{
+    background-color:#f00;
+    color:#00f;
+}
+body {
+    color: #333; // 这种注释内容不会出现在生成的css文件中
+    padding: 0; /* 这种注释内容会出现在生成的css文件中 */
+}
+
+body {
+    color /* 这块注释内容不会出现在生成的css中 */: #333;
+    padding: 1; /* 这块注释内容也不会出现在生成的css中 */ 
+}
