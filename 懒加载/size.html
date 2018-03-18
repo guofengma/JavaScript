@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>获取到的元素/文档及屏幕尺寸</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .box1{
+            width: 101px;
+            height: 102px;
+            border:2px solid #000;
+            padding:5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box1"></div>
+
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    <p>Kyrie</p>
+    
+    <p>Kyrie</p>
+    
+
+
+    <script src="./js/jquery-3.3.1.js"></script>
+    <script>
+        
+        console.log(document.body.clientWidth);
+        console.log(document.body.clientHeight);        
+        console.log(document.documentElement.clientWidth);
+        console.log(document.documentElement.clientHeight);        
+        
+        console.log( $(".box1").width() );
+        console.log( $(".box1").height() );        
+
+        console.log( $(".box1").innerWidth() ); // 111
+        console.log( $(".box1").innerHeight() ); // 112
+        
+        console.log( $(".box1").outerWidth() ); // 115
+        console.log( $(".box1").outerHeight() );// 116
+
+        console.log( $(".box1").outerWidth(true) );
+        console.log( $(".box1").outerHeight(true) );        
+        
+        console.log( $(window).width() );
+        console.log( $(window).height() );    
+        
+        console.log( $(document).width() );
+        console.log( $(document).height() );      
+        
+        console.log( $(document).scrollTop() );
+        console.log( $(window).scrollTop() )
+    </script>
+</body>
+</html>
