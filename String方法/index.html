@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>字符串方法</title>
+</head>
+<body>
+    
+    <script>
+        var x = 'jhon';
+        var y = new String('jhon');
+
+        console.log(typeof x);  // string
+        console.log(typeof y);  // object
+
+        var a = 'lebron';
+
+        console.log(a.charAt(1));   // 1
+        console.log(a[1]);          // 1
+        console.log(a.charCodeAt(0));   // 108
+
+        console.log(a.concat("kyrie"));
+        console.log(a);
+
+        console.log(a.substring(1,5));
+        console.log(a.slice(1,5));
+        console.log(a);
+
+        var b = 'kyrie';
+        console.log(b.substring(0,b.length-1));
+        console.log(b.slice(0,b.length-1));
+        
+        document.write(b.bold());
+        document.write(b.big())
+        document.write(b.fontsize(30))
+        document.write(b.fontcolor("#f00").fontsize(50));
+        document.write(b.italics());
+        document.write( b.link("http://www.baidu.com") );
+        document.write(b.sub());
+        document.write(b.sup())
+
+    </script>
+</body>
+</html>

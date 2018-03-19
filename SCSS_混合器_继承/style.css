@@ -59,6 +59,7 @@ h1.error, h1.seriousError {
   border-width: 3px;
 }
 
+
 .active, .item {
   width: 100px;
   height: 100px;
