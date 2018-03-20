@@ -8,26 +8,34 @@
     <title>Bootstrap</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <style>
-
         .no1 {
             background-color: #f00;
             height: 40px;
         }
+
         .no2 {
             background-color: #00f;
             height: 40px;
         }
-        .no3{
-            background-color:purple;
-            height:60px;
+
+        .no3 {
+            background-color: purple;
+            height: 60px;
         }
-        .no4{
-            background-color:#f0f;
-            height:60px;            
+
+        .no4 {
+            background-color: #f0f;
+            height: 60px;
         }
-        .no5{
-            background-color:#ff0;
-            height:60px;            
+
+        .no5 {
+            background-color: #ff0;
+            height: 60px;
+        }
+        .box1,.box2{
+            width: 100px;
+            height: 100px;
+            background-color:#f0f
         }
     </style>
 </head>
@@ -40,16 +48,16 @@
             <div class="col-xs-3 no2"></div>
             <div class="col-xs-6 no1 col-xs-offset-3"></div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-4 col-sm-6 col-xs-12 no1">
                 <div class="row">
                     <div class="col-xs-6 no2 ">123</div>
-                    <div class="col-xs-6 no1 ">123</div>                    
+                    <div class="col-xs-6 no1 ">123</div>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-3 no1 col-md-push-1">1</div>
             <div class="col-md-9 no2 col-md-pull-1">2</div>
@@ -62,7 +70,9 @@
         <div class="h5">5</div>
         <div class="h6">6</div>
 
-        <h1>Kyrie<small>irving</small></h1>
+        <h1>Kyrie
+            <small>irving</small>
+        </h1>
 
         <p>Hello Kyrie Irving</p>
         <p>Hello Lebron James</p>
@@ -72,7 +82,9 @@
 
 
         <del>You can use the mark tag to highlight text.</del>
-        <p>You can use the mark tag to <mark>highlight text.</mark></p>
+        <p>You can use the mark tag to
+            <mark>highlight text.</mark>
+        </p>
         <ins>You can use the mark tag to highlight text.</ins>
         <s>You can use the mark tag to highlight text.</s>
         <u>You can use the mark tag to highlight text.</u>
@@ -81,22 +93,133 @@
         <strong>You can use the mark tag to highlight text.</strong>
         <em>You can use the mark tag to highlight text.</em>
 
-        <p class="text-left">Hello WorldrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWor</p>
-        <p class="text-center">Hello WorldrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWor</p>
-        <p class="text-right">Hello rldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorWorld</p>      
-        <p class="text-justify">Hello WorldWorlrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWordWorldWorldWorldWorld</p>        
-        <p class="text-nowrap">Hello WorldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorld</p>                  
+        <p class="text-left">Hello WorldWor</p>
+        <p class="text-center">Hello WolddWororldWor</p>
+        <p class="text-right">Hello rldWoorlrldldWrWorld</p>
+        <p class="text-justify">Hello WrldWoldWorld</p>
+        <p class="text-nowrap">Hello WldldWorld</p>
 
+        <div class="text-lowercase">hello,world</div>
+        <div class="text-uppercase">hello World</div>
+        <p class="text-capitalize">hello world</p>
+        <abbr title="arrtibute">attr</abbr>
+
+        <address>
+            <strong>Twitter, Inc.</strong>
+            <br> 1355 Market Street, Suite 900
+            <br> San Francisco, CA 94103
+            <br>
+            <abbr title="Phone">P:</abbr> (123) 456-7890
+        </address>
+
+
+
+        <blockquote class="blockquote-reverse">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+            <footer>Someone famous in
+                <cite title="Source Title">Source Title</cite>
+            </footer>
+        </blockquote>
+
+        <ol>
+            <li>Lorem ipsum dolor sit amet</li>
+            <li>Consectetur adipiscing elit</li>
+            <li>Integer molestie lorem at massa</li>
+            <li>Facilisis in pretium nisl aliquet</li>
+            <li>Nulla volutpat aliquam velit</li>
+        </ol>
+        <ul>
+            <li>Lorem ipsum dolor sit amet</li>
+            <li>Consectetur adipiscing elit</li>
+            <li>Integer molestie lorem at massa</li>
+            <li>Facilisis in pretium nisl aliquet</li>
+            <li>Nulla volutpat aliquam velit</li>
+        </ul>
+        <ol class="list-unstyled">
+            <li>Lorem ipsum dolor sit amet</li>
+            <li>Consectetur adipiscing elit</li>
+            <li>Integer molestie lorem at massa</li>
+            <li>Facilisis in pretium nisl aliquet</li>
+            <li>Nulla volutpat aliquam velit</li>
+        </ol>
+
+        To switch directories, type
+        <kbd>cd</kbd> followed by the name of the directory.
+        <br> To edit settings, press
+        <kbd>
+            <kbd>ctrl</kbd> +
+            <kbd>,</kbd>
+        </kbd>
+
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+                <tr class="active">
+                    <td>First Name</td>
+                    <td>Last Name</td>
+                    <td>Username</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="info">
+                    <td>Kyrie</td>
+                    <td>Irving</td>
+                    <td>@ky</td>
+                </tr>
+                <tr class="danger">
+                    <td>Lebron</td>
+                    <td>James</td>
+                    <td>@LJ</td>
+                </tr>
+                <tr class="warning">
+                    <td>Kevin</td>
+                    <td>Durant</td>
+                    <td>@kd</td>
+                </tr>
+            </tbody>
+        </table>
+        <form action="">
+            <div class="form-group">
+                <label for="Email">Email address</label>
+                <input type="email" id="Email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="PassWord">passWord</label>
+                <input type="text" class="form-control" id="PassWord">
+            </div>
+
+        </form>
+
+
+        <form action="">
+            <div class="form-group">
+                <label for="jay1">请输入用户名</label>
+                <input type="text" id="jay1" class="form-control col-xs-6 col-sm-10 ">
+            </div>
+            <div class="form-group">
+                <label for="jay2">请输入账号</label>
+                <input type="text" id="jay2" class="form-control col-xs-6 col-sm-10">
+            </div>
+            <div class="form-group">
+                <label for="jay3">请输入密码</label>
+                <input type="text" id="jay3" class="form-control col-xs-6 col-sm-10">
+            </div>
+        </form>
+
+        <button type="button" class="btn btn-default">Default</button>
+        <button type="button" class="btn btn-primary">Primary</button>
+        <button type="button" class="btn btn-success">Success</button>
+        <button type="button" class="btn btn-info">Info</button>
+        <button type="button" class="btn btn-danger">Danger</button>
+        <div class="content clearfix">
+            <p class="pull-left">Hello</p>
+            <p class="pull-right">World</p>
+        </div>
+        
+        <div class="box1 center-block hidden"></div>
+        <div class="box2 center-block"></div>        
 
     </div>
-
-
-
-
-
-
-
-
+    <img src="./gd.jpg" alt="" style="width:100%;height:auto;display:block">
 
 
 
