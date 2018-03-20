@@ -8,16 +8,26 @@
     <title>Bootstrap</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <style>
-        .container{
-            width: 800px;
-        }
-        .item1 {
+
+        .no1 {
             background-color: #f00;
             height: 40px;
         }
-        .item2 {
+        .no2 {
             background-color: #00f;
             height: 40px;
+        }
+        .no3{
+            background-color:purple;
+            height:60px;
+        }
+        .no4{
+            background-color:#f0f;
+            height:60px;            
+        }
+        .no5{
+            background-color:#ff0;
+            height:60px;            
         }
     </style>
 </head>
@@ -26,10 +36,70 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8 item1 col-sm-6 col-xs-12">.col-md-8</div>
-            <div class="col-md-4 item2 col-sm-6 col-xs-12">.col-md-4</div>
+            <div class="col-xs-9 no1"></div>
+            <div class="col-xs-3 no2"></div>
+            <div class="col-xs-6 no1 col-xs-offset-3"></div>
         </div>
+        
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12 no1">
+                <div class="row">
+                    <div class="col-xs-6 no2 ">123</div>
+                    <div class="col-xs-6 no1 ">123</div>                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3 no1 col-md-push-1">1</div>
+            <div class="col-md-9 no2 col-md-pull-1">2</div>
+        </div>
+
+        <div class="h1">1</div>
+        <div class="h2">2</div>
+        <div class="h3">3</div>
+        <div class="h4">4</div>
+        <div class="h5">5</div>
+        <div class="h6">6</div>
+
+        <h1>Kyrie<small>irving</small></h1>
+
+        <p>Hello Kyrie Irving</p>
+        <p>Hello Lebron James</p>
+
+        <p class="lead">Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.</p>
+        <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.</p>
+
+
+        <del>You can use the mark tag to highlight text.</del>
+        <p>You can use the mark tag to <mark>highlight text.</mark></p>
+        <ins>You can use the mark tag to highlight text.</ins>
+        <s>You can use the mark tag to highlight text.</s>
+        <u>You can use the mark tag to highlight text.</u>
+        <small>You can use the mark tag to highlight text.</small>
+
+        <strong>You can use the mark tag to highlight text.</strong>
+        <em>You can use the mark tag to highlight text.</em>
+
+        <p class="text-left">Hello WorldrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWor</p>
+        <p class="text-center">Hello WorldrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWor</p>
+        <p class="text-right">Hello rldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorWorld</p>      
+        <p class="text-justify">Hello WorldWorlrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWordWorldWorldWorldWorld</p>        
+        <p class="text-nowrap">Hello WorldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorrldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorldWorld</p>                  
+
+
     </div>
+
+
+
+
+
+
+
+
+
+
+
     <script src="./js/jquery-3.3.1.js"></script>
     <script src="./js/bootstrap.min.js"></script>
 
