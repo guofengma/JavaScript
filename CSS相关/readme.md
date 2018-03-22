@@ -2,16 +2,16 @@
 
 - [1. CSS的鼠标按下事件](#1-css的鼠标按下事件)
 - [2. !important](#2-important)
-- [3. 点击按钮效果](#3-点击按钮效果)
-- [4. 透明](#4-透明)
-- [5. CSS转换大小写](#5-css转换大小写)
-- [6. CSS轮廓(outline)](#6-css轮廓outline)
-- [7. Display与Visibility](#7-display与visibility)
-- [8. 伪元素](#8-伪元素)
-- [9. Animation](#9-animation)
-- [10. Background](#10-background)
-- [11. 学到的新属性](#11-学到的新属性)
-- [12. transfrom](#12-transfrom)
+- [3. 透明](#3-透明)
+- [4. CSS转换大小写](#4-css转换大小写)
+- [5. CSS轮廓(outline)](#5-css轮廓outline)
+- [6. Display与Visibility](#6-display与visibility)
+- [7. 伪元素](#7-伪元素)
+- [8. Animation](#8-animation)
+- [9. Background](#9-background)
+- [10. 学到的新属性](#10-学到的新属性)
+- [11. transfrom](#11-transfrom)
+- [12. 多行文本垂直居中](#12-多行文本垂直居中)
 
 <!-- /TOC -->
 
@@ -64,12 +64,7 @@
 ```
     在上面的例子中,通过JS 也改变不了 item 的颜色.
 
-# 3. 点击按钮效果
-
-    
-    
-
-# 4. 透明
+# 3. 透明
 
     在IE浏览器, 透明设置属性为 filter
 ```css
@@ -79,7 +74,7 @@
 }
 ```
 
-# 5. CSS转换大小写
+# 4. CSS转换大小写
 
 ```css
 .text2{
@@ -92,7 +87,7 @@
 }
 ```
 
-# 6. CSS轮廓(outline)
+# 5. CSS轮廓(outline)
 
     轮廓（outline）是绘制于元素周围的一条线，位于边框边缘的外围，可起到突出元素的作用.
     轮廓（outline）属性指定元素轮廓的样式、颜色和宽度.
@@ -101,7 +96,7 @@
     outline-style
     outline-width
 
-# 7. Display与Visibility
+# 6. Display与Visibility
 
     隐藏一个元素可以通过把display属性设置为"none"，或把visibility属性设置为"hidden".但是请注意，这两种方法会产生不同的
     结果.
@@ -109,7 +104,7 @@
     visibility:hidden可以隐藏某个元素，但隐藏的元素仍需占用与未隐藏之前一样的空间.也就是说，该元素虽然被隐藏了，但仍然会
     影响布局.
 
-# 8. 伪元素
+# 7. 伪元素
 
     CSS伪元素是用来添加一些选择器的特殊效果
 
@@ -150,7 +145,7 @@
     可用于添加一个小图片等.
 
 
-# 9. Animation
+# 8. Animation
 
     animation属性是一个简写属性,用于设置六个动画属性：
 
@@ -191,7 +186,7 @@
 }
 ```
 
-# 10. Background
+# 9. Background
 
     使用简写属性时,属性值的顺序为：
     background-color
@@ -200,7 +195,7 @@
     background-attachment   图片不随内容的滚动而滚动 默认是scroll,(会随着页面的内容滚动,fixed不随页面滚动).
     background-position
 
-# 11. 学到的新属性
+# 10. 学到的新属性
 
 
     animation-play-state:paused;
@@ -293,7 +288,6 @@
     }
 ```
 
-
     border-collapse:collapse;
     border-collapse 属性设置表格的边框是否被合并为一个单一的边框,还是像在标准的HTML中那样分开显示.
 
@@ -307,7 +301,7 @@
     word-wrap:break-word;    允许长的内容换行
     word-break:break-all;    允许在单词内换行
 
-# 12. transfrom
+# 11. transfrom
 
     Transform属性应用于元素的 2D或3D 转换,这个属性允许你将元素旋转 缩放 移动 倾斜等.
 
@@ -330,3 +324,26 @@
     skew() 倾斜的角度
         skewX(10deg)        只在X轴倾斜
         skewY(10deg)        只在Y轴倾斜
+
+# 12. 多行文本垂直居中
+
+    第一种方法：
+    父级设置 display:table-cell; 然后利用 表格属性 来设置文本垂直居中.
+
+```html
+<style>
+    div{
+        width:100px;
+        height:100px;
+        display:table-cell;
+        vertical-align:middle;
+        text-align:center;
+    }
+</style>
+<div>
+    <p>Hello</p>
+    <p>World</p>
+</div>
+```
+    上述方法虽然能设置 文本垂直居中,但是设置了display:table-cell;后 对margin 属性无反应.并且,不能设置
+    position:absolute float:left 等属性,因为此时 居中效果会失效

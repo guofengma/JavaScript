@@ -11,6 +11,7 @@
 - [8. 双飞翼布局](#8-双飞翼布局)
 - [9. min-width/max-width](#9-min-widthmax-width)
 - [10. rem/em](#10-remem)
+- [11. 媒体查询](#11-媒体查询)
 
 <!-- /TOC -->
 
@@ -227,3 +228,41 @@ nav{
 
     对于只需要适配少部分手机设备,且分辨率对页面影响不大的,使用px即可.
     对于需要适配各种移动设备,使用rem.例如只需要适配 iPhone 和iPad等分辨率差别比较大的设备.
+    
+
+# 11. 媒体查询
+
+    @media
+    CSS3 的多媒体查询继承了CSS2多媒体类型的所有思想：取代了查找设备的类型,CSS3根据设置自适应显示.媒体查询可用于检测
+    很多事情,例如：
+        viewport(视口)的宽度与高度
+        设备的宽度与高度
+        朝向(智能手机横屏,竖屏)
+        分辨率
+        
+
+    not:not是用来排除掉某些特性的设备的,比如@media no print(非打印设备)
+    only:用来定某种特别的媒体类型.
+    
+
+    CSS3多媒体类型
+    all             用于所有多媒体类型设备
+    print           用于打印机
+    screen          用于电脑屏幕,平板,智能手机
+    speech          用于屏幕阅读器
+    
+```css
+body{
+    background-color:purple;
+}
+@media screen and (max-width:800px){
+    body{
+        background-color:skyblue;
+    }
+}
+@media screen and (max-width:400px){
+    body{
+        background-color:seagreen;
+    }
+}
+```
