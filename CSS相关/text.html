@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文本居中方法</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            font-size:.625rem;
+        }
+        .container{
+            width: 300px;
+            height: 300px;
+            border:1px solid #000;
+            position:relative;
+        }
+        .container div{
+            width: 300px;
+            height: 62px;
+            text-align:center;
+            position:absolute;
+            top:0;
+            bottom:0;
+            margin:auto;
+        }
+        .text{
+            width: 100px;
+            height: 100px;
+            background-color:#f00;
+            position:relative;
+        }
+        .text p{
+            font-size:2.0rem;
+            font-weight:bold;
+            color:#fff;
+        }
+        .text div{
+            height:85.33px;
+            width:100%;
+            position:absolute;
+            top:0;
+            bottom:0;
+            margin:auto;
+            text-align:center;
+        }
+
+        .center{
+            width:300px;
+            height:300px;
+            border:1px solid #000;
+            position:relative;
+            text-align:center;
+        }
+        .center img{
+            width: 100px;
+            height:100px;
+            top:50%;
+            left:50%;
+            position:absolute;
+            margin-top:-50px;
+            margin-left:-50px;
+        }
+
+        .block-center{
+            width: 320px;
+            height: 320px;
+            border:1px solid #f00;
+            position:relative;
+        }
+        .block-center div{
+            width: 50px;
+            height: 50px;
+            background-color:#f00;
+            position:absolute;
+            left:0;
+            top:0;
+            bottom:0;
+            right:0;
+            margin:auto;
+        }
+        .ellipsis{
+            width: 200px;
+            display:-webkit-box;
+            -webkit-box-orient:vertical;
+            -webkit-line-clamp:3;
+            overflow:hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <p>Hello World!</p>
+            <p>Kyrie Irving!</p>
+            <p>Lebron James</p>
+        </div>
+    </div>
+
+    <div class="text">
+        <div>
+            <p>紧急</p>
+            <p>通知</p>
+        </div>
+    </div>
+
+    <div class="center">
+        <!-- <p>Hello World</p>
+        <p>Lebron James</p>
+        <div>Hello Kyrie</div> -->
+        <img src="http://www.everyonepiano.cn/pianomusic/009/0008839/0008839-small.jpg" alt="">
+    </div>
+
+    <div class="block-center">
+        <div></div>
+    </div>
+
+    
+    <div class="ellipsis">
+        中央政治局担负着把握中国特色社会主义事业航船方向、统筹协调党和国家重大决策部署、组织应对国内外重大矛盾风险的重要职责，是“关键少数”中的“关键少数”。
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+</body>
+</html>

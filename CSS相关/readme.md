@@ -11,7 +11,13 @@
 - [9. Background](#9-background)
 - [10. 学到的新属性](#10-学到的新属性)
 - [11. transfrom](#11-transfrom)
-- [12. 多行文本垂直居中](#12-多行文本垂直居中)
+- [12. 垂直居中的方法](#12-垂直居中的方法)
+    - [12.1. 单行文本垂直居中](#121-单行文本垂直居中)
+    - [12.2. 多行文本垂直居中](#122-多行文本垂直居中)
+    - [12.3. 块元素水平垂直居中](#123-块元素水平垂直居中)
+- [13. text-align:center 属性](#13-text-aligncenter-属性)
+- [14. 单行文本省略号](#14-单行文本省略号)
+- [15. 多行文本省略号](#15-多行文本省略号)
 
 <!-- /TOC -->
 
@@ -325,7 +331,15 @@
         skewX(10deg)        只在X轴倾斜
         skewY(10deg)        只在Y轴倾斜
 
-# 12. 多行文本垂直居中
+# 12. 垂直居中的方法
+
+    在页面中经常会用到 居中的效果,下面总结以下页面中的几种居中方式：
+    
+## 12.1. 单行文本垂直居中
+
+    利用line-height 文本垂直居中于 行高,设置line-height为 父级高度即可！
+
+## 12.2. 多行文本垂直居中
 
     第一种方法：
     父级设置 display:table-cell; 然后利用 表格属性 来设置文本垂直居中.
@@ -347,3 +361,132 @@
 ```
     上述方法虽然能设置 文本垂直居中,但是设置了display:table-cell;后 对margin 属性无反应.并且,不能设置
     position:absolute float:left 等属性,因为此时 居中效果会失效
+
+
+    第二种方法：
+    给需要垂直居中的文本一个父级div,其高度为文本的高度.然后设置该div 在其父级div 中的垂直居中.
+
+```html
+<style>
+    .container{
+        width: 300px;
+        height: 300px;
+        border:1px solid #000;
+        position:relative;
+    }
+    .container div{
+        width: 300px;
+        height: 62px;
+        text-align:center;
+        position:absolute;
+        top:0;
+        bottom:0;
+        margin:auto;
+    }
+</style>
+<div class="container">
+    <div>
+        <p>Hello World!</p>
+        <p>Kyrie Irving!</p>
+        <p>Lebron James</p>
+    </div>
+</div>
+```
+
+## 12.3. 块元素水平垂直居中
+
+```html
+<style>
+    .box{
+        width:234px;
+        height:234px;
+    }
+    .box{
+        width:50px;
+        height:50px;
+    }
+</style>
+<div class="box">
+    <div></div>
+</div>
+```
+    1. 确定父元素高宽 和 子元素高宽
+        设置子元素 margin-left:父元素宽度的一半 + 子元素宽度的一半
+        
+    2. 不确定父元素宽高 子元素宽高确定
+```css
+    .box{
+        position:relative;
+    }
+    div{
+        position:absolute;
+        left:50%;
+        top:50%;
+        margin-left:-25px;
+        margin-top:-25px;
+    }
+```
+
+    3. 父元素宽高确定,子元素宽高不确定
+```css
+    .box{
+        width: 320px;
+        height: 320px;
+        border:1px solid #f00;
+        position:relative;
+    }
+    div{
+        width: 50px;
+        height: 50px;
+        background-color:#f00;
+        position:absolute;
+        left:0;
+        top:0;
+        bottom:0;
+        right:0;
+        margin:auto;
+    }
+```
+
+# 13. text-align:center 属性
+
+    text-align:center; 属性 是设置文本的对齐方式,有 left center right 三个值可选.
+    
+    该属性设置在父级.使子元素在父级有不同的居中效果. 适用场景：
+
+```html
+<div class="center">
+    <span>Hello World</span>
+    <p>Lebron James</p>
+    <div>Hello Kyrie</div>
+</div>
+```
+    1. 如果文本被 <span> 等行内元素包裹,该属性有效
+    2. 如果文本被 块元素包裹,并且块元素没有设置宽高的情况下,该属性有效.
+    3. 如果文本被块元素包裹,且块元素设置了宽高,那么文本在设置了宽高的 元素里居中.而不是相对其父元素左右居中.
+    4. 如果设置了宽高的块元素 包裹的文本,将其设置为 display:inline-block,那么它包裹的文本相对 父元素左右居中.
+    这也是 Img 元素 设置 相对父级左右居中 可以利用 text-align:center 的方法.
+
+
+# 14. 单行文本省略号
+
+```css
+.text{
+    width: 200px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+```
+
+# 15. 多行文本省略号
+
+```css
+.text{
+    width: 200px;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:3;
+    overflow:hidden;
+}
+```
