@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Echarts</title>
+    <style>
+        #main{
+            width: 600px;
+            height: 400px;
+            border:1px solid #000;
+        }
+
+        #container{
+            width: 600px;
+            height: 400px;
+            border:1px solid #f00;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div id="main"></div>
+    <div id="container"></div>
+
+    <script src="./echarts.common.min.js"></script>
+    <script>
+        
+        // 绘制一个简单的图表,echarts.init初始化一个echarts实例并通过setOption方法生成一个简单的柱状图.
+        var myChart = echarts.init(document.getElementById("main"));
+
+        var option = {
+            title:{
+                text:'ECharts入门实例'
+            },
+            tooltip:{},
+            legend:{
+                data:['销量']
+            },
+            xAxis:{
+                data:['衣服','羊毛衫','雪纺衫','裤子','高跟鞋','袜子','夹克']
+            },
+            yAxis:{},
+            series:[{
+                name:'销量',
+                type:'bar',
+                data:[5,20,36,10,10,20]
+            }]
+        };
+
+        myChart.setOption(option);
+        
+    </script>
+</body>
+</html>
