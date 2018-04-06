@@ -231,3 +231,11 @@ mychart.setOption(option);
     top                 grid组件里容器上侧的距离    'top' 'middle' 'bottom'  或者 10 10% 具体的数值
     right               同上
     bottom              同上
+    backgroundColor     标题背景色,默认透明
+    borderColor         标题边框颜色
+    borderWidth         标题的边框线宽
+    borderRadius        圆角
+    shadowBlur          图形阴影的模糊大小
+    shadowColor         图形阴影的模糊颜色
+    shadowOffsetX       阴影水平方向上的偏移距离
+    shadowOffsetY       阴影垂直方向上的偏移距离
