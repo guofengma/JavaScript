@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Function</title>
+</head>
+<body>
+    
+    <script>
+        
+        function sum(num1,num2){
+            console.log(num1+num2);
+        }
+        sum(1,2);
+
+        var another = sum;
+        another(3,4);
+
+        sum = null;
+        another(2,3);
+            
+        function addSomeNumber(num){
+            console.log(num+10);
+        }
+        function addSomeNumber(num){
+            console.log(num+100);
+        }
+        addSomeNumber(100); // 200
+        
+        var a = function a(a){
+            console.log(a);
+        }
+        
+
+    </script>
+</body>
+</html>
