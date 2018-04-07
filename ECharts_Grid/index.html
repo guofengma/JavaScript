@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Grid</title>
+    <style>
+        #main{
+            width: 600px;
+            height: 400px;
+            border:1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="main"></div>
+
+    <script src="./echarts.min.js"></script>
+    <script>
+        
+        var myChart = echarts.init(document.getElementById("main"));
+
+        var option = {
+            xAxis:{
+                show:true,
+                position:'bottom',
+                type:'category',
+                gridIndex:0,
+                data:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+                name:'星期',
+                nameLocation:'end',
+                nameTextStyle:{
+                    color:'#f00',
+                    fontStyle:'normal',
+                    fontWeight:'lighter',
+                    fontFamily:'serif',
+                    fontSize:'18',
+                    align:'middle',
+                    verticalAlign:'bottom',
+                    lineHeight:'56',
+                    backgroundColor:'#000',
+                    borderColor:'#00f',
+                    borderWidth:1,
+                    borderRadius:2,
+                    padding:5,
+                    shadowBlur:5,
+                    shadowOffsetX:5,
+                    shadowOffsetY:5,
+                    shadowColor:'#f0f',
+                    width:100,
+                    textBorderColor:'#fff',
+                    textBorderWidth:2,
+                    textShadowColor:'#00f',
+                    textShadowOffsetX:1,
+                    textShadowOffsetY:1,
+                    textShadowBlur:1
+                }
+            },
+            yAxis:{
+                type:'value'
+            },
+            series:[{
+                data:[120,200,150,80,70,110,130],
+                type:'bar'
+            }]
+        }   
+        myChart.setOption(option);
+    
+    </script>
+</body>
+</html>
