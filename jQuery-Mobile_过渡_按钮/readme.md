@@ -15,7 +15,6 @@
         - [1.6.2. 只显示图标](#162-只显示图标)
         - [1.6.3. 移除圆圈](#163-移除圆圈)
         - [1.6.4. 黑色/白色按钮](#164-黑色白色按钮)
-    - [1.7. jQuery Mobile弹窗](#17-jquery-mobile弹窗)
 
 <!-- /TOC -->
 
@@ -115,7 +114,7 @@
     slideDown   从上到下滑动到下一页
 
 
-    注意:面的所有效果支持后退行为。例如,如果您想要页面从左向右滑动,而不是从右向左滑动,请使用带有 "reverse" 值的 data-direction 属性.
+    注意:上面的所有效果支持后退行为 例如,如果您想要页面从左向右滑动,而不是从右向左滑动,请使用带有 "reverse" 值的 data-direction 属性.
     在后退按钮上这是默认的.
 ```js
 <a href="#pagetwo" data-transition="slide" data-direction="reverse">切换</a>
@@ -126,9 +125,9 @@
     Mobile应用程序是建立在你想要显示的简单的点击事物上.
 
     在jQuery Mobile中,按钮可以通过三种方式创建:
-        <button>
-        <input>
-        使用带有 data-role="button"的<a>元素
+    1.  <button>
+    2.  <input>
+    3.  使用带有 data-role="button"的<a>元素
 
     在jQuery Mobile中,按钮会自动样式化,让它们在移动设备上更具吸引力和可用性.我们推荐您使用带有 data-role="button"
     的<a>元素在页面间进行链接,使用<input>或<button>元素进行表单提交.
@@ -219,8 +218,3 @@
 ```js
 <a class='ui-btn ui-icon-search ui-btn-icon-left ui-alt-icon'>黑色</a>
 ```
-
-## 1.7. jQuery Mobile弹窗
-
-    弹窗是一个非常流行的对话框,弹窗可以覆盖在页面上展示.
-    弹窗可用于显示一段文本,图片,地图或其他内容.
