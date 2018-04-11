@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery Mobile</title>
+    <link rel="stylesheet" href="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">    
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    
+    <div data-role="page" id="pageone">
+        <div data-role="header">
+            <h1>我是头部</h1>
+        </div>
+
+        <div data-role="content">
+            <p>我是身体</p>
+        </div>
+        
+        <div data-role="footer">
+            <h1>我是脚部</h1>
+        </div>
+        <a href="#pagetwo" data-transition="slide" data-role="button" class='ui-corner-all ui-mini ui-shadow'>下一页</a>
+        <button>按钮</button>
+        <input type="button" value="按钮">
+        <a href="#" data-role="button">按钮</a>
+        <a href="http://www.baidu.com" data-role="button">百度</a>
+
+        <a href="http://www.baidu.com" data-role="button" data-inline="true">百度</a>
+        <a href="http://www.qq.com" data-role="button" data-inline="true">腾讯</a>
+        <a href="http://www.jindong.com" data-role="button" data-inline="true">京东</a>
+        <a href="#" class="ui-btn ui-icon-home ui-btn-icon-notext ui-alt-icon"></a>
+
+    </div>
+
+    <div data-role="page" id="pagetwo">
+        <div data-role="header">
+            <h1>我是头部</h1>
+        </div>
+
+        <div data-role="content">
+            <p>我是身体</p>
+        </div>
+
+        <div data-role="footer">
+            <h1>我是底部</h1>
+        </div>
+        <!-- <a href="#pageone" data-transition="slide" data-direction="reverse">上一页</a> -->
+        <a href="#" data-role="button" data-rel="back">返回</a>
+
+        <div data-role="controlgroup" data-type='horizontal'>
+            <a href="" data-role="button">按钮1</a>
+            <a href="" data-role="button">按钮2</a>
+            <a href="" data-role="button">按钮3</a>
+        </div>
+
+        <a href="#" class="ui-btn ui-icon-search ui-btn-icon-left"  data-role="button" data-inline="true">Search</a>
+        <a href="#" class="ui-btn ui-icon-arrow-l ui-btn-icon-left" data-role="button" data-inline="true">Arrow</a>   
+        <a href="#" data-role="button" data-inline='true'>按钮1</a>    
+        <a href="#" data-role="button" data-inline='true'>按钮2</a>    
+
+        <a href="#" class="ui-btn ui-icon-search ui-btn-icon-left">左侧</a>
+        <a href="#" class="ui-btn ui-icon-search ui-btn-icon-bottom">下侧</a>
+
+        <a href="#" class="ui-btn ui-icon-search ui-btn-icon-notext"搜索></a>
+    </div>
+    
+    <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+</body>
+</html>
