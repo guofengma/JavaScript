@@ -2,6 +2,7 @@
 
 - [1. Node.js EventEmitter](#1-nodejs-eventemitter)
     - [1.1. EventEmitter类](#11-eventemitter类)
+    - [1.2. Event Loop](#12-event-loop)
 
 <!-- /TOC -->
 
@@ -41,3 +42,15 @@ setTimeout(function(){
     setTimeout在1s后向 event 对象发送事件 some_event, 此时会调用 some_event 的监听器.
 
     EventEmitter的每个事件由一个事件名和若干个参数组成,事件名是一个字符串,对于每个事件,EventEmitter支持若干个事件监听器.
+
+## 1.2. Event Loop
+    
+    为什么JavaScript是单线程?
+    JavaScript语言的一大特点就是单线程,也就是说,同一个时间只能做一件事.作为浏览器脚本语言,JavaScript的主要用途是
+    与用户互动,以及操作DOM.这决定了它只能是单线程,否则会带来很复杂的同步问题.比如，假定JavaScript同时有两个线程，一个线程
+    在某个DOM节点上添加内容，另一个线程删除了这个节点，这时浏览器应该以哪个线程为准？
+
+    所以,为了避免复杂性,从一诞生,JavaScript就是单线程.这已经成为了这门语言的核心特征.
+
+    I/O(input/output),即输入/输出端口.每个设备都会有一个专用的I/O地址,用来处理自己的输入输出信息.CPU与外部设备,存储器的连接
+    和数据交换都需要通过接口设备来实现.
