@@ -2,7 +2,9 @@
 
 - [1. Node.js EventEmitter](#1-nodejs-eventemitter)
     - [1.1. EventEmitter类](#11-eventemitter类)
-    - [1.2. Event Loop](#12-event-loop)
+    - [1.2. error事件](#12-error事件)
+    - [1.3. 继承EventEmitter](#13-继承eventemitter)
+    - [1.4. Event Loop](#14-event-loop)
 
 <!-- /TOC -->
 
@@ -14,7 +16,7 @@
 
 ## 1.1. EventEmitter类
 
-    events模块只提供了一个对象:events.EventEmitter.EventEmitter的核心就是事件触发与事件监听器功能的封装.
+    events模块只提供了一个对象:events.EventEmitter. EventEmitter的核心就是事件触发与事件监听器功能的封装.
 
     可以通过 require('events')来访问该模块.
 ```js
@@ -160,10 +162,42 @@ eventEmitter.emit('connection');
 eventListeners = require('events').EventEmitter.listenerCount(eventEmitter,'connection');
 console.log(eventListeners + " 个监听器监听连接事件。");
 
-console.log("程序执行完毕。");
+console.log("程序执行完毕.");
+
+// $ node main.js
+// 2 个监听器监听连接事件。
+// 监听器 listener1 执行。
+// 监听器 listener2 执行。
+// listener1 不再受监听。
+// 监听器 listener2 执行。
+// 1 个监听器监听连接事件。
+// 程序执行完毕。
 ```
 
-## 1.2. Event Loop
+## 1.2. error事件
+
+    EventEmitter定义了一个特殊的事件 error,它包含了错误的语义,我们在遇到 异常的时候通常会 触发 error 事件.
+    当 error 被触发时,EventEmitter规定如果没有 响应的 监听器, node.js 会把它当作异常,退出程序并输出错误信息.
+    我们一般要为会触发 error 事件的对象设置监听器,避免遇到错误后整个程序崩溃.
+```js
+var events = require('events');
+var emitter = new events.EventEmitter();
+emitter.emit('error');
+```
+
+## 1.3. 继承EventEmitter
+
+    大多数时候我们不会直接使用 EventEmitter,而是在对象中继承它.包括fs,net http在内的,只要是支持事件响应的核心模块都是EventEmitter
+    的子类.
+    为什么要这样做呢?原因有两点:
+    首先,具有某个实体功能的对象实现事件符合语义,事件的监听和发生应该是一个对象的方法.
+    其次 JavaScript 的对象机制是基于原型的,支持部分多重继承,继承EventEmitter不会打乱对象原有的继承关系.
+
+
+    eventEmitter.on()与eventEmitter.addListener()没有区别,且一个事件可以绑定多个回调函数.
+    若事件队列中出现一个未绑定事件则触发error事件,若未绑定error事件则程序抛出异常结束执行.
+
+## 1.4. Event Loop
     
     一:为什么JavaScript是单线程?
     
