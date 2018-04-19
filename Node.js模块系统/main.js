@@ -1,6 +1,6 @@
 
 var Hello = require('./hello');
-hello = new Hello();
+var hello = new Hello();
 
 hello.setName('Kyrie');
 hello.sayHello();
