@@ -74,3 +74,11 @@ fs.open(path,flags[,mode],callback);
         ax              类似'a',但是如果文件路径存在,则文件追加失败
         a+              以读取追加模式打开文件,如果文件不存在则创建
         ax+             类似'a+',但是如果文件路径存在,则文件读取追加失败
+
+```js
+var fs = require('fs');
+
+// 异步打开文件
+console.log('准备打开文件');
+
+```
