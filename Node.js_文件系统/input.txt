@@ -1,0 +1,2 @@
+百度官网地址:http://www.baidu.com
+文件读取实例

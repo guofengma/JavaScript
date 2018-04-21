@@ -34,3 +34,12 @@ process.argv.forEach(function(val,index,array){
 
 console.log(process.execPath);
 console.log(process.platform);
+
+console.log(process.arch);
+console.log(process.title);
+console.log(process.config);
+console.log(process.versions);
+console.log( '当前目录为:' + process.cwd() );
+console.log('当前版本为:' + process.version);
+console.log('当前程序所花的时间为:' + process.uptime());
+console.log(process.memoryUsage());
