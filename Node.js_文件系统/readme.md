@@ -3,6 +3,7 @@
 - [1. 文件系统](#1-文件系统)
     - [1.1. 异步和同步](#11-异步和同步)
     - [1.2. 打开文件](#12-打开文件)
+    - [1.3. 获取文件信息](#13-获取文件信息)
 
 <!-- /TOC -->
 
@@ -80,5 +81,26 @@ var fs = require('fs');
 
 // 异步打开文件
 console.log('准备打开文件');
+fs.open('input.txt','r+',function(err,fd){
+    if(err){
+        return console.log(err);
+    }
+    console.log("文件打开成功!");
+});
+```
 
+## 1.3. 获取文件信息
+
+    以下为通过异步模式获取文件信息的语法格式:
+    fs.stat(path,callback);
+
+        path - 文件路径
+        callback - 回调函数,带有两个参数如:(err,stats) stats是fs.Stats对象.
+
+    fs.stat(path)执行后,会将stats类的实例返回给其回调函数.可以通过stats类中的提供方法判断文件的相关属性.
+    
+```js
+fs.stat(__filename,function(err,stats){
+    console.log(stats.isFile());    // true
+})
 ```
