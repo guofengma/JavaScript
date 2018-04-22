@@ -1,2 +1,1 @@
-百度官网地址:http://www.baidu.com
-文件读取实例
+我是通过fs.writeFile写入文件的内容

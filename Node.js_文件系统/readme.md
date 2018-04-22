@@ -4,6 +4,8 @@
     - [1.1. 异步和同步](#11-异步和同步)
     - [1.2. 打开文件](#12-打开文件)
     - [1.3. 获取文件信息](#13-获取文件信息)
+    - [1.4. 写入文件](#14-写入文件)
+    - [1.5. 读取文件](#15-读取文件)
 
 <!-- /TOC -->
 
@@ -92,15 +94,160 @@ fs.open('input.txt','r+',function(err,fd){
 ## 1.3. 获取文件信息
 
     以下为通过异步模式获取文件信息的语法格式:
-    fs.stat(path,callback);
-
+```js
+fs.stat(path,callback);
+```
+    参数使用说明:
         path - 文件路径
-        callback - 回调函数,带有两个参数如:(err,stats) stats是fs.Stats对象.
+        callback - 回调函数,带有两个参数 (err,stats),stats是fs.Stats对象.
 
-    fs.stat(path)执行后,会将stats类的实例返回给其回调函数.可以通过stats类中的提供方法判断文件的相关属性.
-    
+    fs.stat(path)执行后,会将stats类的实例返回给其回调函数,可以通过stats类中的提供方法判断文件的相关属性.例如判断是否为
+    文件:
 ```js
 fs.stat(__filename,function(err,stats){
     console.log(stats.isFile());    // true
 })
 ```
+
+    stats类中的方法有:
+
+    stats.isFile()              如果是文件返回true,否则返回false.
+    stats.isDirectory()         如果是目录返回true,否则返回false.
+    stats.isBlockDevice()       如果是块设备返回true,否则返回false.
+    stats.isCharacterDevice()   如果是字符设备返回true,否则返回false.
+    stats.isSymbolicLink()      如果是软连接返回true,否则返回false.
+    stats.isFIFO()              如果是 FIFO,返回true,否则返回false.FIFO是UNIX中的一种特殊类型的命令管道.
+    stats.isSocket()            如果是Socket返回true,否则返回false.
+
+```js
+// 以下实例为获取文件信息
+
+var fs = require("fs");
+
+console.log("准备打开文件");
+
+fs.stat(__filename,function(err,stats){
+    if(err){
+        return console.error(err);
+    }
+    console.log(stats);
+    console.log("获取信息成功");
+
+
+    // 检测文件类型
+    console.log('是否为文件(isFile)?' + stats.isFile() );
+    console.log("是否为目录(isDirectory)?" + stats.isDirectory() );
+})
+// 执行结果
+$ node file.js
+
+// 准备打开文件！
+Stats {
+  dev: 816527736,
+  mode: 33206,
+  nlink: 1,
+  uid: 0,
+  gid: 0,
+  rdev: 0,
+  blksize: undefined,
+  ino: 12384898975518130,
+  size: 0,
+  blocks: undefined,
+  atimeMs: 1524326483580,
+  mtimeMs: 1524399339864.0144,
+  ctimeMs: 1524399339864.0144,
+  birthtimeMs: 1524326436626.6768,
+  atime: 2018-04-21T16:01:23.580Z,
+  mtime: 2018-04-22T12:15:39.864Z,
+  ctime: 2018-04-22T12:15:39.864Z,
+  birthtime: 2018-04-21T16:00:36.627Z 
+}
+// 读物文件信息成功
+// 是否为文件(isFile)?true
+// 是否为目录(isDirectory)? false
+```
+
+## 1.4. 写入文件
+
+    fs.writeFile(file,data[,options],callback)
+
+    writeFile直接打开文件默认是w模式,所以如果文件存在,该方法写入的内容会覆盖旧的文件内容.
+    参数使用说明如下:
+        file - 文件名或文件描述符
+        data - 要写入文件的数据,可以是String(字符串)或Buffer(流对象).
+        options - 该参数是一个对象,包含{encoding,mode,flag}.默认编码为Utf8,模式为0666,flag为'w'
+        callback - 回调函数,回调函数只包含错误信息参数(err),在写入失败时返回.
+
+```js
+// main.js文件, 此时有一个已创建的文件 index.txt,并且文件有内容
+var fs = require("fs");
+
+// 开始写入文件
+console.log("开始写入文件!");
+
+fs.writeFile('input.txt',"我是通过fs.writeFile写入的内容",function(err){
+    if(err){
+        return console.error(err);
+    }
+    console.log("数据写入成功!");
+
+    console.log("读取写入的数据!");
+    fs.readFile("input.txt",function(err,data){
+        if(err){
+            return console.error(err);
+        }
+        console.log("异步读取文件数据:" + data.toString());
+    })
+});
+
+$ node main.js
+// 准备写入文件
+// 数据写入成功！
+// 读取写入的数据！
+// 异步读取文件数据: 我是通 过fs.writeFile 写入文件的内容
+
+
+
+下面是第二个例子
+
+var fs = require("fs");
+// mian.js文件, 此时不存在mian.txt文件.
+
+console.log("开始写入文件数据");
+
+fs.writeFile("main.txt","我是通过fs.writeFile写入的内容",function(err){
+    if(err){
+        return console.error(err)
+    }
+    console.log("文件写入成功");
+
+    //读取文件内容
+    fs.readFile('mian.txt',function(err,data){
+        if(err){
+            console.error(err);
+        }
+        console.log("异步读取文件数据:" + data.toString() );
+    });
+})
+
+$ node main.js
+// 开始写入文件数据
+// 文件写入数据成功
+// 异步读取文件数据: 我是通过 fs.writeFile 写入的内容
+```
+    注意: 因为fs.writeFile是默认以w方式读取文件数据,当文件不存在时,会创建该文件.而当文件存在时,则写入的文件内容会覆盖
+    之前的文件内容.
+    
+## 1.5. 读取文件
+
+    以下为异步模式下读取文件的语法格式:
+    fs.read(fd,buffer,offset,length,position,callback)
+    该方法使用了文件描述符来读取文件.
+
+    参数:
+    fd - 通过fs.open()方法返回的文件描述符
+    buffer - 数据写入的缓冲区
+    offset - 缓冲区写入的写入偏移量
+    length - 要从文件中读取的字节数
+    position - 文件读取的起始未知,如果position的值为null,则会从当前文件指针的位置读取.
+    callback - 回调函数,有三个参数err,bytesRead,buffer,err为错误信息,bytesRead表示读取的字节数,buffer为缓冲区对象.
