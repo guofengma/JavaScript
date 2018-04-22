@@ -6,6 +6,9 @@
     - [1.3. 获取文件信息](#13-获取文件信息)
     - [1.4. 写入文件](#14-写入文件)
     - [1.5. 读取文件](#15-读取文件)
+    - [1.6. 关闭文件](#16-关闭文件)
+    - [1.7. 截取文件](#17-截取文件)
+    - [1.8. 删除文件](#18-删除文件)
 
 <!-- /TOC -->
 
@@ -251,3 +254,154 @@ $ node main.js
     length - 要从文件中读取的字节数
     position - 文件读取的起始未知,如果position的值为null,则会从当前文件指针的位置读取.
     callback - 回调函数,有三个参数err,bytesRead,buffer,err为错误信息,bytesRead表示读取的字节数,buffer为缓冲区对象.
+
+```js
+// 新建 input.txt文件
+// input.txt   内容为 百度官网:http://www.baidu.com
+
+
+var fs = require("fs");
+var buf = new Buffer(1024);
+
+console.log("准备打开已存在的文件!");
+
+fs.open("input.txt","r+",function(err,fd){
+    if(err){
+        return console.error(err);
+    }
+    console.log("文件打开成功!");
+
+    console.log("准备读取文件:");
+
+    fs.read(fd,buf,0,buf.length,0,function(err,bytes){
+        if(err){
+            console.error(err);
+        }
+        console.log(bytes + '字节被读取');
+
+        if(bytes > 0){
+            console.log( buf.slice(0,bytes).toString() );
+        }
+    })
+})
+
+$ node file.js
+// 准备打开已存在的文件!
+// 文件打开成功!
+// 准备读取文件:
+// 42 字节被读取
+// 百度官网地址：http://www.baidu.com
+```
+
+## 1.6. 关闭文件
+
+    以下为异步模式下关闭文件的语法格式:
+    fs.close(fd,callback)
+    该方法使用了文件描述符来读取文件.
+
+```js
+var fs = require("fs");
+var buf = new Buffer(1024);
+
+console.log("准备打开文件");
+
+fs.open("kyrie.txt","r+",function(err,fd){
+    if(err){
+        console.error(err);
+    }
+    console.log("文件打开成功!");
+    console.log("准备读取文件!");
+
+    fs.read(fd,buf,0,buf.length,0,function(err,bytes){
+        if(err){
+            console.log(err);
+        }
+
+        // 仅输出读取的字节
+        if(bytes > 0){
+            console.log(buf.slice(0,bytes).toString());
+        }
+
+        // 关闭文件
+        fs.close(fd,function(err){
+            if(err){
+                console.log(err);
+            }
+            console.log('文件关闭成功');
+        })
+    })
+})
+```
+
+## 1.7. 截取文件
+
+    以下为异步模式下截取文件的语法格式:
+    fs.ftruncate(fd,len,callback)
+
+        fd - 通过fs.open()方法返回的文件描述符
+        len - 文件内容截取的长度
+        callback - 回调函数,没有参数
+
+```js
+var fs = require("fs");
+var buf = new Buffer(1024);
+
+console.log("准备打开文件!");
+
+fs.open("input.txt","r+",function(err,fd){
+    if(err){
+        return console.error(err);
+    }
+    console.log("文件打开成功!");
+    console.log("截取了10字节后的文件内容.");
+
+
+    // 截取文件
+    fs.ftruncate(fd,10,function(err){
+        if(err){
+            console.log(err);
+        }
+        console.log("文件截取成功");
+        console.log("读取相同的文件");
+
+        fs.read(fd,buf,0,buf.length,0,function(err,bytes){
+            if(err){
+                console.log(err);
+            }
+
+            // 仅输出读取的字节
+            if(bytes > 0){
+                console.log(buf.slice(0,bytes).toString());
+            }
+
+            // 关闭文件
+            fs.close(fd,function(err){
+                if(err){
+                    console.log(err);
+                }
+                console.log("文件关闭成功!");
+            })
+        })
+    })
+})
+```
+
+## 1.8. 删除文件
+
+    fs.unlink(path,callback)
+
+    path - 文件路径
+    callback - 回调函数,没有参数
+
+```js
+var fs = require("fs");
+
+console.log("准备删除文件!");
+
+fs.unlink("input.txt",function(err){
+    if(err){
+        console.error(err);
+    }
+    console.log("文件删除成功!");
+})
+```
