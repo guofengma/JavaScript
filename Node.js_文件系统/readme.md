@@ -479,3 +479,53 @@ fs.rmdir("./style",function(err){
     异步的方法函数最后一个参数为回调函数,回调函数的第一个参数包含了错误信息(error).
 
     建议大家使用异步方法,比起同步,异步方法性能更高,速度更快,而且没有阻塞.
+
+
+    打开文件(异步):
+    fs.open(path,flags[,mode],callback)
+    
+
+    获取文件信息(异步)
+    fs.stat(path,callback(err,stats))
+        stats.isFile()      是否为文件
+        stats.isDirectory() 是否为目录
+
+    
+    写入文件(异步)
+    fs.writeFile(file,data[,options],callback)
+        file:文件名
+        data:要写入文件的数据
+        options:该参数是一个对象,包含{encoding,mode,flag} 默认编码为utf8 模式为0666 flag为'w'
+
+
+    读取文件(异步)
+    fs.read(fd,buffer,offset,length,opsition,callback)
+
+        fd - 通过fs.open()方法返回的文件描述符
+        buffer - 数据写入的缓冲区
+        offset - 缓冲区写入的写法偏移量
+        length - 要从文件中读取的字节数
+        position - 文件读取的起始位置
+
+
+    关闭文件(异步)
+    fs.close(fd,callback)
+    
+
+    截取文件(异步)
+    fs.ftruncate(fd,len,callback)
+    
+
+    删除文件
+    fs.unlink(path,callback)
+    
+
+    创建目录
+    fs.mkdir(path,[,mode],callback)
+
+
+    读取目录
+    fs.readdir(path,callback)
+
+    删除目录
+    fs.rmdir(path,callback)
