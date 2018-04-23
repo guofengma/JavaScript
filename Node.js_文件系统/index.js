@@ -29,13 +29,51 @@
 // });
 
 
-var fs = require('fs');
+// var fs = require('fs');
 
-console.log("准备打开文件");
+// console.log("准备打开文件");
 
-fs.open('input.txt','rs+',function(err,fd){
+// fs.open('input.txt','rs+',function(err,fd){
+//     if(err){
+//         console.error(err);
+//     }
+//     console.log("文件打开成功");
+// })
+
+
+var fs = require("fs");
+// console.log("创建目录/tmp/test/");
+
+// fs.mkdir("/tmp/test/",function(err){
+//     if(err){
+//         console.error(err);
+//     }
+//     console.log("目录创建成功!");
+// })
+
+// fs.mkdir("./style",function(err){
+//     if(err){
+//         console.error(err);
+//     }
+//     console.log("目录创建成功");
+// })
+
+
+console.log("读取文件目录");
+
+fs.readdir("./style",function(err,files){
+    if(err){
+        return console.error(err);
+    }
+    files.forEach(function(file){
+        console.log(file);
+    })
+})
+
+console.log("开始删除目录");
+fs.rmdir("./style",function(err){
     if(err){
         console.error(err);
     }
-    console.log("文件打开成功");
+    console.log("删除目录成功!");
 })

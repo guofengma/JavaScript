@@ -9,6 +9,10 @@
     - [1.6. 关闭文件](#16-关闭文件)
     - [1.7. 截取文件](#17-截取文件)
     - [1.8. 删除文件](#18-删除文件)
+    - [1.9. 创建目录](#19-创建目录)
+    - [1.10. 读取目录](#110-读取目录)
+    - [1.11. 删除目录](#111-删除目录)
+- [2. 总结](#2-总结)
 
 <!-- /TOC -->
 
@@ -405,3 +409,73 @@ fs.unlink("input.txt",function(err){
     console.log("文件删除成功!");
 })
 ```
+
+## 1.9. 创建目录
+
+    fs.mkdir(path[,mode],callback)
+
+        path - 文件路径
+        mode - 设置目录权限,默认为07777
+        callback - 回调函数,没有参数
+
+```js
+var fs = require("fs");
+console.log("创建目录/style");
+
+fs.mkdir("./style/",function(err){
+    if(err){
+        return console.error(err);
+    }
+    console.log("目录创建成功!");
+})
+```
+
+## 1.10. 读取目录
+
+    fs.readdir(path,callback)
+
+    path - 文件路径
+    callback - 回调函数,回调函数带有两个参数,err files err为错误信息,files为目录下的文件数组列表
+```js
+var fs = require("fs");
+
+fs.readdir("./style",function(err,files){
+    if(err){
+        console.error(err);
+    }
+    files.forEach(function(file){
+        console.log(file);
+    })
+})
+
+$ node main.js
+// style.css
+```
+
+## 1.11. 删除目录
+
+    fs.rmdir(path,callback)
+    path - 文件路径
+    callback - 回调函数
+
+```js
+var fs = require("fs");
+
+console.log("开始删除目录");
+fs.rmdir("./style",function(err){
+    if(err){
+        console.error(err);
+    }
+    console.log("删除目录成功!");
+})
+```
+
+# 2. 总结
+
+    Node.js提供一组类似UNIX(POSIX)标准的文件操作API,Node导入文件系统模块(fs)语法：
+    var fs = require("fs");
+
+    Node.js文件系统(fs模块)模块中的方法有异步和同步版本,例如读取文件内容的函数有异步的 fs.readFile() 和同步的 fs.readFileSync().
+    异步的方法函数最后一个参数为回调函数,回调函数的第一个参数包含了错误信息(error).
+
+    建议大家使用异步方法,比起同步,异步方法性能更高,速度更快,而且没有阻塞.
