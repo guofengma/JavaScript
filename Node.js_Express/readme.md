@@ -7,6 +7,7 @@
     - [1.4. 路由](#14-路由)
     - [1.5. 静态文件](#15-静态文件)
     - [1.6. GET方法](#16-get方法)
+    - [1.7. POST方法](#17-post方法)
 
 <!-- /TOC -->
 
@@ -188,3 +189,85 @@ $ node demo.js
 ## 1.6. GET方法
 
     以下实例演示了在表单中通过GET方法提交两个参数,我们可以使用 server.js文件内的process_get路由器来处理输入:
+
+```html
+<!-- index.html文件 -->
+<form action="http://127.0.0.1:8081/process_get" method="GET">
+First Name: <input type="text" name="first_name">  <br>
+ 
+Last Name: <input type="text" name="last_name">
+<input type="submit" value="Submit">
+</form>
+
+<script>
+    var express = require("express");
+    var app = express();
+
+    app.use(express.static("public"));
+    app.get("/index.html",function(req,res){
+        res.sendFile(__dirname + '/' + index.html);
+    })
+
+    app.get("/process_get",function(req,res){
+        // 输出JSON格式
+        var response = {
+            "first_name":req.query.first_name,
+            "last_name":req.query.last_name
+        };
+        console.log(response);
+        res.end(JSON.stringify(response));
+    })
+
+    var server = app.listen(8081,function(){
+        var host = server.address().address;
+        var port = server.address().port;
+
+        console.log("应用实例,访问地址为 http://%s:%s",host,port)
+    })
+</script>
+```
+
+## 1.7. POST方法
+
+    以下实例演示了在表单中通过POST方法提交两个参数,同样可以使用server.js文件内的process_post路由器来处理输入:
+
+```html
+<!-- index.html文件 -->
+<form action="http://127.0.0.1:8081/process_post" method="POST">
+    First Name: <input type="text" name="first_name"></br>
+    Last Name: <input type="text" name="last_name">
+    <input type="submit" value="submit">
+</form>
+
+<script>
+// server.js
+    var express = require("express");
+    var app = express();
+    var bodyParser = require("body-parser");
+
+    // 创建application/x-www-form-urlencoded编码解析
+    var urlencodedParser = bodyParser.urlencoded({extended:false})
+
+    app.use(express.static("public"));
+
+    app.get("/index.html",function(req,res){
+        res.sendFile(__dirname + '/' + 'index.html');
+    })
+
+    app.post("/process_post",urlencodedParser,function(req,res){
+        // 数据JSON格式
+        var response = {
+            "first_name":req.body.first_name,
+            "last_name":req.body.last_name
+        }
+        console.log(response);
+        res.end(JSON.stringify(response));
+    })
+
+    var server = app.listen(8081,function(){
+        var host = server.address().address
+        var port = server.address().port
+        console.log("应用实例访问地址为 http://%s:%s",host,port);
+    })
+</script>
+```
