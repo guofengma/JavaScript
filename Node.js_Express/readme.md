@@ -5,6 +5,8 @@
     - [1.2. 第一个Express框架实例](#12-第一个express框架实例)
     - [1.3. 请求和响应](#13-请求和响应)
     - [1.4. 路由](#14-路由)
+    - [1.5. 静态文件](#15-静态文件)
+    - [1.6. GET方法](#16-get方法)
 
 <!-- /TOC -->
 
@@ -112,3 +114,77 @@ app.get("/",function(request,response){
     路由决定了由谁(指定脚本)去响应客户端请求
     在HTTP请求中,我们可以通过路由提取出请求的URL以及GET/POST参数
     
+```js
+var express = require("express");
+var app = express();
+
+// 主页输出Hello World
+app.get("/",function(req,res){
+    console.log("主页Get请求");
+    res.send("Hello GET");
+})
+
+// POST请求
+app.post("/",function(req,res){
+    console.log("主页POST请求");
+    res.send("Hello Post");
+})
+
+// /del_user页面响应
+app.get('/del_user',function(req,res){
+    console.log("/del_user响应DELETE请求");
+    res.send("删除页面");
+})
+
+// /list_user页面Get请求
+app.get('/list-user',function(req,res){
+    console.log("/list_user GET请求");
+    res.send("用户列表页面");
+})
+
+// 对页面 abcd abxcd ab123cd 等响应GET请求
+app.get("/ab*cd",function(req,res){
+    console.log("/ab*cdGET请求");
+    res.send("正则匹配");
+})
+
+var server = app.listen(9999,function(){
+    var host = server.address().address;
+    var port = server.address().port;
+
+    console.log("应用实例访问地址为http://%s:%s",host,port);
+})
+```
+
+## 1.5. 静态文件
+
+    Express提供了内置的中间件 express.static来设置静态文件,如图片 CSS JavaScript等.可以使用 express.static中间件来设置静态文件
+    路径.如果你将图片 CSS JavaScript文件放在public目录下,可以这么写:
+    
+    app.use(express.static("public"));
+
+    可以在 public 目录下 创建一个 images 目录,再添加一张照片,以gd为例
+```js
+var express = require("express");
+var app = express();
+
+app.use(express.static("public"));
+
+app.get("/",function(req,res){
+    res.send("Hello World");
+})
+
+var server = app.listen(9000,function(){
+    var host = server.address().address
+    var port = server.address().port
+
+    console.log("应用实例,访问地址为 http://%s:%s",host,port);
+})
+
+$ node demo.js
+// 然后在浏览器中打开以下地址 http://0.0.0.9000/images/gd.jpg
+```
+
+## 1.6. GET方法
+
+    以下实例演示了在表单中通过GET方法提交两个参数,我们可以使用 server.js文件内的process_get路由器来处理输入:
