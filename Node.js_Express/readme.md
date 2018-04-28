@@ -10,6 +10,7 @@
     - [1.7. POST方法](#17-post方法)
     - [1.8. 表单编码类型](#18-表单编码类型)
     - [1.9. 文件上传](#19-文件上传)
+    - [1.10. Cookie管理](#110-cookie管理)
 
 <!-- /TOC -->
 
@@ -337,4 +338,22 @@ var server = app.listen(8081,function(){
     var port = server.address().port
     console.log("应用实例访问地址为http://%s:%s",host,port)
 })
+```
+
+## 1.10. Cookie管理
+
+    我们可以使用中间件向Node.js服务器发送cookie信息,以下实例输出了客户端发送的cookie信息:
+
+```js
+var express = require("express");
+var cookieParser = require("cookie-parser");
+var util = require('util');
+
+var app = express();
+app.use(cookieParser());
+
+app.get("/",function(req,res){
+    console.log("cookies:" + util.inspect(req.cookies));
+})
+app.listen(3000)
 ```
