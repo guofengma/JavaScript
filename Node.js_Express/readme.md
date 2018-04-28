@@ -8,6 +8,8 @@
     - [1.5. 静态文件](#15-静态文件)
     - [1.6. GET方法](#16-get方法)
     - [1.7. POST方法](#17-post方法)
+    - [1.8. 表单编码类型](#18-表单编码类型)
+    - [1.9. 文件上传](#19-文件上传)
 
 <!-- /TOC -->
 
@@ -270,4 +272,69 @@ Last Name: <input type="text" name="last_name">
         console.log("应用实例访问地址为 http://%s:%s",host,port);
     })
 </script>
+```
+
+## 1.8. 表单编码类型
+
+    在Form元素的语法中,EncType表明提交数据的格式,用Enctype属性指定将数据回发到服务器时浏览器使用的编码类型
+    application/x-www-form-urlencoded:窗体数据被编码为名称/值对.这是标准的编码格式. multipart/form-data:窗体数据被编码为
+    一条消息,页上的每个控件对应消息中的一个部分. text/plain:窗体数据以纯文本形式进行编码,其中不含任何控件或格式字符.
+
+
+    form的enctype属性为编码方式,常用有两种:application/x-www-form-urlencoded和 multipart/form-data,默认为application/x
+    -www-form-urlencoded.当action为get时,浏览器用 x-www-form-urlencoded的编码方法把form数据换成一个字符串
+    (name1=value1&name2=value2...),然后把这个字符串append到url的后面,用?分隔,加载这个新的url.
+
+    当action为Post的时候,浏览器把form数据封装到Http body中,然后发送到server.如果没有type=file的控件,用默认的
+    application/x-www-form-urlencoded就可以了.但是如果有type=file的话,就要用到 multipart/form-data了.浏览器会把整个表单
+    以控件为单位分隔,并为每个部分加上Content-Disposition(form-data或者file),Content-type(默认为text/plain),name(控件为name)
+    等信息,并加上分隔符(boundary).
+
+
+## 1.9. 文件上传
+
+    以下实例用于上传文件的表单,使用POST方法,表单enctype属性设置为multipart/form-data.
+
+```js
+var express = require("express");
+var app = express();
+var fs = require("fs");
+
+var bodyParser = require("body-parser");
+var multer = require("multer");
+
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(multer({dest:"/tmp/"}).array("image"));
+
+app.get("/index.html",function(req,res){
+    res.sendFile(__dirname + '/' + "index.html");
+})
+
+app.post("/file_upload",function(req,res){
+    console.log(req.files[0]);  // 上传的文件信息
+
+    var des_file = __dirname + '/' + req.files[0].originalname;
+
+    fs.readFile(req.files[0].path,function(err,data){
+        fs.writeFile(des_file,data,function(err){
+            if(err){
+                console.log(err);
+            }else{
+                response = {
+                    message:"File uploaded successfully",
+                    filename:req.files[0].originalname
+                };
+            }
+            console.log(response);
+            res.end(JSON.stringify(response));
+        })
+    })
+})
+
+var server = app.listen(8081,function(){
+    var host = server.address().address
+    var port = server.address().port
+    console.log("应用实例访问地址为http://%s:%s",host,port)
+})
 ```
