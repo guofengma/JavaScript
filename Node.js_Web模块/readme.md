@@ -3,6 +3,7 @@
 - [1. Node.js Web模块](#1-nodejs-web模块)
     - [1.1. 使用Node创建Web服务器](#11-使用node创建web服务器)
     - [1.2. 使用Node创建Web客户端](#12-使用node创建web客户端)
+    - [1.3. http.Server类](#13-httpserver类)
 
 <!-- /TOC -->
 
@@ -74,3 +75,30 @@ var callback = function(response){
 var req = http.request(options,callback);
 req.end();
 ```
+
+## 1.3. http.Server类
+
+    server.listen()
+    
+    开启HTTP服务器监听连接.方法与 net.server 的 server.listen() 相同.
+
+    server.listening
+    返回一个布尔值,表示服务器是否正在监听连接
+
+    server.maxHeadersCount
+    限制请求头的最大数量,默认为2000,如果设为0,则没有限制
+
+    http.ServerResponse类
+    该对象在HTTP服务器内部被创建,它作为第二个参数被传入 'request' 事件.
+
+    close事件
+    当底层连接在 response.end() 被调用或能够刷新之前被终止时触发.
+
+    response.end()
+    该方法会通知服务器,所有响应头和响应主体都已被发送,即服务器将其视为已完成.每次响应都必须调用 response.end()方法
+    
+    response.setHeader(name,value)
+    为一个隐士的响应头设置值,如果该响应头已存在,则值会被覆盖.如果要发送多个名称相同的响应头,则使用字符串数组.
+    response.setHeader() 设置的响应头会与 response.writeHead() 设置的响应头合并,并且response.writeHead()的优先
+
+    

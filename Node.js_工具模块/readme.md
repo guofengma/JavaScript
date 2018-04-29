@@ -8,6 +8,8 @@
     - [1.3. Node.js Net模块](#13-nodejs-net模块)
         - [1.3.1. 方法](#131-方法)
         - [1.3.2. net.Server](#132-netserver)
+        - [1.3.3. 事件](#133-事件)
+        - [1.3.4. 事件](#134-事件)
     - [1.4. Node.js DNS模块](#14-nodejs-dns模块)
     - [1.5. Node.js Domain模块](#15-nodejs-domain模块)
         - [1.5.1. 方法](#151-方法)
@@ -128,7 +130,42 @@ $ node mian.js
     server.unref()
     如果这是事件系统中唯一一个活动的服务器,调用unref将允许程序退出.
 
+### 1.3.3. 事件
 
+    listening
+    当服务器调用 server.listen 绑定后会触发
+
+    connection
+    当新连接创建后会被触发,socket是 net.Socket实例
+
+    close
+    服务器关闭时触发.注意,如果存在这个连接,这个事件不会触发直到所有的连接关闭.
+
+    error
+    发生错误时触发,close事件将被下列事件直接调用
+
+
+### 1.3.4. 事件
+
+    lookup
+    在解析域名后,但在连接前,触发这个事件,对UNIX socket不适用
+
+    connect
+    成功建立socket连接时触发
+
+    data
+    当接受到数据时触发
+
+    end
+    当socket另一端发送FIN包时,触发该事件
+
+    timeout
+    当socket空闲超时时触发,仅是表明socket已经空闲.用户必须手动关闭连接.
+
+    close
+    当socket完全关闭时触发,参数 had_error是布尔值,它表示是否因为传输错误导致socket关闭.
+    
+    
 ## 1.4. Node.js DNS模块
 
     Node.js DNS模块用于解析域名.
