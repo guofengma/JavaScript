@@ -1,0 +1,141 @@
+/* 顶部导航 */
+.header-top{
+    background-color:#25292e;
+    height:56px;
+    width: 100%;
+    min-width:1000px;
+    line-height:56px;
+}
+
+.wrap{
+    width: 1000px;
+    margin:0 auto;
+}
+.wrap .logo{
+    margin:9px 0;
+}
+.wrap .logo a{
+    display:block;
+    background-image:url("../images/icon.png");
+}
+.wrap .logo,.wrap .logo a{
+    width: 95px;
+    height: 38px;
+}
+
+.header-top .fl,.header-top .fr li{
+    float:left;
+}
+.header-top .nav{
+    float:right;
+}
+.header-top .login-reg-btn{
+    height:56px;
+    line-height:56px;
+}
+.header-top li a{
+    font-size:1.2rem;
+    color:#666;
+}
+.header-top .login-reg-btn a{
+    color:#ccc;
+}
+.header-top .login-reg-btn .loginBtn{
+    margin-right:8px;
+}
+.header-top .login-reg-btn .regBtn{
+    padding-right:15px;
+}
+.header-top ul li a{
+    letter-spacing:1.1px;
+}
+.header-top ul li.line{
+    width:1px;
+    height:8px;
+    margin-top:25px;
+    background:#525961;
+}
+.header-top .cart,.header-top .message,.header-top .add{
+    padding:0 15px;
+}
+.header-top .add{
+    padding:0 0 0 15px;
+}
+
+
+
+/* 二级导航开始 */
+#nav{
+    width: 1000px;
+    height:45px;
+    margin:0 auto;
+    border-bottom:4px solid #ededed;
+    background-color:#fff;
+}
+#nav .fl{
+    width: 734px;
+    height: 49px;
+    float:left;
+}
+#nav .fl li{
+    float:left;
+    width: 121px;
+    height:45px;
+    line-height:46px;
+    cursor:pointer;
+}
+#nav .fl .homeBtn a{
+    width: 118px;
+    text-align:left;
+}
+#nav ul li a{
+    display:block;
+    width: 121px;
+    height: 45px;
+    color:#333;
+    font-size:15px;
+    text-align:center;
+}
+#nav ul li:hover{
+    border-bottom:4px solid #333;
+}
+#nav .search{
+    float:right;
+    width: 260px;
+    height: 49px;
+    position:relative;
+    overflow:hidden;
+}
+#nav .search-box{
+    width: 260px;
+    border-bottom:4px solid #25292e;
+    text-align:left;
+    height:45px;
+    position:absolute;
+    left:260px;
+    font-family:'Hiragino Sans GB','microsoft yahei' ,'Arial';
+}
+.search input[type="text"]{
+    border:none;
+    outline:none;
+    width: 188px;
+    height: 30px;
+    padding-left:4px;
+    line-height:30px;
+    margin-top:9px;
+    float:left;
+}
+.search .icon-sousuo{
+    width: 33px;
+    height: 40px;
+    position: absolute;
+    right: 0;
+    color: #333;
+    top: 3px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 40px;
+}
+.search .icon-sousuo:hover{
+    opacity:0.6;
+}
