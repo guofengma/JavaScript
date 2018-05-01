@@ -139,3 +139,48 @@
 .search .icon-sousuo:hover{
     opacity:0.6;
 }
+
+/* 页面主体部分 */
+main{
+    width:1000px;
+    margin:0 auto;
+}
+
+/* 轮播图开始 */
+#actionContainer{
+    position:relative;
+    margin:23px 0 0 0;
+    overflow:hidden;
+}
+#actionContainer .carousel{
+    width: 6000px;
+    height:475px;
+    position:absolute;
+    left:-1000px;
+}
+.carousel ul li{
+    float:left;
+}
+#actionContainer .carousel li img,#actionContainer{
+    width: 1000px;
+    height: 475px;
+}
+
+/* 左右点击按钮 */
+#actionContainer .iconfont{
+    width: 130px;
+    height: 470px;
+    position:absolute;
+    color:#ccc;
+    opacity:0.5;
+    display:none;
+    font-size:50px;
+    line-height:470px;
+    text-align:center;
+}
+#actionContainer .left-Btn{
+    left:0;
+}
+#actionContainer .right-Btn{
+    right:0;
+}
