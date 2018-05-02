@@ -28,11 +28,13 @@ $(document).ready(function(){
 
     function imgMove(){
         idx++;
-        $("#actionContainer .carousel").animate({left:idx*-x},300,function(){
+        $("#actionContainer .carousel").animate({left:idx*-x},400,function(){
             if(idx >= 5 ){
                 idx = 1;
                 $("#actionContainer .carousel").css("left",-x);
             }
+            $("#actionBtn a").removeClass("active");
+            $("#actionBtn a").eq(idx-1).addClass("active");
         });
     }  
     var t = setInterval(imgMove,3000);
@@ -63,6 +65,8 @@ $(document).ready(function(){
                 idx = 1;
                 $("#actionContainer .carousel").css({"left":-x});
             }
+            $("#actionBtn a").removeClass("active");
+            $("#actionBtn a").eq(idx-1).addClass("active");
         })
         t = setInterval(imgMove,3000);
     })
@@ -76,8 +80,50 @@ $(document).ready(function(){
                 idx = 4
                 $("#actionContainer .carousel").css({"left":-idx*x});
             }
+            $("#actionBtn a").removeClass("active");
+            $("#actionBtn a").eq(idx-1).addClass("active");
         })
         t = setInterval(imgMove,3000);
     })
+
+    //  点击小按钮显示对应的图片
+    $("#actionBtn a").click(function(){
+        clearInterval(t);
+        // 把对应小按钮的序号赋值给 idx
+        idx = $(this).index();
+        $("#actionContainer .carousel").animate({"left":-x*(idx+1)},400);
+        $("#actionBtn a").removeClass("active");
+        $("#actionBtn a").eq(idx).addClass("active");
+    })
 })
     
+
+// 获取页面商品 18 件
+// API 前缀 http://h6.duchengjiu.top/shop/
+
+$.ajax({
+    url:"http://h6.duchengjiu.top/shop/api_goods.php",
+    type:"GET",
+    data:{
+        page:1,
+        pagesize:18,
+    },
+    "dataType":"json",
+    success:function(str){
+        for(let i = 0; i < str.data.length; i++){
+            console.log(str.data[i]);
+            $(".shopList").append(
+                `
+                <div class="item">
+                    <a href="#"><img src=""></a>
+                    <div class="shadow-box">
+                        <p class="price"><p>
+                        <p class="title"></p>
+                        <p class="content"></p>
+                    </div>
+                </div>
+                `
+            )
+        }
+    }
+})
