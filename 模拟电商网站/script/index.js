@@ -115,9 +115,9 @@ $.ajax({
             $(".shopList").append(
                 `
                 <div class="item">
-                    <a href="#"><img src=""></a>
+                    <a href="#"><img src="#" /></a>
                     <div class="shadow-box">
-                        <p class="price"><p>
+                        <p class="price"></p>
                         <p class="title"></p>
                         <p class="content"></p>
                     </div>
