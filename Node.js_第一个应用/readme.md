@@ -1,21 +1,40 @@
 <!-- TOC -->
 
-- [1. Node.js](#1-nodejs)
-    - [1.1. Node.js创建第一个应用](#11-nodejs创建第一个应用)
-    - [1.2. 创建Node.js应用](#12-创建nodejs应用)
-    - [1.3. NPM使用介绍](#13-npm使用介绍)
-        - [1.3.1. 使用package.json](#131-使用packagejson)
-        - [1.3.2. 卸载模块](#132-卸载模块)
-        - [1.3.3. 使用淘宝NPM镜像](#133-使用淘宝npm镜像)
+- [1. 浏览器历史概述](#1-浏览器历史概述)
+- [2. Node.js](#2-nodejs)
+    - [2.1. Node.js创建第一个应用](#21-nodejs创建第一个应用)
+    - [2.2. 创建Node.js应用](#22-创建nodejs应用)
+    - [2.3. NPM使用介绍](#23-npm使用介绍)
+        - [2.3.1. 区分命令行 和 交互模式](#231-区分命令行-和-交互模式)
+        - [2.3.2. 使用严格模式](#232-使用严格模式)
+        - [2.3.3. 使用package.json](#233-使用packagejson)
+        - [2.3.4. 卸载模块](#234-卸载模块)
+        - [2.3.5. 使用淘宝NPM镜像](#235-使用淘宝npm镜像)
 
 <!-- /TOC -->
 
-# 1. Node.js
+# 1. 浏览器历史概述
+
+    众所周知,在Netscape设计出JavaScript后的短短几个月,JavaScript事实上已经是前端开发的唯一标准.
+    后来,微软通过IE击败了Netscape后一统桌面,结果几年时间,浏览器毫无进步.（2001年推出的古老的IE 6到今天仍然有人在使用！）
+    没有竞争就没有发展.微软认为IE6浏览器已经非常完善,几乎没有可改进之处,然后解散了IE6开发团队！而Google却认为支持现代Web应用的
+    新一代浏览器才刚刚起步,尤其是浏览器负责运行JavaScript的引擎性能还可提升10倍.
+
+    随后,Google也开始创建自家的浏览器.他们也看中了WebKit内核,于是基于WebKit内核推出了Chrome浏览器.
+
+    Chrome浏览器是跨Windows和Mac平台的,并且,Google认为要运行现代Web应用,浏览器必须有一个性能非常强劲的JavaScript引擎,于是Google自己开发了一个高性能JavaScript引擎,名字叫V8,以BSD许可证开源.
+
+    现代浏览器大战让微软的IE浏览器远远地落后了,因为他们解散了最有经验、战斗力最强的浏览器团队！回过头再追赶却发现,支持HTML5的WebKit已经成为手机端的标准了,IE浏览器从此与主流移动端设备绝缘.
+    
+# 2. Node.js
 
     node.js是运行在服务端的JavaScript.
     node.js是一个基于Chrome JavaScript 运行时建立的一个平台.
     node.js是一个事件驱动I/O服务端JavaScript环境,基于Google的V8引擎,V8引擎执行JavaScript的速度非常快,性能非常好.
-
+    
+    安装Node.js
+    在windows上安装时务必选择全部组件,包括勾选 Add to Path.
+    
     node -v 
     查看node版本
 
@@ -37,8 +56,10 @@ $ node
 > console.log('Hello World!');
 Hello World!
 ```
+    退出交互模式 连按两次 Ctrl+C.
 
-## 1.1. Node.js创建第一个应用
+
+## 2.1. Node.js创建第一个应用
 
     使用node.js时,我们不仅仅在实现一个应用,同时还实现了整个HTTP服务器.事实上,我们的Web应用以及对应的web服务器
     基本上是一样的.
@@ -48,7 +69,7 @@ Hello World!
     2. 创建服务器:服务器可以监听客户端的请求,类似于Apache Nginx等HTTP服务器
     3. 接收请求与响应请求:服务器很容易创建,客户端可以使用浏览器或终端发送HTTP请求,服务器接收请求后返回响应数据.
 
-## 1.2. 创建Node.js应用
+## 2.2. 创建Node.js应用
 
     1. 引入 required 模块
     我们使用 require 指令来载入 http模块,并将实例化的 HTTP 赋值给变量 http,实例如下:
@@ -86,8 +107,14 @@ Server running at http://127.0.0.1:8888/
     一个数值参数,指定这个HTTP服务器监听的端口号.
 
 
-## 1.3. NPM使用介绍
+## 2.3. NPM使用介绍
 
+    npm是Node.js的包管理工具(package manager).
+    为什么需要一个包管理工具呢? 因为我们在Node.js上开发时,会用到很多别人写的JavaScript代码.如果我们要使用别人写的某个包,每次都
+    根据名称搜索以下官方网站,下载代码,解压,再使用非常繁琐.于是一个集中管理的工具应运而生！大家把自己开发的模块打包后放到npm官网上
+    如果要使用,直接通过npm安装就可以直接使用.不用管代码在哪,应该从哪下载!
+    
+    
     NPM是随同nodeJS一起安装的包管理工具,能解决NodeJS代码部署上的很多问题,常见的使用场景有以下几种:
     1. 允许用户从NPM服务器上下载别人编写的第三方包到本地使用
     2. 允许用户从NPM服务器下载并安装别人编写的命令程序到本地使用.
@@ -127,8 +154,22 @@ Server running at http://127.0.0.1:8888/
     如果要查看某个模块的版本号,可以使用如下命令:
         $ cnpm list grunt
 
+### 2.3.1. 区分命令行 和 交互模式
 
-### 1.3.1. 使用package.json
+    在Node交互式环境下,我们可以输入JavaScript代码并立即执行.
+    此外,在命令行模式运行.js文件和在Node交互环境下直接运行JavaScript代码有所不同.Node交互环境会把每一行JavaScript代码的结果自动打印出来.
+    但是,直接运行JavaScript文件却不会.
+
+### 2.3.2. 使用严格模式
+
+    如果在JavaScript文件开头写上 'use strict',那么Node在执行该JavaScript时将使用严格模式.但是,在服务器环境下,
+    如果有很多JavaScript文件,每个文件都写上 'use strict'很麻烦.我们可以给Node.js传递一个参数,让Node直接为所有
+    js文件开启严格模式
+
+    node --use_strict main.js
+    
+
+### 2.3.3. 使用package.json
 
     package.json位于模块的目录下,用于定义包的属性.可以在 node_modules/express/package.json内容
 
@@ -144,7 +185,7 @@ Server running at http://127.0.0.1:8888/
         main - main字段指定了程序的主入口文件,require('noduleName')就会加载这个文件
         keywords - 关键字
 
-### 1.3.2. 卸载模块
+### 2.3.4. 卸载模块
 
     可以使用以下命令来卸载Node.js模块.
         $ cnpm unstall express
@@ -175,7 +216,7 @@ Server running at http://127.0.0.1:8888/
         如果是新增了功能,但是向下兼容,需要更新Y位.
         如果有大变动,向下不兼容,需要更新X位.
 
-### 1.3.3. 使用淘宝NPM镜像
+### 2.3.5. 使用淘宝NPM镜像
 
     淘宝npm镜像是一个完整 npmjs.org 镜像.
         $ npm install -g cnpm --registry=https://registry.npm.taobao.org

@@ -113,17 +113,18 @@ $.ajax({
         for(let i = 0; i < str.data.length; i++){
             console.log(str.data[i]);
             $(".shopList").append(
-                `
-                <div class="item">
-                    <a href="#"><img src="#" /></a>
+                `<div class="item">
+                    <a href="#"><img src="${str.data[i].goods_thumb}" title="${str.data[i].goods_name}" alt="${str.data[i].goods_desc}"/></a>
                     <div class="shadow-box">
-                        <p class="price"></p>
-                        <p class="title"></p>
-                        <p class="content"></p>
+                        <p class="price">￥${str.data[i].price}</p>
+                        <p class="title">${str.data[i].goods_name}</p>
+                        <p class="desc">${str.data[i].goods_desc}</p>
                     </div>
-                </div>
-                `
+                </div>`    
             )
+            if( i % 3 == 0 ){
+                $(".shopList .item").eq(i).addClass("first");
+            }
         }
     }
 })

@@ -258,3 +258,59 @@ main{
     height:auto;
 }
 
+.shopList .item{
+    float:left;
+    margin:0 0 30px 26px;
+    position:relative;
+}
+.shopList .first{
+    margin-left:0;
+}
+.shopList .item,.shopList .item img{
+    width: 316px;
+    height:316px;
+}
+.shopList .shadow-box{
+    position:absolute;
+    width: 286px;
+    height: 286px;
+    padding:15px;
+    left:0;
+    top:0;
+    background-color:#484848;
+    display:none;
+}
+.shopList .item:hover .shadow-box{
+    display:block;
+}
+.shopList .item p{
+    text-align:center;
+    color:#fff;    
+    height:25px;
+    width:85%;
+    line-height:20px;
+    vertical-align:middle;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    margin:0 auto;
+}
+.shopList .item .title{
+    font-size:1.4rem;
+    font-weight:bold;
+    margin-top:80px;
+}
+.shopList .item .price{
+    font-size:2rem;
+    color:#0c6eba;
+    font-style:italic;
+    margin-top:4px;
+    width:97%;
+    text-align:left;
+}
+.shopList .item .desc{
+    font-weight:100;
+    margin-top:5px;
+    white-space:normal;
+    height:auto;
+}
