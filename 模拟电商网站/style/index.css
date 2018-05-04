@@ -253,11 +253,10 @@ main{
     font-size:1.2rem;
 }
 .shopList{
-    margin-top:20px;
+    margin:20px 0 10px 0;
     width: 1000px;
     height:auto;
 }
-
 .shopList .item{
     float:left;
     margin:0 0 30px 26px;
@@ -313,4 +312,22 @@ main{
     margin-top:5px;
     white-space:normal;
     height:auto;
+}
+
+.backtoTop{
+    width: 60px;
+    height:auto;
+    position:fixed;
+    right: 44px;
+    bottom: 10px;
+    cursor:pointer;
+    display:none;
+}
+.backtoTop a{
+    width: 59px;
+    height: 59px;
+    display:block;
+    background-position:-20px -813px;
+    position:relative;
+    background-image:url("../images/icon.png");
 }

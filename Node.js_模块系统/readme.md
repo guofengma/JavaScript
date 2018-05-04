@@ -2,10 +2,14 @@
 
 - [1. 模块系统](#1-模块系统)
     - [1.1. 创建模块](#11-创建模块)
-    - [1.2. 服务端的模块放在哪里](#12-服务端的模块放在哪里)
-        - [1.2.1. 从文件模块缓存中加载](#121-从文件模块缓存中加载)
-        - [1.2.2. 从原生模块加载](#122-从原生模块加载)
-        - [1.2.3. 从文件加载](#123-从文件加载)
+    - [1.2. CommonJS规范](#12-commonjs规范)
+    - [1.3. 不同模块中相同变量名互不冲突的原因?](#13-不同模块中相同变量名互不冲突的原因)
+    - [1.4. module.exports实现原理](#14-moduleexports实现原理)
+    - [1.5. module.exports VS export](#15-moduleexports-vs-export)
+    - [1.6. 服务端的模块放在哪里](#16-服务端的模块放在哪里)
+        - [1.6.1. 从文件模块缓存中加载](#161-从文件模块缓存中加载)
+        - [1.6.2. 从原生模块加载](#162-从原生模块加载)
+        - [1.6.3. 从文件加载](#163-从文件加载)
 - [2. Node.js 函数](#2-nodejs-函数)
     - [2.1. 匿名函数](#21-匿名函数)
     - [2.2. 函数传递是如何让HTTP服务器工作的](#22-函数传递是如何让http服务器工作的)
@@ -19,6 +23,11 @@
     模块是Node.js应用程序的基本组成部分,文件和模块是一一对应的.换言之,一个Node.js文件就是一个模块,这个文件可能是JavaScript
     代码,JSON或者编译过的C/C++扩展.
 
+    模块的最大好处是提高了代码的可维护性,其次,编写代码不必从零开始.当一个模块编写完毕,就可以被其他地方引用.我们在编写程序的时候也经常引用其他
+    模块,包括Node内置的模块和第三方的模块.
+    
+    使用模块还可以避免函数名和变量名冲突,相同名字的函数和变量完全可以分别存在不同的模块中,因此,我们在编写模块时,不必考虑名字会与其他模块冲突.
+    
 ## 1.1. 创建模块
 
     在Node.js中,创建一个模块非常简单,
@@ -46,7 +55,6 @@ module.exports = function(){
 }
 
 
-
 // hello.js
 function Hello(){
     var name;
@@ -62,8 +70,143 @@ module.exports = Hello;
     模块接口的唯一变化是使用 module.exports = Hello 代替了 exports.world = function(){}.在外部引用该模块时,
     其接口对象就是要输出的 Hello 对象本身,而不是原先的exports.
 
+```js
+// kyrie.js
+var a = 'Kyrie Irving';
+var b = 'Lebron James';
+function greet(){
+    console.log(a);
+    console.log(b);
+}
+module.exports = greet;
+// 把函数greet作为模块的输出暴露出去,这样其他模块就可以使用greet函数了
 
-## 1.2. 服务端的模块放在哪里
+
+// lbj.js
+var a = 'Hello Wordl';
+var greet = require("./kyrie.js");
+greet();
+console.log(a);
+
+$ node lbj.js
+// 输出 Kyrie Irving
+// Lebron James
+// Hello World
+```
+    在上面的例子中,引用的模块作为变量保存在greet变量中,其实变量就是在kyrie.js中我们用 module.exports = greet 输出的
+    greet函数,所以,lbj.js就成功地引用了kyrie.js模块中定义的greet()函数,下面就可以直接使用它.并且 两个模块里使用了
+    相同的全局变量,并没有产生冲突!;
+    
+## 1.2. CommonJS规范
+
+    这种模块加载机制被称为CommonJS规范,在这个规范下,每个.js文件都是一个模块,它们内部各自使用的变量名和函数名都互不冲突,
+    例如kyrie.js和 lbj.js 都申明了全局变量 a,但互不影响!
+    
+    一个模块想要对外暴露变量(函数也是变量),可以用module.exports = variable;一个模块要引用其他模块暴露的变量,用 var 
+    ref = require("module_name");就拿到了引用模块的变量.
+
+    module.exports = variable;
+    输出的变量可以时任意对象,函数,数组等等!
+    
+    
+## 1.3. 不同模块中相同变量名互不冲突的原因?
+
+    JavaScript语言本身并没有一种模块机制来保证不同模块可以使用相同的变量名.
+    那Node.js是如何实现这一点的?
+
+    其实要实现“模块”这个功能,并不需要语法层面的支持.Node.js也并不会增加任何JavaScript语法.实现“模块”功能的奥妙就在于
+    JavaScript是一种函数式编程语言,它支持闭包.如果我们把一段JavaScript代码用一个函数包装起来,这段代码的所有“全局”变量
+    就变成了函数内部的局部变量.
+    
+```js
+// hello.js
+var s = "Hello";
+var name = "World!";
+console.log(s + '' + name + '!');
+
+
+// Node.js加载了hello.js后,它可以把代码包装一下,变成这样执行:
+(function(){
+    var s = "Hello";
+    var name = "World!";
+    console.log(s + '' + name + '!');
+})();
+```
+    这样一来,原来的全局变量s现在变成了匿名函数内部的局部变量.如果Node.js继续加载其他模块,这些模块中定义的'全局'变量s也
+    互不干扰.
+    所以,Node利用JavaScript的函数式编程的特性,轻而易举地实现了模块的隔离!
+    
+## 1.4. module.exports实现原理
+
+    Node可以先准备一个对象module,
+```js
+var module = {
+    id:'hello',
+    exports:{}
+};
+
+var load = function(module){
+    // 读取hello.js代码
+    function greet(name){
+        console.log("Hello" + name + '!');
+    }
+    module.exports = greet;
+    // hello.js代码结束
+    return module.exports;
+};
+
+var exported = load(module);
+// 保存module
+save(module,exported);
+```
+    变量module是Node在加载js文件前准备的一个变量,并将其传入加载函数,我们在hello.js中可以直接使用变量Module原因就在于它实际上是函数的一个参数.
+
+    module.export = greet;
+    通过把参数 module 传递给load() 函数,hello.js就顺利地把一个变量传递给了Node执行环境,Node会把module变量保存到某个地方.
+    由于Node保存了所有导入的module,当我们用require()获取module时,Node找到对应的module,把这个module的exports变量返回,这样,另一个模块就顺利拿到了
+    模块的输出.
+
+## 1.5. module.exports VS export
+
+    在Node环境中,有两种方法可以在一个模块中输出变量:
+
+    方法一: 对module.exports赋值
+```js
+function hello(){
+    console.log("Hello,World");
+}
+function greet(name){
+    console.log("Hello" + name);
+}
+module.exports = {
+    hello:hello,
+    greet:greet
+}
+```
+
+    方法二:直接使用exports
+```js
+function hello(){
+    console.log("Hello World!");
+}
+function greet(){
+    console.log("Hello" + name + '!');
+}
+
+
+exports.hello = hello;
+exports.greet = greet;
+
+但是你不可以直接对 exports 赋值:
+exports = {
+    hello:hello,
+    greet:greet
+}
+```
+    最后,建议使用module.exports = xxx 的方式来输出模块变量.
+    
+
+## 1.6. 服务端的模块放在哪里
 
 ```js
 var http = require('http');
@@ -79,11 +222,11 @@ http.createServer(...);
     优先级也各自不同.
 
 
-### 1.2.1. 从文件模块缓存中加载
+### 1.6.1. 从文件模块缓存中加载
 
     尽管原生模块与文件模块的优先级不同,但是都会优先从文件模块的缓存中加载已经存在的模块.
 
-### 1.2.2. 从原生模块加载
+### 1.6.2. 从原生模块加载
 
     原生模块的优先级仅次于文件模块缓存的优先级.require方法在解析文件名之后,优先检查模块是否在原生模块列表中.以http
     模块为例,尽管在目录下存在一个 http/http.node/http.json文件,require('http')都不会从这些文件中加载,而是从原生
@@ -91,7 +234,7 @@ http.createServer(...);
 
     原生模块也有一个缓存区,同样也是优先从缓存区加载.如果缓存区没有被加载过,则调用原生模块的加载方式进行加载和执行.
 
-### 1.2.3. 从文件加载
+### 1.6.3. 从文件加载
 
     当文件模块缓存中不存在,而且不是原生模块的时候,Node.js会解析 require 方法传入的参数.
     
@@ -206,3 +349,4 @@ var router = require("./router");
 
 server.start(router.route);
 ```
+

@@ -111,7 +111,6 @@ $.ajax({
     "dataType":"json",
     success:function(str){
         for(let i = 0; i < str.data.length; i++){
-            console.log(str.data[i]);
             $(".shopList").append(
                 `<div class="item">
                     <a href="#"><img src="${str.data[i].goods_thumb}" title="${str.data[i].goods_name}" alt="${str.data[i].goods_desc}"/></a>
@@ -126,5 +125,46 @@ $.ajax({
                 $(".shopList .item").eq(i).addClass("first");
             }
         }
+        $(".item").click(function(){
+            var i = $(this).index();
+            window.location.href = "detail.html?goods_id=" + str.data[i].goods_id;
+        })
     }
+})
+
+// 搜索按钮实现页面跳转
+$(".icon-sousuo").click(function(){
+    var searchStr = $(".search input").val();
+    window.location.href = "detail.html?goods_id=" + searchStr;
+})
+
+// 页面导航功能
+$.ajax({
+    url:"http://h6.duchengjiu.top/shop/api_cat.php",
+    type:"GET",
+    success:function(str){
+        console.log(str);
+        for(i = 1; i < 5; i++){
+            $("#nav ul").append(`
+                <li><a href="list.html?cat_id?= + '${str.data[i].cat_id}' " target="_blank">${str.data[i].cat_name}</a></li>
+            `)
+        }
+    }
+})
+
+// 判断 回到顶部按钮出现的条件
+$(document).ready(function(){
+    $(document).mousewheel(function(event,delta){
+        if( $(document).scrollTop() >= 150){
+            $(".backtoTop").show();
+        }else{
+            $(".backtoTop").hide();
+        }
+    });
+    // 点击回到顶部
+    $(".backtoTop").click(function(){
+        $(document).animate({
+            scrollTop:0
+        },500);
+    })
 })

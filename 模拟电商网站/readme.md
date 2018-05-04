@@ -25,6 +25,8 @@
     筛选:    last()
             first()
             eq()
+            $(this).index()
+            
             
     animate参数
     animate(params,[speed],[easing],[fn])
@@ -45,3 +47,18 @@
     ES6模板字符串的使用 ``
 
     鼠标hover事件,显示内容和背景颜色,背景图片半透明显示.
+
+    通过ajax获取到数据,用jQuery添加到页面上, 在页面下方再原生添加DOM时,此时DOM的位置会出现在哪？
+
+
+    字符串的方法/数组的方法
+
+    location对象的几个方法
+    cursor 鼠标指针常用的几个
+
+    小图标和文字在同一排显示
+
+    用jQuery的方法实现 数量的 加减
+    scrollTop 控制
+    
+    
