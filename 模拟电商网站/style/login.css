@@ -1,14 +1,60 @@
-body{
-    background-color:#4F4A4A;
-}
-
 main{
-    width: 1000px;
-    margin:0 auto;
-    padding-top:110px;
+    width: 100%;
+    background-color:rgb(255,84,158);
 }
-table{
-    width:565px;
+.content{
+    width:1200px;
+    height:600px;
+    background-color:#ccc;
+    position:relative;
     margin:0 auto;
-    margin-top:40px;
+    background-image:url("../images/bg.jpg");
+}
+.login-box{
+    padding:25px 26px 20px;
+    background-color:#fff;
+    width: 298px;
+    height: 272px;
+    position:absolute;
+    right: 50px;
+    top: 100px;
+}
+.username,.password,.login-title{
+    font-weight:700;
+    color:#3c3c3c;
+    font-size:16px;    
+    margin-top:15px;  
+}
+.username{
+    margin:50px 0 15px 0;
+}
+.login-box input{
+    border-color:#cbcbcb;
+    color:#9b9b9b;
+    width: 238px;
+    font-size:14px;
+    height:36px;
+    line-height:36px;
+    border:1px solid #ddd;
+}
+.login-box .username input{
+    text-indent:1em;
+}
+.login{
+    width: 298px;
+    height: 36px;
+    text-align:center;
+    line-height:36px;
+    background-color:#ff0036;
+    margin-top:20px;
+    color:#fff;
+    border-radius:2px;
+    font-size:16px;
+    display:block;
+}
+.login-box .register{
+    color:#000;
+    float:right;
+    margin-top:10px;
+    font-size:12px;
 }

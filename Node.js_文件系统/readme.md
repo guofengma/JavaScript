@@ -2,22 +2,26 @@
 
 - [1. 文件系统](#1-文件系统)
     - [1.1. 异步和同步](#11-异步和同步)
-    - [1.2. 打开文件](#12-打开文件)
-    - [1.3. 获取文件信息](#13-获取文件信息)
-    - [1.4. 写入文件](#14-写入文件)
-    - [1.5. 读取文件](#15-读取文件)
-    - [1.6. 关闭文件](#16-关闭文件)
-    - [1.7. 截取文件](#17-截取文件)
-    - [1.8. 删除文件](#18-删除文件)
-    - [1.9. 创建目录](#19-创建目录)
-    - [1.10. 读取目录](#110-读取目录)
-    - [1.11. 删除目录](#111-删除目录)
+    - [1.2. 同步读文件](#12-同步读文件)
+    - [1.3. 打开文件](#13-打开文件)
+    - [1.4. 获取文件信息](#14-获取文件信息)
+    - [1.5. 写入文件](#15-写入文件)
+    - [1.6. 读取文件](#16-读取文件)
+    - [1.7. 关闭文件](#17-关闭文件)
+    - [1.8. 截取文件](#18-截取文件)
+    - [1.9. 删除文件](#19-删除文件)
+    - [1.10. 创建目录](#110-创建目录)
+    - [1.11. 读取目录](#111-读取目录)
+    - [1.12. 删除目录](#112-删除目录)
 - [2. 总结](#2-总结)
+    - [2.1. 同步还是异步](#21-同步还是异步)
 
 <!-- /TOC -->
 
 # 1. 文件系统
 
+    Node.js内置的fs模块就是文件系统模块,负责读写文件.和其他所有模块不同的是,fs模块同时提供了异步和同步的方法
+    
     Node.js提供一组类似 UNIX(POSIX)标准的文件操作API.Node导入文件系统模块(fs)语法如下所示:
     
 ```js
@@ -56,9 +60,83 @@ $ node index.js
 // 程序执行完毕
 // 异步读取：百度官网 http://www.baidu.com
 // 文件读取实例
-```
 
-## 1.2. 打开文件
+
+// simple.txt
+春日游,杏花吹满头.陌上谁家少年,足风流！
+
+
+// simple.js
+var fs = require("fs");
+fs.readFile("simple.txt","utf-8",function(err,data){
+    if(err){
+        console.log(err);
+    }else{
+        console.log(data);
+    }
+})
+// $ node simple.js
+// 正常输出  春日游,杏花吹满头.陌上谁家少年,足风流！
+```
+    simple.txt文件必须在当前目录下,且文件编码为utf-8.
+    异步读取时,传入的回调函数接收两个参数,当正常读取时,err参数为null,data参数为读取到的string,当读取发生错误时,err参数代表一个
+    错误对象,data为undefined. 这也是Node.js标准的回调函数:第一个参数代表错误信息,第二个参数代表结果.
+
+    由于err是否为null就是判断是否出错的标志,所以通常的判断逻辑是:
+    if(err){
+        // 出错
+    }else{
+        // 正常
+    }
+
+
+
+    如果要读取的文件是二进制的呢？
+```js
+fs.readFile("ai.jpg",function(err,data){
+    if(err){
+        console.log(err)
+    }else{
+        console.log(data);
+        console.log(data.length + 'bytes');
+    }
+})
+```
+    当读取二进制文件时,不传入文件编码时,回调函数的data参数将返回一个Buffer对象.在Node.js中,Buffer对象就是一个包含零个或任意个
+    字节的数组.
+    
+```js
+Buffer对象可以和String作转换:
+
+Buffer ---> String
+var text = data.toString("utf-8");
+console.log(text);
+
+String --> Buffer
+var buf = Buffer.from("text","utf-8");
+console.log(buf);    
+```    
+
+## 1.2. 同步读文件
+
+    除了标准的异步读取模式外,fs也提供相应的同步读取函数.同步读取的函数和异步函数相比,多了一个Sync后缀,并且不接受回调函数,函数直接
+    返回结果!
+    用fs模块同步读取一个文本文件的代码如下:
+```js
+var fs = require("fs");
+var data = fs.readFileSync("simple.txt","utf-8");
+console.log(data);
+```
+    如果同步读取文件发生错误,则需要使用 try ... catch 捕获该错误.
+    try{
+        var data = readFileSync("simple.txt","utf-8");
+        console.log(data);
+    }catch(err){
+        // 出错了
+    }
+
+    
+## 1.3. 打开文件
 
     以下为在异步模式下打开文件的语法格式:
 ```js
@@ -98,8 +176,9 @@ fs.open('input.txt','r+',function(err,fd){
 });
 ```
 
-## 1.3. 获取文件信息
+## 1.4. 获取文件信息
 
+    如果我们要获取文件大小,创建时间等信息,可以使用fs.stat(),它返回一个stat对象,能够告诉我们文件或目录的详细信息：
     以下为通过异步模式获取文件信息的语法格式:
 ```js
 fs.stat(path,callback);
@@ -113,6 +192,27 @@ fs.stat(path,callback);
 ```js
 fs.stat(__filename,function(err,stats){
     console.log(stats.isFile());    // true
+})
+
+
+var fs = require("fs");
+fs.stat("simple.txt",function(err,data){
+    if(err){
+        console.log(err);
+    }else{
+        // 是否是文件
+        console.log("isFile" + stat.isFile());
+        // 是否是目录
+        console.log("isDirectoty" + stat.isDirectory());
+        if(stat.isFile()){
+            // 文件大小
+            console.log("size" + stat.size);
+            // 创建时间
+            console.log("birth time" + stat.birthtime);
+            // 修改时间
+            console.log("modified time" + stat.mtime);
+        }
+    }
 })
 ```
 
@@ -174,7 +274,7 @@ Stats {
 // 是否为目录(isDirectory)? false
 ```
 
-## 1.4. 写入文件
+## 1.5. 写入文件
 
     fs.writeFile(file,data[,options],callback)
 
@@ -245,7 +345,32 @@ $ node main.js
     注意: 因为fs.writeFile是默认以w方式读取文件数据,当文件不存在时,会创建该文件.而当文件存在时,则写入的文件内容会覆盖
     之前的文件内容.
     
-## 1.5. 读取文件
+```js
+// simple.js
+var message = "秋风清,秋月明!落叶聚还散,寒鸦栖复惊！"
+fs.writeFile("simple.txt",message,function(err){
+    if(err){
+        console.log(err);
+    }else{
+        console.log('ok');
+    }
+})
+
+$ node simple.js
+// 会在simple.txt文件里写入message的内容.
+```
+    WriteFile()的参数依次为文件名,数据和回调函数.如果传入的数据是string,则默认按UTF-8编码写入文本文件,如果传入的参数是Buffer,
+    则写入的是二进制文件.回调函数由于只关心成功与否,因此只需要一个err参数.
+    
+    
+    和readFile()类似,writeFile()也有一个同步方法,叫writeFileSync();
+```js
+var fs = require("fs");
+var data = "Hello Node.js";
+fs.writeFileSync("output.txt",data);
+```
+
+## 1.6. 读取文件
 
     以下为异步模式下读取文件的语法格式:
     fs.read(fd,buffer,offset,length,position,callback)
@@ -297,7 +422,7 @@ $ node file.js
 // 百度官网地址：http://www.baidu.com
 ```
 
-## 1.6. 关闭文件
+## 1.7. 关闭文件
 
     以下为异步模式下关闭文件的语法格式:
     fs.close(fd,callback)
@@ -337,7 +462,7 @@ fs.open("kyrie.txt","r+",function(err,fd){
 })
 ```
 
-## 1.7. 截取文件
+## 1.8. 截取文件
 
     以下为异步模式下截取文件的语法格式:
     fs.ftruncate(fd,len,callback)
@@ -390,7 +515,7 @@ fs.open("input.txt","r+",function(err,fd){
 })
 ```
 
-## 1.8. 删除文件
+## 1.9. 删除文件
 
     fs.unlink(path,callback)
 
@@ -410,7 +535,7 @@ fs.unlink("input.txt",function(err){
 })
 ```
 
-## 1.9. 创建目录
+## 1.10. 创建目录
 
     fs.mkdir(path[,mode],callback)
 
@@ -430,7 +555,7 @@ fs.mkdir("./style/",function(err){
 })
 ```
 
-## 1.10. 读取目录
+## 1.11. 读取目录
 
     fs.readdir(path,callback)
 
@@ -452,7 +577,7 @@ $ node main.js
 // style.css
 ```
 
-## 1.11. 删除目录
+## 1.12. 删除目录
 
     fs.rmdir(path,callback)
     path - 文件路径
@@ -529,3 +654,12 @@ fs.rmdir("./style",function(err){
 
     删除目录
     fs.rmdir(path,callback)
+
+
+## 2.1. 同步还是异步
+
+    在fs模块中,提供同步方法是为了方便使用.由于Node环境执行的JavaScript代码是服务端代码,所以绝大部分需要在服务器运行期反复执行业务
+    逻辑的代码,必须使用异步代码,否则同步代码在执行期间,服务器将停止响应.因为JavaScript只有一个执行线程.
+
+    服务器启动时如果需要读取配置文件，或者结束时需要写入到状态文件时，可以使用同步代码，因为这些代码只在启动和结束时执行一次，不影响
+    服务器正常运行时的异步执行。
