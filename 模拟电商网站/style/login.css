@@ -37,7 +37,7 @@ main{
     line-height:36px;
     border:1px solid #ddd;
 }
-.login-box .username input{
+.login-box input{
     text-indent:1em;
 }
 .login{

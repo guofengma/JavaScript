@@ -5,11 +5,15 @@
     - [2.1. Node.js创建第一个应用](#21-nodejs创建第一个应用)
     - [2.2. 创建Node.js应用](#22-创建nodejs应用)
     - [2.3. NPM使用介绍](#23-npm使用介绍)
-        - [2.3.1. 区分命令行 和 交互模式](#231-区分命令行-和-交互模式)
-        - [2.3.2. 使用严格模式](#232-使用严格模式)
-        - [2.3.3. 使用package.json](#233-使用packagejson)
-        - [2.3.4. 卸载模块](#234-卸载模块)
-        - [2.3.5. 使用淘宝NPM镜像](#235-使用淘宝npm镜像)
+    - [2.4. npm run](#24-npm-run)
+        - [2.4.1. 通配符 *](#241-通配符-)
+        - [2.4.2. 执行顺序](#242-执行顺序)
+        - [2.4.3. 默认值](#243-默认值)
+        - [2.4.4. live-server模块](#244-live-server模块)
+        - [2.4.5. 区分命令行 和 交互模式](#245-区分命令行-和-交互模式)
+        - [2.4.6. 使用严格模式](#246-使用严格模式)
+        - [2.4.7. 使用package.json](#247-使用packagejson)
+        - [2.4.8. 使用淘宝NPM镜像](#248-使用淘宝npm镜像)
 
 <!-- /TOC -->
 
@@ -108,7 +112,7 @@ Server running at http://127.0.0.1:8888/
 
 
 ## 2.3. NPM使用介绍
-
+    
     npm是Node.js的包管理工具(package manager).
     为什么需要一个包管理工具呢? 因为我们在Node.js上开发时,会用到很多别人写的JavaScript代码.如果我们要使用别人写的某个包,每次都
     根据名称搜索以下官方网站,下载代码,解压,再使用非常繁琐.于是一个集中管理的工具应运而生！大家把自己开发的模块打包后放到npm官网上
@@ -154,39 +158,6 @@ Server running at http://127.0.0.1:8888/
     如果要查看某个模块的版本号,可以使用如下命令:
         $ cnpm list grunt
 
-### 2.3.1. 区分命令行 和 交互模式
-
-    在Node交互式环境下,我们可以输入JavaScript代码并立即执行.
-    此外,在命令行模式运行.js文件和在Node交互环境下直接运行JavaScript代码有所不同.Node交互环境会把每一行JavaScript代码的结果自动打印出来.
-    但是,直接运行JavaScript文件却不会.
-
-### 2.3.2. 使用严格模式
-
-    如果在JavaScript文件开头写上 'use strict',那么Node在执行该JavaScript时将使用严格模式.但是,在服务器环境下,
-    如果有很多JavaScript文件,每个文件都写上 'use strict'很麻烦.我们可以给Node.js传递一个参数,让Node直接为所有
-    js文件开启严格模式
-
-    node --use_strict main.js
-    
-
-### 2.3.3. 使用package.json
-
-    package.json位于模块的目录下,用于定义包的属性.可以在 node_modules/express/package.json内容
-
-    package.json属性说明:
-        name - 包名
-        version - 包的版本号
-        description - 包的描述
-        homepage - 包的官网url
-        author - 包的作者姓名
-        contributors - 包的其他贡献者姓名
-        dependencies - 依赖包列表.如果依赖包没有安装,npm会自动将依赖包安装在node_module目录下
-        repository - 包代码存放的地方的类型,可以是git或svn
-        main - main字段指定了程序的主入口文件,require('noduleName')就会加载这个文件
-        keywords - 关键字
-
-### 2.3.4. 卸载模块
-
     可以使用以下命令来卸载Node.js模块.
         $ cnpm unstall express
 
@@ -208,7 +179,7 @@ Server running at http://127.0.0.1:8888/
 
     发布模块:
         $ npm publish
-
+    
     版本号
     使用NPM下载和发布代码时都会接触到版本号.NPM使用语义版本号来管理代码,语义版本号分为X.Y.Z三位,分别代表主版本号,次版本号和补丁
     版本号.
@@ -217,7 +188,137 @@ Server running at http://127.0.0.1:8888/
         如果有大变动,向下不兼容,需要更新X位.
 
 
-### 2.3.5. 使用淘宝NPM镜像
+    设置环境变量:
+        $ npm set init-author-name
+        $ npm set init-author-email
+        $ npm set init-author-url
+        $ npm set init-license 'MIT'
+
+    上面命令等于为npm init设置了默认值,以后执行npm init的时候,package.json的作者姓名 邮件 主页 许可证字段就会
+    自动写入预设的值.
+    如果某个项目有不同的设置,可以针对该项目运行 npm config.
+    
+    查看包的信息
+        $ npm info
+        
+    安装不同版本
+        $ npm module@latest
+        或者直接加版本号
+    
+
+## 2.4. npm run
+
+    npm 不仅可以用于模块管理,还可以用于执行脚本.package.json文件有一个 scripts字段,可以用于指定脚本命令.供npm
+    直接调用.
+    
+    npm run 是 npm run-script的缩写,一般都使用前者,但是后者可以更好地反应这个命令的本质.
+    
+    npm 允许在 package.json文件里面,使用scripts字段定义脚本命令.
+```js
+{
+    "scripts":{
+        "build":"node build.js"
+    }
+}
+```
+    上面的代码是 package.json文件的一个片段,里面的scripts字段是一个对象.它的每一个属性,对应一段脚本.比如,build 命令对应的脚本是 node
+     build.js.
+
+    命令行下使用npm run 命令,就可以执行这段脚本.
+    
+        $ npm run build
+        等同于执行
+        $ node build.js
+        
+    这些定义在 package.json里面的脚本,就称为npm 脚本.它的优点很多
+        项目的相关脚本,可以集中在一个地方
+        不同项目的脚本命令,只要功能相同,就可以有同样的对外接口.用户不需要知道怎么测试你的项目,只要运行npm run test
+        即可
+        可以利用npm 提供的很多辅助功能.
+
+
+    查看当前项目的所有 npm 脚本命令,可以使用不带任何参数的npm run 命令.
+        
+
+### 2.4.1. 通配符 *
+
+    "lint":"jshint*.js"
+    "lint":"jshint**.js"
+
+    *表示任意文件名, **表示任意一层子目录.
+    
+
+    传参
+    向npm脚本传入参数,要使用 -- 标明.
+    
+
+### 2.4.2. 执行顺序
+
+    如果npm 脚本里面需要执行多个任务,那么需要明确它们的执行顺序.
+    
+    如果是并行执行(即同时的平行执行),可以使用 & 符号.
+        $ npm run script1.js & npm run script2.js
+    
+    如果是继发执行(即只有前一个任务成功,才执行下一个任务),可以使用&&符号.
+        $ npm run script1.js && npm run script2.js
+        
+    
+### 2.4.3. 默认值
+
+    一般来说,npm脚本由用户提供,但是,npm对两个脚本提供了默认值.也就是说,这两个脚本不用定义,就可以直接使用.
+```js
+"start":"node server.js",
+"install":"node-gyp rebuild"
+```
+    上面代码中，npm run start的默认值是node server.js，前提是项目根目录下有server.js这个脚本；npm run 
+    install的默认值是node-gyp rebuild，前提是项目根目录下有binding.gyp文件。
+
+### 2.4.4. live-server模块
+
+    live-server模块有三个功能.
+    启动一个HTTP服务器,展示指定目录的index.html文件,通过该文件加载各种网络资源,这是file://协议做不到的
+    添加自动刷新功能,只要指定目录之中,文件有任何变化,他就会刷新页面.
+    npm run server命令执行以后,自动打开浏览器.
+    
+    以前,上面三个功能需要三个模块来完成: http_server live-reload 和 opener,现在只要live-server一个模块就够了.
+
+    
+### 2.4.5. 区分命令行 和 交互模式
+
+    在Node交互式环境下,我们可以输入JavaScript代码并立即执行.
+    此外,在命令行模式运行.js文件和在Node交互环境下直接运行JavaScript代码有所不同.Node交互环境会把每一行JavaScript代码的结果自动打印出来.
+    但是,直接运行JavaScript文件却不会.
+
+### 2.4.6. 使用严格模式
+
+    如果在JavaScript文件开头写上 'use strict',那么Node在执行该JavaScript时将使用严格模式.但是,在服务器环境下,
+    如果有很多JavaScript文件,每个文件都写上 'use strict'很麻烦.我们可以给Node.js传递一个参数,让Node直接为所有
+    js文件开启严格模式
+
+    node --use_strict main.js
+    
+
+### 2.4.7. 使用package.json
+
+    package.json位于模块的目录下,用于定义包的属性.可以在 node_modules/express/package.json内容
+
+    package.json属性说明:
+        name - 包名
+        version - 包的版本号
+        description - 包的描述
+        homepage - 包的官网url
+        author - 包的作者姓名
+        contributors - 包的其他贡献者姓名
+        dependencies - 依赖包列表.如果依赖包没有安装,npm会自动将依赖包安装在node_module目录下
+        repository - 包代码存放的地方的类型,可以是git或svn
+        main - main字段指定了程序的主入口文件,require('noduleName')就会加载这个文件
+        keywords - 关键字
+
+
+### 2.4.8. 使用淘宝NPM镜像
 
     淘宝npm镜像是一个完整 npmjs.org 镜像.
         $ npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+
+    

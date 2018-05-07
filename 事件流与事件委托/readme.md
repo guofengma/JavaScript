@@ -96,12 +96,13 @@
 
     缺点：事件代理的常用应用仅限于上述需求,如果把所有事件都用事件代理,可能会出现事件误判.即本不该被触发的事件被绑定上
     了事件
+    
 
 ## 3.1. IE中关于事件的属性和方法
 
                    IE                      非IE
     事件作用目标    srcElement              target
     阻止事件冒泡    cancleBubble=true       stopPropagation
-    阻止默认事件    returnValue             preventDefault
+    阻止默认事件    returnValue=false       preventDefault
     事件对象        window.event            event
     DOM2级事件      attachEventListener     addEventListener

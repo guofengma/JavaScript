@@ -1,0 +1,15 @@
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "description": "<!-- TOC -->",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "build":"node build.js"
+  },
+  "author": "JayK <1129594783@qq.com>",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {}
+}
