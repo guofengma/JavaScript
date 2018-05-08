@@ -23,14 +23,34 @@
 <!-- /TOC -->
 
 # 1. Node.js全局对象
-
+    
+    
+    Node提供以下几个全局变量,它们是所有模块都可以调用的.
+    
     JavaScript中有一个特殊的对象,称为全局对象(Global Object),它及其所有属性都可以在程序的任何地方访问,即全局变量.
     在浏览器JavaScript中,通常window是全局对象,而在Node.js中的全局对象是global.所有全局变量都是 global 对象的属性.
     在Node.js我们可以直接访问到 global 的属性,而不需要在应用中包含它.
 
+    注意: 如果再浏览器中声明一个全局变量,实际上是声明了一个全局对象的属性,比如 var x = 1等同于设置 window.x = 1;但是node不是
+    这样,至少在模块中不是这样(REPL环境的行为与浏览器一致).在模块文件中,声明 var x = 1,该变量不是global对象的属性,global.x等于
+    undefined.这是因为模块的全局变量都是该模块私有的,其他模块无法获取到.
+```js
+// main.js文件
+var a = 1;
+console.log(global.a);
+
+$ node main.js
+// 输出 undefineds
+
+在 REPL 环境下
+> var a = 1;
+> console.log(global.a)
+> 1
+```
+    
 ## 1.1. 全局对象与全局变量
 
-    global最根本的作用是作为全局变量的宿主.按照ECMAScript的定义,满足以下条件的变量是全局变量:
+    > global: 最根本的作用是作为全局变量的宿主.按照ECMAScript的定义,满足以下条件的变量是全局变量:
         在最外层定义的变量
         全局对象的属性
         隐式定义的变量(未定义直接赋值的变量)
@@ -38,8 +58,24 @@
     当你定义一个全局变量时,这个变量同时也会成为全局对象的属性,反之亦然.需要注意的是,在Node.js中你不可能在最外层定义
     变量,因为所有用户代码都是属于当前模块的,而模块本身不是最外层上下文.
 
-    注意:永远使用 var 定义变量以避免引入全局变量,因为全局变量会污染命名空间,提高代码的耦合风险.
+    
+    > process: 该对象表示Node所处的当前进程,允许开发者与该进程互动.
+    > console: 指向Node内置的console模块,提供命令行环境中的标准输入,标准输出功能.
+    
+    Node还提供一些全局函数：
+    > setTimeout(): 用于在指定毫秒之后,运行回调函数.
+    > clearTimeout() : 用于终止一个setTimeout方法新建的定时器
+    > setInterval():    用于每隔一定毫秒调用回调函数.
+    > clearInterval():  终止一个用setInterval方法新建的定时器
+    > require():    用于加载模块
+    > Buffer()      用于操作二进制数据.
+    
+    
+    Node提供两个全局变量,都以两个下划线开头.
+    > __filename:指向当前运行的脚本文件名,它将输出文件所在位置的绝对路径,如果在模块中,返回的值是模块文件的路径.
+    > __dirname: 表示当前执行脚本所在的目录.
 
+    
 ## 1.2. __filename
 
     _filename表示当前正在执行的脚本的文件名,它将输出文件所在位置的绝对路径,且和命令行参数所指定的文件名不一定相同.
@@ -106,7 +142,6 @@ var time = setInterval(printHello,2000);
     6. console.time()
     7. console.assert()
     用于判断某个表达式或变量是否为真,接收两个参数,第一个参数是表达式,第二个参数是字符串.
-
 
 ## 1.8. process
 
@@ -213,7 +248,8 @@ $ node main.js
 
     14. arch
     当前CPU的架构 'arm' 'ia32' 或者 'x64'
-
+    CPU架构是CPU厂商给属于同一系列的CPU产品定的一个规范,主要目的是为了区分不同类型CPU的重要指示.
+    
     15. platform
     运行程序所在的平台系统 'darwin' 'linux' 'sunos' 或 'win32'
     
@@ -224,8 +260,28 @@ process.argv.forEach(function(val,index,array){
     console.log(index + ':' + val);
 });
 
+console.log(process.version);   // node:'8.9.3'
+console.log(process.versions);  
+// { http_parser: '2.7.0',
+//   node: '8.9.3',
+//   v8: '6.1.534.48',
+//   uv: '1.15.0',
+//   zlib: '1.2.11',
+//   ares: '1.10.1-DEV',
+//   modules: '57',
+//   nghttp2: '1.25.0',
+//   openssl: '1.0.2n',
+//   icu: '59.1',
+//   unicode: '9.0',
+//   cldr: '31.0.1',
+//   tz: '2017b' }
+
 console.log(process.execPath);
-console.log(process.platform);
+console.log(process.arch);  // x64
+console.log(process.platform);  // win32
+console.log(process.env);
+console.log('当前版本为:' + process.version);
+console.log(process.versions);
 ```
 
 ## 1.11. Process方法参考手册
@@ -241,12 +297,14 @@ console.log(process.platform);
         7. uptime() 返回Node已经运行的秒数.
         8. memoryUsage()    返回一个对象,描述了Node进程所用的内存状态,单位为字节.
         9. nextTick(callBack) 一旦当前事件循环结束,调用回调函数
+        10. kill(pid) 发送信号给进程,pid是进程id,并且signal是发送的信号的字符串描述.信号名是字符串,比如"SIGINT"
+        或 "SIGHUP".如果忽略,信号会是"SIGTERM".
 
 ```js
 console.log( '当前目录为:' + process.cwd() );
-console.log('当前版本为:' + process.version);
+process.chdir("./xxx"); //切换当前工作目录到 指定的目录
 console.log('当前程序所花的时间为:' + process.uptime());
-console.log(process.memoryUsage());
+console.log(process.memoryUsage()); // 当前Node进程所用的内存状态
 ```
 
 # 2. Node.js常用工具

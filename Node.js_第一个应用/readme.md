@@ -32,6 +32,13 @@
     
 # 2. Node.js
 
+    Node是JavaScript语言的服务器运行环境. 所谓'运行环境'有两层意思：首先,JavaScript语言通过Node在服务器上运行,在这个意义上,Node有点像
+    JavaScript虚拟机;其次,Node提供大量工具库,使得JavaScript语言与操作系统互动(比如读写文件,新建子进程),在这个意义上,Node又是JavaScript
+    的工具库.
+    
+    Node内部采用Google公司的V8引擎,作为JavaScript语言解释器,通过自行开发的libuv库,调用操作系统资源.
+    
+    
     node.js是运行在服务端的JavaScript.
     node.js是一个基于Chrome JavaScript 运行时建立的一个平台.
     node.js是一个事件驱动I/O服务端JavaScript环境,基于Google的V8引擎,V8引擎执行JavaScript的速度非常快,性能非常好.
@@ -51,9 +58,14 @@ console.log('Hello World');
 node main.js
 
 // 会在终端输出 Hello World
+
+// 使用 -e 参数,可以执行代码字符串
+$ node -e 'console.log("Hello World")'
+// 输出 Hello World
 ```
 
-    交互模式:
+    交互模式:REPL环境(Read-eval-print-loop,读取-求值-输出-循环),可以直接运行各种JavaScript命令.
+    
     打开终端,键入node进入命令交互模式,可以输入一条代码语句后立即执行并显示结果,例如:
 ```js
 $ node
