@@ -24,6 +24,9 @@
     注意:在 v6.0之前创建Buffer对象直接使用 new Buffer()构造函数来创建对象实例,但是Buffer对内存的权限操作相比很大,
     可以直接捕获一些敏感信息,所以在v6.0以后,官方文档里面建立使用Buffer.from()接口去创建Buffer对象.
 
+
+    Bbuffer对象是Node处理二进制数据的一个接口.它是Node原生提供的全局对象,可以直接使用,不需要require("buffer");
+
 ## 1.1. Buffer与字符编码
 
     Buffer实例一般用于表示编码字符的序列,比如UTF-8,USC2 Base64或十六进制编码的数据.通过使用显式的字符编码,就可以在Buffer实例与普通的JavaScript字符串之间进行互相转换.
@@ -43,6 +46,7 @@ console.log(buf.toString('base64'));
     base64 - Base64编码
     hex - 将每个字节编码位两个十六进制字符
 
+
 ## 1.2. 创建Buffer类
 
     Buffer提供了以下API来创建Buffer类:
@@ -50,7 +54,6 @@ console.log(buf.toString('base64'));
     Buffer.from(array):返回一个被array的值初始化的新的Buffer实例(传入的array的元素只能是数字,不然就会自动被0覆盖)
     Buffer.from(buffer):复制传入的Buffer实例的数据,并返回一个新的Buffer实例
     
-
 # 2. Node.js Stream(流)
 
     Stream是一个抽象接口,Node中有很多对象实现了这个接口.例如,对http服务器发起请求的request对象就是一个Stream,

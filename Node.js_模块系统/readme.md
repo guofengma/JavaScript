@@ -5,9 +5,10 @@
     - [1.2. 核心模块](#12-核心模块)
     - [1.3. 创建模块](#13-创建模块)
     - [1.4. CommonJS规范](#14-commonjs规范)
-    - [1.5. 不同模块中相同变量名互不冲突的原因?](#15-不同模块中相同变量名互不冲突的原因)
-    - [1.6. module.exports实现原理](#16-moduleexports实现原理)
-    - [1.7. module.exports VS export](#17-moduleexports-vs-export)
+    - [1.5. 异常处理](#15-异常处理)
+    - [1.6. 不同模块中相同变量名互不冲突的原因?](#16-不同模块中相同变量名互不冲突的原因)
+    - [1.7. module.exports实现原理](#17-moduleexports实现原理)
+    - [1.8. module.exports VS export](#18-moduleexports-vs-export)
 - [2. Node.js 函数](#2-nodejs-函数)
     - [2.1. 匿名函数](#21-匿名函数)
     - [2.2. 函数传递是如何让HTTP服务器工作的](#22-函数传递是如何让http服务器工作的)
@@ -93,7 +94,8 @@ var bar = require("bar");
 
     
 ## 1.3. 创建模块
-
+    
+    Node模块采用CommonJS规范,只要符合这个规范,就可以自定义模块.
     在Node.js中,创建一个模块非常简单,
 ```js
 // main.js文件
@@ -172,8 +174,40 @@ $ node lbj.js
     module.exports = variable;
     输出的变量可以时任意对象,函数,数组等等!
     
+
+    module变量是整个模块文件的顶层变量,它的exports属性就是模块向外输出的接口.如果直接输出一个函数,那么调用模块就是调用一个
+    函数.但是模块也可以输出一个对象.
+```js
+// foo.js
+var out = new Object();
+
+out.print = function(string){
+    console.log(string);
+}
+module.exports = out;
+
+// main.js
+var m = require("./foo");
+m.print("这是自定义模块");
+```
     
-## 1.5. 不同模块中相同变量名互不冲突的原因?
+## 1.5. 异常处理
+
+    Node是单线程运行环境,一旦抛出的异常没有被捕获,就会引起整个进程的崩溃.所以,Node的异常处理对于保证系统的稳定运行非常重要
+    一般来说,Node有三种方法,传播一个错误:
+        > 使用throw语句抛出一个错误对象,即抛出异常.
+        > 将错误对象传递给回调函数,由回调函数负责发出错误.
+        > 通过EventEmitter接口,发出一个error事件.
+
+    Node采用的方法,是将错误对象作为第一个参数,传入回调函数.这样就避免了捕获代码与发生错误的代码不在同一个时间段的问题.
+```js
+fs.readFile("./foo.txt",function(err,data){
+    if(err) throw err;
+    console.log(data);
+})
+```
+    
+## 1.6. 不同模块中相同变量名互不冲突的原因?
 
     JavaScript语言本身并没有一种模块机制来保证不同模块可以使用相同的变量名.
     那Node.js是如何实现这一点的?
@@ -200,7 +234,7 @@ console.log(s + '' + name + '!');
     互不干扰.
     所以,Node利用JavaScript的函数式编程的特性,轻而易举地实现了模块的隔离!
     
-## 1.6. module.exports实现原理
+## 1.7. module.exports实现原理
 
     Node可以先准备一个对象module,
 ```js
@@ -230,7 +264,7 @@ save(module,exported);
     由于Node保存了所有导入的module,当我们用require()获取module时,Node找到对应的module,把这个module的exports变量返回,这样,另一个模块就顺利拿到了
     模块的输出.
 
-## 1.7. module.exports VS export
+## 1.8. module.exports VS export
 
     在Node环境中,有两种方法可以在一个模块中输出变量:
 

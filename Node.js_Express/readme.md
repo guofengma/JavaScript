@@ -6,16 +6,19 @@
     - [1.3. 请求和响应](#13-请求和响应)
     - [1.4. 路由](#14-路由)
     - [1.5. 静态文件](#15-静态文件)
-    - [1.6. GET方法](#16-get方法)
-    - [1.7. POST方法](#17-post方法)
-    - [1.8. 表单编码类型](#18-表单编码类型)
-    - [1.9. 文件上传](#19-文件上传)
-    - [1.10. Cookie管理](#110-cookie管理)
+- [2. 运行原理](#2-运行原理)
+    - [2.1. GET方法](#21-get方法)
+    - [2.2. POST方法](#22-post方法)
+    - [2.3. 表单编码类型](#23-表单编码类型)
+    - [2.4. 文件上传](#24-文件上传)
+    - [2.5. Cookie管理](#25-cookie管理)
 
 <!-- /TOC -->
 
 # 1. Express
 
+    Express是目前最流行的基于Node.js的Web开发框架,可以快速地搭建一个完整功能的网站.
+    
     Express是一个简洁而灵活的node.js Web应用框架,提供了一系列强大特性帮组你创建各种Web应用,和丰富的HTTP工具.
     使用Express可以快速地搭建一个完整功能的网站.
 
@@ -160,6 +163,50 @@ var server = app.listen(9999,function(){
 })
 ```
 
+    启动脚本 index.js 的 app.get方法,用于指定不同的访问路径所对应的回调函数,叫做'路由'.
+```js
+var express = require("express");
+var app = express();
+
+app.get("/",function(req,res){
+    res.send("Hello World!");
+})
+
+app.get("/customer",function(req,res){
+    res.send("customer page");
+})
+
+app.get("/admin",function(req,res){
+    res.send("admin page");
+})
+
+app.listen(3000);
+```
+
+    这时,最好就把路由放到一个单独的文件中,比如新建一个 routes子目录.
+```js
+// routes/index.js
+
+module.exports = function(app){
+    app.get("/",function(req,res){
+        res.send("Hello World!");
+    });
+    app.get("/customer",function(req,res){
+        res.send("customer page");
+    });
+    app.get("/admin",function(req,res){
+        res.send("admin page");
+    })
+}
+
+// index.js
+然后,原来的index.js就变成下面这样.
+var express = require("express");
+var app = express();
+var routes = require("./routes")(app);
+app.listen(3000);
+```
+
 ## 1.5. 静态文件
 
     Express提供了内置的中间件 express.static来设置静态文件,如图片 CSS JavaScript等.可以使用 express.static中间件来设置静态文件
@@ -189,7 +236,40 @@ $ node demo.js
 // 然后在浏览器中打开以下地址 http://0.0.0.9000/images/gd.jpg
 ```
 
-## 1.6. GET方法
+# 2. 运行原理
+
+    Express框架建立在node.js内置的http模块上.http模块生成服务器的原始代码如下：
+```js
+var http = require("http");
+var app = http.createServer(function(request,response){
+    response.writeHead(200,{"Content-Type":"text/plain"});
+    response.end("Hello World");
+});
+
+app.listen(3000,"localhost");
+```
+
+    上面代码的关键是 http 模块的 createServer方法,表示生成一个HTTP服务器实例.该方法接受一个回调函数,该回调函数的参数,分
+    别为代表HTTP请求和HTTP回应的request对象和response对象。
+
+
+    Express框架的核心是对 http模块的再包装.上面的代码用Express改写如下：
+```js
+var express = require("express");
+var app = express();
+
+app.get("/",function(req,res){
+    res.send("Hello World!");
+})
+
+app.listen(3000);
+```
+    原来是用http.createServer方法新建一个app实例,现在则是用Express的构造方法,生成一个Epress实例。两者的回调函数都是相
+    同的。Express框架等于在http模块之上,加了一个中间层。
+
+
+
+## 2.1. GET方法
 
     以下实例演示了在表单中通过GET方法提交两个参数,我们可以使用 server.js文件内的process_get路由器来处理输入:
 
@@ -230,7 +310,7 @@ Last Name: <input type="text" name="last_name">
 </script>
 ```
 
-## 1.7. POST方法
+## 2.2. POST方法
 
     以下实例演示了在表单中通过POST方法提交两个参数,同样可以使用server.js文件内的process_post路由器来处理输入:
 
@@ -275,7 +355,7 @@ Last Name: <input type="text" name="last_name">
 </script>
 ```
 
-## 1.8. 表单编码类型
+## 2.3. 表单编码类型
 
     在Form元素的语法中,EncType表明提交数据的格式,用Enctype属性指定将数据回发到服务器时浏览器使用的编码类型
     application/x-www-form-urlencoded:窗体数据被编码为名称/值对.这是标准的编码格式. multipart/form-data:窗体数据被编码为
@@ -292,7 +372,7 @@ Last Name: <input type="text" name="last_name">
     等信息,并加上分隔符(boundary).
 
 
-## 1.9. 文件上传
+## 2.4. 文件上传
 
     以下实例用于上传文件的表单,使用POST方法,表单enctype属性设置为multipart/form-data.
 
@@ -340,7 +420,7 @@ var server = app.listen(8081,function(){
 })
 ```
 
-## 1.10. Cookie管理
+## 2.5. Cookie管理
 
     我们可以使用中间件向Node.js服务器发送cookie信息,以下实例输出了客户端发送的cookie信息:
 
