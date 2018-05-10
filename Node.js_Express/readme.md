@@ -7,11 +7,17 @@
     - [1.4. 路由](#14-路由)
     - [1.5. 静态文件](#15-静态文件)
 - [2. 运行原理](#2-运行原理)
-    - [2.1. GET方法](#21-get方法)
-    - [2.2. POST方法](#22-post方法)
-    - [2.3. 表单编码类型](#23-表单编码类型)
-    - [2.4. 文件上传](#24-文件上传)
-    - [2.5. Cookie管理](#25-cookie管理)
+    - [2.1. 中间件](#21-中间件)
+    - [2.2. use方法](#22-use方法)
+    - [2.3. Content-Type](#23-content-type)
+- [3. Express的方法](#3-express的方法)
+    - [3.1. response对象](#31-response对象)
+    - [3.2. request对象](#32-request对象)
+    - [3.3. GET方法](#33-get方法)
+    - [3.4. POST方法](#34-post方法)
+    - [3.5. 表单编码类型](#35-表单编码类型)
+    - [3.6. 文件上传](#36-文件上传)
+    - [3.7. Cookie管理](#37-cookie管理)
 
 <!-- /TOC -->
 
@@ -74,47 +80,6 @@ app.get("/",function(request,response){
     // 
 })
 ```
-    Request对象 - request对象表示HTTP请求,包含了请求查询字符串,参数,内容,HTTP头部等属性.
-
-        req.app : 当callback为外部文件时,用req.app访问express的实例
-        req.baseUrl : 获取路由当前安装的URL路径
-        req.body/req.cookies : 获得[请求主体]/Cookies
-        req.fresh/req.state :判断请求是否还[新鲜]
-        req.hostname/req.ip :获取主机名和ip地址
-        req.originalUrl : 获取原始请求Url
-        req.params : 获取路由的parameters
-        req.path : 获取请求路径
-        req.protocol : 获取协议类型
-        req.query : 获取URL的查询参数串
-        req.route : 获取当前匹配的路由
-        req.subdomains : 获取子域名
-        req.accepts() 检查可接受的请求的文档类型
-        req.acceptsCharsets/req.acceptsEncodings/req.acceptsLanguages:返回指定字符集的第一个可接受字符编码
-        req.get() 获取指定的HTTP请求头
-        req.is() 判断请求头Content-Type的MIME类型
-
-
-    Response对象 - response对象表示HTTP响应,即在接受到请求时向客户端发送的HTTP响应数据.常见属性有:
-
-        res.app : 同req.app一样
-        res.append() : 追加指定HTTP头
-        res.set()  在res.append()后将重置之前设置的头
-        res.cookie(name,value) 设置Cookie
-        option: domain/expires/httpOnly/maxAge/path/secure/signed
-        res.clearCookie() 清除Cookie
-        res.download() 传送指定路径的文件
-        res.get()   返回指定的HTTP头
-        res.json() 传送JSON响应
-        res.jsonp() 传送JSONP响应
-        res.location() 只设置响应的Location HTTP头,不设置状态码或者close.response
-        res.redirect() 设置响应的Location HTTP头,并且设置状态码302
-        res.render(view) 渲染一个view,同时向callback传递渲染后的字符串,如果在渲染过程中有错误发成next(err)将会被自动调用.
-        callback将会被传入一个可能发生的错误以及渲染后的页面,这样就不会自动输出了.
-        res.send() 传送HTTP响应
-        res.sendFile(): 传送指定路径的文件
-        res.set() 设置HTTP头,传入Object可以一次设置多个头
-        res.status() 设置 HTTP状态码
-        res.type() 设置Content--Tyoe的MIME类型
 
 ## 1.4. 路由
 
@@ -266,10 +231,158 @@ app.listen(3000);
 ```
     原来是用http.createServer方法新建一个app实例,现在则是用Express的构造方法,生成一个Epress实例。两者的回调函数都是相
     同的。Express框架等于在http模块之上,加了一个中间层。
+    
+## 2.1. 中间件
 
+    中间件(middleware)就是处理HTTP请求的函数,它最大的特点就是,一个中间件处理完,再传递给下一个中间件.APP实例在运行过程中,
+    会调用一系列的中间件.
+    
+    每个中间件可以从APP实例,接受三个参数,依次为request对象(代表HTTP请求),response对象(代表 HTTP回应),next回调函数(下一
+    个中间件).每个中间件都可以对HTTP请求(request对象)进行加工,并且决定是否调用next方法,将request对象再传给下一个中间件.
 
+## 2.2. use方法
 
-## 2.1. GET方法
+    use是express注册中间件的方法,它返回一个函数.
+```js
+var express = require("express");
+var http = require("http");
+var app = express();
+
+app.use(function(request,response,next){
+    console.log("In comes a " + request.method + 'to' + request.url);
+    next();
+});
+
+app.use(function(request,response){
+    response.writeHead(200,{"Content-Type":"text/plain"});
+    response.end("Hello World!");
+});
+http.createServer(app).listen(1337);
+```
+    use方法内部可以对访问路径进行判断,据此就能实现简单的路由,根据不同的请求地址,返回不同的网页内容.
+```js
+var express = require("express");
+var http = require("http");
+var app = express();
+
+app.use(function(request,response,next){
+    if(request.url == "/"){
+        response.writeHead(200,{"Content-Type":"text/plain"});
+        response.end("Welcome to the homepage!");
+    }else{
+        next();
+    }
+})
+app.use(function(request,response,next){
+    if(request,url == "/about"){
+        response.writeHead(200,{"Content-Type":"text/plain"});
+    }else{
+        next();
+    }
+})
+
+app.use(function(request,response){
+    response.writeHead(404,{"Content-Type":"text/plain"});
+    response.end("404 error");
+})
+
+http.createServer(app).listen(1337);
+```
+    除了在回调函数内部判断请求的网址,use方法也允许将请求网址写在第一个参数.这代表,只有请求路径匹配这个参数,后面的中间件才会
+    生效.
+```js
+app.use("/path",someMiddleware);
+```
+
+## 2.3. Content-Type
+
+    Content-Type,从名字上可以理解为内容类型.专业叫'媒体类型'.即MediaType,也叫MIME类型.主要是用来指明报文主体部分内容属于
+    何种类型.比如html json 或xml等等.
+    但是content-type一般只存在于Post方法中,因为Get方法是不含'body'的.它的请求参数都会被编码到url后面,所以在Get方法中加
+    content-type是无用的.
+    
+    常见的类型包括以下几种:
+        text/html                           HTML格式
+        text/plain                          纯文本格式
+        image/gif                           gif图片格式
+        image/png                           png图片格式
+        application/xml                     xml数据格式
+        application/json                    json数据格式
+        application/x-www-form-urlencoded   表单提交中默认的encType
+    
+# 3. Express的方法    
+
+    all方法和HTTP动词方法
+```js
+app.get("/",function(request,response){
+    response.end("welcome to the home!");
+})
+app.get("/about",function(request,response){
+    response.end("welcome to the about page");
+})
+```
+    除了get方法以外,Express还提供post put delete方法,即HTTP动词都是Express的方法.
+
+    请求路径,除了绝对匹配以外,Express允许模式匹配.
+```js
+app.get("/helo/:who",function(req,res){
+    res.end("Hello," + req.params.who + '.');
+})
+```
+
+## 3.1. response对象
+
+    response对象表示HTTP响应,即在接收到请求时向客户端发送的HTTP响应数据,常见方法有:
+    
+    1. response.redirect方法
+    response.redirect方法允许网址的重定向.
+```js
+response.redirect("/hello/anime");
+response.redirect("http://www.example.com");
+response.redirect(301,"http://www.example.com");
+```
+
+    2. response.sendFile方法
+    传送指定路径的文件 - 会自动根据文件的extension设定Content-Type.
+```js
+response.sendFile("/path/to/anime.mp4");
+```
+
+    3. response.render方法
+    response.render方法用于渲染网页模板
+```js
+app.get("/",function(resquest,response){
+    response.render("index",{message:"Hello World!"});
+})
+```
+    上面代码使用render方法,将message变量传入index模板,渲染HTML网页.
+    
+    4. res.status(): 设置HTTP状态码
+
+    5. res.type()   设置Content-Type的MIME类型.
+    
+    res.end()和res.send()区别:
+    如果服务端有数据返回到客户端,这时必须用res.send(),如果服务器端没有数据返回到客户端,那么就可以用res.end()
+
+    
+## 3.2. request对象
+
+    1. request.ip
+    request.ip属性用于获得HTTP请求的IP地址.
+
+    2. request.files
+    request.files用于获取上传的文件
+    
+    3. req.body/req.cookies:获得[请求主体]/Cookies
+    
+    4. req.path 获取请求路径
+    
+    5. req.route    获取当前匹配的路由
+
+    5. req.query    获取URL的查询参数串
+
+    
+## 3.3. GET方法
 
     以下实例演示了在表单中通过GET方法提交两个参数,我们可以使用 server.js文件内的process_get路由器来处理输入:
 
@@ -310,7 +423,7 @@ Last Name: <input type="text" name="last_name">
 </script>
 ```
 
-## 2.2. POST方法
+## 3.4. POST方法
 
     以下实例演示了在表单中通过POST方法提交两个参数,同样可以使用server.js文件内的process_post路由器来处理输入:
 
@@ -355,7 +468,7 @@ Last Name: <input type="text" name="last_name">
 </script>
 ```
 
-## 2.3. 表单编码类型
+## 3.5. 表单编码类型
 
     在Form元素的语法中,EncType表明提交数据的格式,用Enctype属性指定将数据回发到服务器时浏览器使用的编码类型
     application/x-www-form-urlencoded:窗体数据被编码为名称/值对.这是标准的编码格式. multipart/form-data:窗体数据被编码为
@@ -372,7 +485,7 @@ Last Name: <input type="text" name="last_name">
     等信息,并加上分隔符(boundary).
 
 
-## 2.4. 文件上传
+## 3.6. 文件上传
 
     以下实例用于上传文件的表单,使用POST方法,表单enctype属性设置为multipart/form-data.
 
@@ -420,7 +533,7 @@ var server = app.listen(8081,function(){
 })
 ```
 
-## 2.5. Cookie管理
+## 3.7. Cookie管理
 
     我们可以使用中间件向Node.js服务器发送cookie信息,以下实例输出了客户端发送的cookie信息:
 
