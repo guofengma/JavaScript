@@ -4,15 +4,16 @@
     - [1.1. 异步和同步](#11-异步和同步)
     - [1.2. 同步读文件](#12-同步读文件)
     - [1.3. 打开文件](#13-打开文件)
-    - [1.4. 获取文件信息](#14-获取文件信息)
-    - [1.5. 写入文件](#15-写入文件)
-    - [1.6. 读取文件](#16-读取文件)
-    - [1.7. 关闭文件](#17-关闭文件)
-    - [1.8. 截取文件](#18-截取文件)
-    - [1.9. 删除文件](#19-删除文件)
-    - [1.10. 创建目录](#110-创建目录)
-    - [1.11. 读取目录](#111-读取目录)
-    - [1.12. 删除目录](#112-删除目录)
+    - [1.4. mkdir() writeFile() readFile()](#14-mkdir-writefile-readfile)
+    - [1.5. 获取文件信息](#15-获取文件信息)
+    - [1.6. 写入文件](#16-写入文件)
+    - [1.7. 读取文件](#17-读取文件)
+    - [1.8. 关闭文件](#18-关闭文件)
+    - [1.9. 截取文件](#19-截取文件)
+    - [1.10. 删除文件](#110-删除文件)
+    - [1.11. 创建目录](#111-创建目录)
+    - [1.12. 读取目录](#112-读取目录)
+    - [1.13. 删除目录](#113-删除目录)
 - [2. 总结](#2-总结)
     - [2.1. 同步还是异步](#21-同步还是异步)
 
@@ -20,8 +21,12 @@
 
 # 1. 文件系统
 
-    Node.js内置的fs模块就是文件系统模块,负责读写文件.和其他所有模块不同的是,fs模块同时提供了异步和同步的方法
+    fs是filesystem的缩写,该模块提供本地文件的读取能力,基本上是POSIX文件操作命令的简单包装.
     
+    POSIX表示可移植操作系统接口,POSIX标准定义了操作系统应该为应用程序提供的接口标准.是IEEE为要在各种UNIX操作系统上运行的软件而定义
+    的一系列API标准的总称.
+    
+    Node.js内置的fs模块就是文件系统模块,负责读写文件.和其他所有模块不同的是,fs模块同时提供了异步和同步的方法
     Node.js提供一组类似 UNIX(POSIX)标准的文件操作API.Node导入文件系统模块(fs)语法如下所示:
     
 ```js
@@ -176,7 +181,47 @@ fs.open('input.txt','r+',function(err,fd){
 });
 ```
 
-## 1.4. 获取文件信息
+## 1.4. mkdir() writeFile() readFile()
+
+    mkdir方法用于新建目录
+```js
+var fs = require("fs");
+fs.mkdir("./helloDir",0777,function(err){
+    if(err) throw err;
+})
+```
+
+    writeFile方法用于写入文件
+```js
+var fs = require('fs');
+
+fs.writeFile('./helloDir/message.txt', 'Hello Node', function (err) {
+  if (err) throw err;
+  console.log('文件写入成功');
+});
+```
+
+    readFile方法用于读取文件内容
+```js
+var fs = require("fs");
+fs.readFile("./helloDir/message.txt","UTF-8",function(err,data){
+    if(err) throw err;
+    console.log(data);
+})
+```
+    第一个参数是文件名,第二个参数是文件编码.第三个参数是回调函数.
+
+    readFile方法是异步操作,所以必须小心,不要同时发起多个readFile请求.
+```js
+for(var i = 1; i <= 1000; i++){
+    fs.readFile("./" + i + '.txt',function(){
+        
+    })
+}
+    // 上面同时发起1000个readFile异步请求,很快会耗尽系统资源.
+```
+
+## 1.5. 获取文件信息
 
     如果我们要获取文件大小,创建时间等信息,可以使用fs.stat(),它返回一个stat对象,能够告诉我们文件或目录的详细信息：
     以下为通过异步模式获取文件信息的语法格式:
@@ -274,7 +319,7 @@ Stats {
 // 是否为目录(isDirectory)? false
 ```
 
-## 1.5. 写入文件
+## 1.6. 写入文件
 
     fs.writeFile(file,data[,options],callback)
 
@@ -370,7 +415,7 @@ var data = "Hello Node.js";
 fs.writeFileSync("output.txt",data);
 ```
 
-## 1.6. 读取文件
+## 1.7. 读取文件
 
     以下为异步模式下读取文件的语法格式:
     fs.read(fd,buffer,offset,length,position,callback)
@@ -422,7 +467,7 @@ $ node file.js
 // 百度官网地址：http://www.baidu.com
 ```
 
-## 1.7. 关闭文件
+## 1.8. 关闭文件
 
     以下为异步模式下关闭文件的语法格式:
     fs.close(fd,callback)
@@ -462,7 +507,7 @@ fs.open("kyrie.txt","r+",function(err,fd){
 })
 ```
 
-## 1.8. 截取文件
+## 1.9. 截取文件
 
     以下为异步模式下截取文件的语法格式:
     fs.ftruncate(fd,len,callback)
@@ -515,7 +560,7 @@ fs.open("input.txt","r+",function(err,fd){
 })
 ```
 
-## 1.9. 删除文件
+## 1.10. 删除文件
 
     fs.unlink(path,callback)
 
@@ -535,7 +580,7 @@ fs.unlink("input.txt",function(err){
 })
 ```
 
-## 1.10. 创建目录
+## 1.11. 创建目录
 
     fs.mkdir(path[,mode],callback)
 
@@ -555,7 +600,7 @@ fs.mkdir("./style/",function(err){
 })
 ```
 
-## 1.11. 读取目录
+## 1.12. 读取目录
 
     fs.readdir(path,callback)
 
@@ -577,7 +622,7 @@ $ node main.js
 // style.css
 ```
 
-## 1.12. 删除目录
+## 1.13. 删除目录
 
     fs.rmdir(path,callback)
     path - 文件路径
