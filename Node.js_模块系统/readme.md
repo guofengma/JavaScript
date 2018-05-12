@@ -7,14 +7,20 @@
     - [1.4. CommonJS规范](#14-commonjs规范)
     - [1.5. 异常处理](#15-异常处理)
     - [1.6. 不同模块中相同变量名互不冲突的原因?](#16-不同模块中相同变量名互不冲突的原因)
-    - [1.7. module.exports实现原理](#17-moduleexports实现原理)
-    - [1.8. module.exports VS export](#18-moduleexports-vs-export)
-- [2. Node.js 函数](#2-nodejs-函数)
-    - [2.1. 匿名函数](#21-匿名函数)
-    - [2.2. 函数传递是如何让HTTP服务器工作的](#22-函数传递是如何让http服务器工作的)
-- [3. Node.js路由](#3-nodejs路由)
-    - [3.1. 基本模块](#31-基本模块)
-    - [3.2. 判断JavaScript执行环境](#32-判断javascript执行环境)
+- [2. module对象](#2-module对象)
+    - [2.1. module.exports实现原理](#21-moduleexports实现原理)
+    - [2.2. module.exports VS export](#22-moduleexports-vs-export)
+    - [2.3. AMD规范与CommonJS规范的兼容性](#23-amd规范与commonjs规范的兼容性)
+- [3. require命令](#3-require命令)
+    - [3.1. 加载规则](#31-加载规则)
+    - [3.2. 模块的缓存](#32-模块的缓存)
+- [4. 模块的加载机制](#4-模块的加载机制)
+- [5. Node.js 函数](#5-nodejs-函数)
+    - [5.1. 匿名函数](#51-匿名函数)
+    - [5.2. 函数传递是如何让HTTP服务器工作的](#52-函数传递是如何让http服务器工作的)
+- [6. Node.js路由](#6-nodejs路由)
+    - [6.1. 基本模块](#61-基本模块)
+    - [6.2. 判断JavaScript执行环境](#62-判断javascript执行环境)
 
 <!-- /TOC -->
 
@@ -166,7 +172,8 @@ $ node lbj.js
 ## 1.4. CommonJS规范
 
     这种模块加载机制被称为CommonJS规范,在这个规范下,每个.js文件都是一个模块,它们内部各自使用的变量名和函数名都互不冲突,
-    例如kyrie.js和 lbj.js 都申明了全局变量 a,但互不影响!
+    例如kyrie.js和 lbj.js 都声明了全局变量 a,但互不影响!
+    每个文件就是一个模块,有自己的作用域.在一个文件里面定义的变量,函数,类,都是私有的.对其他文件不可见.
     
     一个模块想要对外暴露变量(函数也是变量),可以用module.exports = variable;一个模块要引用其他模块暴露的变量,用 var 
     ref = require("module_name");就拿到了引用模块的变量.
@@ -174,7 +181,10 @@ $ node lbj.js
     module.exports = variable;
     输出的变量可以时任意对象,函数,数组等等!
     
-
+    CommonJS规范规定,每个模块内部,module变量代表当前模块.这个变量是一个对象,它的exports属性是对外的接口.加载这个模块,
+    其实就是加载该模块的 module.exports属性.
+    
+    
     module变量是整个模块文件的顶层变量,它的exports属性就是模块向外输出的接口.如果直接输出一个函数,那么调用模块就是调用一个
     函数.但是模块也可以输出一个对象.
 ```js
@@ -190,6 +200,13 @@ module.exports = out;
 var m = require("./foo");
 m.print("这是自定义模块");
 ```
+
+    CommonJS模块的特点如下:
+        > 所有代码都运行在模块作用域,不会污染全局作用域.
+        > 模块可以多次加载,但是只会在第一次加载时运行一次,然后运行结果就被缓存了,以后再加载,就直接读取缓存结果,要让模块再次运行
+        必须清除缓存.
+        > 模块的加载顺序,按照其在代码中出现的顺序.
+    
     
 ## 1.5. 异常处理
 
@@ -234,7 +251,27 @@ console.log(s + '' + name + '!');
     互不干扰.
     所以,Node利用JavaScript的函数式编程的特性,轻而易举地实现了模块的隔离!
     
-## 1.7. module.exports实现原理
+
+# 2. module对象
+
+    Node内部提供一个Module构建函数.所有模块都是Module的实例.
+```js
+function Module(id,parent){
+    this.is = id;
+    this.exports = {};
+    this.parent = parent;
+}
+```
+    每个模块内部,都有一个module对象,代表当前模块,它有以下属性:
+        > module.id ： 模块的识别符,通常是带有绝对路径的模块文件名.
+        > module.filename : 模块的文件名,带有绝对路径
+        > module.loaded ：返回一个布尔值,表示模块是否已经完成加载.
+        > module.parent : 返回一个对象,表示调用该模块的模块
+        > module.children: 返回一个数组,表示该模块要用到的其他模块
+        > module.exports 表示模块对外输出的值.
+
+
+## 2.1. module.exports实现原理
 
     Node可以先准备一个对象module,
 ```js
@@ -264,7 +301,7 @@ save(module,exported);
     由于Node保存了所有导入的module,当我们用require()获取module时,Node找到对应的module,把这个module的exports变量返回,这样,另一个模块就顺利拿到了
     模块的输出.
 
-## 1.8. module.exports VS export
+## 2.2. module.exports VS export
 
     在Node环境中,有两种方法可以在一个模块中输出变量:
 
@@ -283,6 +320,10 @@ module.exports = {
 ```
 
     方法二:直接使用exports
+    为了方便,Node为每个模块提供一个exports变量,指向module.exports.这等同在每个模块头部.有一行这样的命令.
+
+    var exports = module.exports.
+    
 ```js
 function hello(){
     console.log("Hello World!");
@@ -295,7 +336,7 @@ function greet(){
 exports.hello = hello;
 exports.greet = greet;
 
-但是你不可以直接对 exports 赋值:
+但是你不可以直接对 exports 赋值,因为这样等于切断了 exports 与 module.exports的联系.
 exports = {
     hello:hello,
     greet:greet
@@ -303,7 +344,99 @@ exports = {
 ```
     最后,建议使用module.exports = xxx 的方式来输出模块变量.
 
-# 2. Node.js 函数
+
+## 2.3. AMD规范与CommonJS规范的兼容性
+
+    CommonJS规范加载模块是同步的,也就是说,只有加载完成,才能执行后面的操作.AMD规范则是非同步加载模块,允许指定回调函数.
+    由于Node.js主要用于服务器编程,模块文件一般都已经存在于本地硬盘,所以加载起来比较快,不用考虑非同步加载的方式,所以
+    CommonJS规范比较适用.但是,如果是浏览器环境,要从服务端加载模块,这时就必须采用非同步模式,因此浏览器端一般采用AMD规范.
+
+    AMD规范适用 define方法定义模块.
+
+
+# 3. require命令
+
+    Node使用CommonJS模块规范,内置的require命令用于加载模块文件.
+
+    require命令的基本功能是,读入并执行一个JavaScript文件,然后返回该模块的exports对象.如果没有发现指定模块,会报错!
+
+```js
+// module.js文件
+
+module.exports = function(){
+    console.log("hello world");
+}
+
+require("./module.js")();   // hello world
+
+上面代码中,require命令调用自身,等于是执行module.exports,因此会输出 hello world!
+```
+
+## 3.1. 加载规则
+
+    根据参数的不同格式,require命令去不同路径寻找模块文件.
+    
+    （1）如果参数字符串以“/”开头，则表示加载的是一个位于绝对路径的模块文件。
+    （2）如果参数字符串以“./”开头，则表示加载的是一个位于相对路径（跟当前执行脚本的位置相比）的模块文件。
+    （3）如果参数字符串不以“./“或”/“开头，则表示加载的是一个默认提供的核心模块
+    
+
+    目录的加载规则:
+    通常,我们会把相关的文件放在一个目录里面,便于组织.这时,最好为该目录设置一个入口文件,让require方法可以通过这个入口文件,
+    加载整个目录. 在目录中放置一个 package.json文件,并且将入口文件写入 main 字段.
+```js
+// package.json
+{
+    "name":"some-library",
+    "main":"./lib/some-library.js"
+}
+```
+    require发现参数字符串指向一个目录以后，会自动查看该目录的package.json文件，然后加载main字段指定的入口文件。如果
+    package.json文件没有main字段，或者根本就没有package.json文件，则会加载该目录下的index.js文件或index.node文件.
+    
+    
+## 3.2. 模块的缓存
+
+    第一次加载某个模块的时候,Node会缓存该模块.以后再加载该模块,就直接从缓存取出该模块的 module.exports属性.
+```js
+require('./example.js');
+require('./example.js').message = "hello";
+require('./example.js').message
+// "hello"
+```
+
+    注意:缓存是根据绝对路径识别模块的,如果同样的模块名,但是保存在不同路径,require命令还是会重新加载该模块.
+    
+    
+# 4. 模块的加载机制
+
+    CommonJS模块的加载机制是,输入的是被输出的值的拷贝.也就是说,一旦输出一个值,模块内部的变化就影响不到这个值.
+
+```js
+// main.js
+var counter = 3;
+
+function incCounter(){
+    counter++;
+}
+module.exports = {
+    counter:counter,
+    incCounter:incCounter,
+}
+
+
+// app.js
+var counter = require('./main').counter;
+var incCounter = require('./main').incCounter;
+
+console.log(counter);  // 3
+incCounter();
+console.log(counter); // 3
+```
+    counter输出以后，lib.js模块内部的变化就影响不到counter了。
+    
+
+# 5. Node.js 函数
 
     在JavaScript中,一个函数可以作为另一个函数的参数.我们可以先定义一个函数,然后传递,也可以在传递参数的地方直接定义
     函数.
@@ -321,7 +454,7 @@ execute(say,'Hello');
     在上面的代码中,我们把say函数作为 execute函数的第一个变量进行了传递.这里传递的不是say的返回值,而是say本身.
     这样一来,say就变成了 execute 中的本地变量 someFunction, execute可以通过 someFunction()来使用say函数.
 
-## 2.1. 匿名函数
+## 5.1. 匿名函数
 
     我们可以把一个函数作为变量传递.但是我们不一定要绕这个 ‘先定义,再传递’的圈子,我们可以直接在另一个函数的括号中定义
     和传递这个函数:
@@ -334,7 +467,7 @@ function sayHello(someFunction,value){
 sayHello((word) => console.log(word),'Hello');
 ```
 
-## 2.2. 函数传递是如何让HTTP服务器工作的
+## 5.2. 函数传递是如何让HTTP服务器工作的
 
 ```js
 // main.js 文件
@@ -362,7 +495,7 @@ function onRequest(request,response){
 http.createServer(onRequest).listen(8888);
 ```
 
-# 3. Node.js路由
+# 6. Node.js路由
 
     我们要为路由提供请求的URL和其他需要的GET 及 POST参数,随后路由需要根据这些数据来执行相应的代码.
     我们需要的所有数据都会包含在 request 对象中,该对象作为 onRequest() 回调函数的第一个参数传递.但是为了解析这个数
@@ -408,7 +541,7 @@ var router = require("./router");
 server.start(router.route);
 ```
 
-## 3.1. 基本模块
+## 6.1. 基本模块
 
     因为Node.js是运行在服务端的JavaScript环境,服务器程序和浏览器程序相比,最大的特点是没有浏览器的安全限制,而且,服务器程序必须能接收网络请求,
     读写文件,处理二进制内容,所以Node.js内置的常用模块就是为了实现基本的服务器功能!
@@ -448,7 +581,7 @@ Console {
   [Symbol(counts)]: Map {} }
 ```
 
-## 3.2. 判断JavaScript执行环境
+## 6.2. 判断JavaScript执行环境
 
     有很多JavaScript代码既能在浏览器中执行,也能在Node环境中执行,但有些时候,程序本身需要判断自己到底是在什么环境下执行
     的,常用的方式就是根据浏览器和Node环境提供的全局变量名来判断；

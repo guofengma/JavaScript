@@ -2,6 +2,7 @@
 
 - [1. Koa](#1-koa)
     - [1.1. Koa应用](#11-koa应用)
+    - [1.2. 中间件](#12-中间件)
 
 <!-- /TOC -->
 
@@ -29,3 +30,9 @@ var koa = require("koa");
 var app = koa();
 http.createServer(app.callback()).listen(3000);
 ```
+
+## 1.2. 中间件
+
+    Koa的中间件很想Express的中间件,也是对HTTP请求进行处理的函数,但是必须是一个Generator函数.而且,Koa的中间件是一个级联
+    式(Cascading)的结构,也就是说,属于是层层调用,第一个中间件调用第二个中间件,第二个调用第三个,以此类推.上游的中间件必须
+    等到下游的中间件返回结果,才会继续执行. 
