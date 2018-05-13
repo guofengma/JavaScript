@@ -14,6 +14,7 @@
 - [3. require命令](#3-require命令)
     - [3.1. 加载规则](#31-加载规则)
     - [3.2. 模块的缓存](#32-模块的缓存)
+    - [3.3. require的内部处理流程](#33-require的内部处理流程)
 - [4. 模块的加载机制](#4-模块的加载机制)
 - [5. Node.js 函数](#5-nodejs-函数)
     - [5.1. 匿名函数](#51-匿名函数)
@@ -407,6 +408,17 @@ require('./example.js').message
 
     注意:缓存是根据绝对路径识别模块的,如果同样的模块名,但是保存在不同路径,require命令还是会重新加载该模块.
     
+## 3.3. require的内部处理流程
+
+    require命令是CommonJS规范之中,用来加载其他模块的命令.它其实不是一个全局命令,而是指向当前模块的module.require命令.
+    而后者又调用Node的内部命令 Module_.load
+    
+    require函数及其辅助方法主要如下:
+        > require() : 加载外部模块
+        > require.resolve() : 将模块名解析到一个绝对路径
+        > require.main : 指向主模块
+        > require.cache : 指向所有缓存的模块
+        > require.extensions: 根据文件的后缀名,调用不同的执行函数.
     
 # 4. 模块的加载机制
 

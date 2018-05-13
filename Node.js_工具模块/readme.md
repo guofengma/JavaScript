@@ -1,18 +1,24 @@
 <!-- TOC -->
 
 - [1. Node.js工具模块](#1-nodejs工具模块)
-    - [1.1. OS模块](#11-os模块)
-        - [1.1.1. 方法和描述](#111-方法和描述)
-    - [1.2. Node.js Path模块](#12-nodejs-path模块)
-        - [1.2.1. 方法和描述](#121-方法和描述)
-    - [1.3. Node.js Net模块](#13-nodejs-net模块)
-        - [1.3.1. 方法](#131-方法)
-        - [1.3.2. net.Server](#132-netserver)
-        - [1.3.3. 事件](#133-事件)
-        - [1.3.4. 事件](#134-事件)
-    - [1.4. Node.js DNS模块](#14-nodejs-dns模块)
-    - [1.5. Node.js Domain模块](#15-nodejs-domain模块)
-        - [1.5.1. 方法](#151-方法)
+- [2. OS模块](#2-os模块)
+        - [2.0.1. 方法和描述](#201-方法和描述)
+- [3. Node.js Path模块](#3-nodejs-path模块)
+    - [3.1. 方法和描述](#31-方法和描述)
+- [4. Node.js Net模块](#4-nodejs-net模块)
+    - [4.1. 方法](#41-方法)
+    - [4.2. net.Server](#42-netserver)
+    - [4.3. 事件](#43-事件)
+- [5. Node.js DNS模块](#5-nodejs-dns模块)
+- [6. Node.js Domain模块](#6-nodejs-domain模块)
+    - [6.1. 方法](#61-方法)
+- [7. url](#7-url)
+    - [7.1. url.hash](#71-urlhash)
+    - [7.2. url.host](#72-urlhost)
+    - [7.3. url.hostname](#73-urlhostname)
+    - [7.4. url.href](#74-urlhref)
+    - [7.5. url.pathname](#75-urlpathname)
+    - [7.6. url.port](#76-urlport)
 
 <!-- /TOC -->
 
@@ -20,13 +26,13 @@
 
     在Node.js模块库中有很多好用的模块,下面介绍几种常用的模块
 
-## 1.1. OS模块
+# 2. OS模块
 
     Node.js os模块提供了一些基本的系统操作函数.可以通过以下方式引入该模块
     
     var os = require("os");
 
-### 1.1.1. 方法和描述
+### 2.0.1. 方法和描述
 
     os.tmpdir()         返回操作系统的默认临时文件夹
     os.endianness()     返回CPU的字节序,可能的是"BE"或"LE"
@@ -56,13 +62,13 @@ os.uptime();        // 返回操作系统运行时间
 os.relase();        // 返回操作系统的法行版本
 ```
 
-## 1.2. Node.js Path模块
+# 3. Node.js Path模块
 
     Node.js path模块提供了一些用于处理文件路径的小工具:
 
     var path = require("path");
 
-### 1.2.1. 方法和描述
+## 3.1. 方法和描述
 
     path.normalize(p)           规范化路径
     path.join([path1],[path2]..) 用于连接路径,该方法的主要用于在于,会正确使用当前系统的路径分隔符,Unix系统是'/',Windows是'\'
@@ -95,20 +101,20 @@ console.log("ext name:" + path.extname("main.js"));
 $ node mian.js
 ```
 
-## 1.3. Node.js Net模块
+# 4. Node.js Net模块
 
     Node.js Net模块提供了一些用于底层的网络通信的小工具,包含了创建服务器/客户端的方法.
 
     var net = require(net);
 
-### 1.3.1. 方法
+## 4.1. 方法
 
     net.createServer([options],)        创建一个TCP服务器.
     net.connect()                       返回一个新的'net.Socket',并连接到指定的地址和端口
     net.createConnection()              创建一个到端口port和主机host的TCP连接.host默认为'localhost'
 
 
-### 1.3.2. net.Server
+## 4.2. net.Server
 
     net.Server通常用于创建一个TCP或本地服务器
 
@@ -130,7 +136,7 @@ $ node mian.js
     server.unref()
     如果这是事件系统中唯一一个活动的服务器,调用unref将允许程序退出.
 
-### 1.3.3. 事件
+## 4.3. 事件
 
     listening
     当服务器调用 server.listen 绑定后会触发
@@ -143,37 +149,15 @@ $ node mian.js
 
     error
     发生错误时触发,close事件将被下列事件直接调用
-
-
-### 1.3.4. 事件
-
-    lookup
-    在解析域名后,但在连接前,触发这个事件,对UNIX socket不适用
-
-    connect
-    成功建立socket连接时触发
-
-    data
-    当接受到数据时触发
-
-    end
-    当socket另一端发送FIN包时,触发该事件
-
-    timeout
-    当socket空闲超时时触发,仅是表明socket已经空闲.用户必须手动关闭连接.
-
-    close
-    当socket完全关闭时触发,参数 had_error是布尔值,它表示是否因为传输错误导致socket关闭.
     
-    
-## 1.4. Node.js DNS模块
+# 5. Node.js DNS模块
 
     Node.js DNS模块用于解析域名.
 
     var dns = require("dns");
 
 
-## 1.5. Node.js Domain模块
+# 6. Node.js Domain模块
 
     Node.js Domain简化异步代码的异常处理,可以捕捉处理 try catch无法捕捉的异常.
 
@@ -186,7 +170,7 @@ $ node mian.js
     隐士绑定:把在domain上下文中定义的变量,自动绑定到domain对象
     显示绑定:把不是在domain上下文中定义的变量,以代码的方式绑定到domain对象
 
-### 1.5.1. 方法
+## 6.1. 方法
 
     domain.run(function)
     在域的上下文运行提供的函数,隐士的绑定了所有的事件分发器,计时器和底层请求
@@ -211,3 +195,110 @@ $ node mian.js
 
     domain.create()
     返回一个domain对象.
+
+# 7. url
+
+    url模块提供了一些实用函数,用于URL处理与解析.可以通过以下方式使用:
+```js
+const url = require("url");
+```
+    一个url字符串是一个结构化的字符串,它包含多个有意义的组成部分.当被解析时,会返回一个url对象,它包含每个组成部分作为属性.
+
+```js
+const url = require("url");
+const myUrl = url.parse('https://user:pass@sub.host.com:8080/p/a/t/h?query=string#hash');
+console.log(myUrl);
+
+// node url.js
+Url {
+  protocol: 'https:',
+  slashes: true,
+  auth: 'user:pass',
+  host: 'sub.host.com:8080',
+  port: '8080',
+  hostname: 'sub.host.com',
+  hash: '#hash',
+  search: '?query=string',
+  query: 'query=string',
+  pathname: '/p/a/t/h',
+  path: '/p/a/t/h?query=string',
+  href: 'https://user:pass@sub.host.com:8080/p/a/t/h?query=string#hash' }
+```
+
+## 7.1. url.hash
+
+    获取及设置URL的分段(hash)部分.
+```js
+const {URL} = require("url");
+const myUrl = new URL("https://example.org/foo#bar");
+
+console.log(myUrl.hash);    // #bar
+
+myUrl.hash = "abc";
+console.log(myUrl.href);
+```
+
+## 7.2. url.host
+
+    获取及设置URL的主机部分
+
+```js
+const {URL} = require("url");
+const myUrl = new URL("http://example.org:81/foo");
+console.log(myUrl.host);
+
+// example.org:81
+
+myUrl.host = "example.com:82";
+console.log(myUrl.href);    // http://example.com:82/foo
+```
+
+## 7.3. url.hostname
+
+    获取及设置URL的主机名,url.host和url.hostname之间的区别时url.hostname不包含端口
+```js
+const {URL} = require("url");
+const myURL = new URL("https://example.org:81/foo");
+console.log(myURL.hostname);    // example.org
+
+
+myURL.hostname = 'example.com:82';
+console.log(myURL.href);        // https://example.com:81/foo
+```
+
+## 7.4. url.href
+
+    获取及设置序列化的URL.
+```js
+const {URL} = require("url");
+const myUrl = new URL("https://example.org/foo");
+console.log(myUrl.href);    // https://example.org/foo
+
+
+myUrl.href = "https://example.com/bar";
+console.log(myUrl.href);    // https://example.com/bar
+```
+    获取href属性的值等同于调用 url.toString().
+    
+
+## 7.5. url.pathname
+
+    获取及设置URL的路径部分.
+
+```js
+const {URL} = require("url");
+const myURL = new URL("https://example.org/abc/xyz?123");
+console.log(myURL.pathname);    // abc/xyz?123
+
+myURL.pathname = "/abcde";
+console.log(myURL.href);        // https://example.org/abcde?123
+```
+
+## 7.6. url.port
+
+    获取及设置URL的端口(port)部分
+```js
+const {URL} = require('url');
+const myURL = new URL("https://example.org:8888");
+console.log(myURL.port);    // 8888
+```
