@@ -18,6 +18,12 @@
     - [4.8. url.search](#48-urlsearch)
     - [4.9. url.username](#49-urlusername)
     - [4.10. url.parse](#410-urlparse)
+    - [4.11. Node.js zlib压缩](#411-nodejs-zlib压缩)
+- [5. Node.js stream(流)](#5-nodejs-stream流)
+    - [5.1. 从流中读取数据](#51-从流中读取数据)
+    - [5.2. 写入流](#52-写入流)
+    - [5.3. 管道流](#53-管道流)
+    - [5.4. 可读流](#54-可读流)
 
 <!-- /TOC -->
 
@@ -276,3 +282,172 @@ console.log(url.parse("http://www.baidu.com"));
 //     href: 'http://www.baidu.com/' }
 ```
     
+## 4.11. Node.js zlib压缩
+
+    zlib模块提供通过Gzip 和 Deflate/Inflate实现的压缩功能
+
+    const zlib = require("zlib");
+
+    压缩或者解压数据流通过zlib流将原数据流传输到目标流中来完成.
+
+
+    链式流:链式是通过连接输出流到另外一个流并创建多个流操作链的机制.链式流一般用于管道操作.
+```js
+var fs = require("fs");
+var zlib = require("zlib");
+
+// 压缩input.txt 文件为 input.txt.gz
+fs.createReadStream("input.txt")
+.pipe(zlib.createGzip())
+.pipe(fs.createWriteStream("input.txt.gz"));
+
+console.log("文件压缩完成");
+```
+
+    解压上述文件
+```js
+var fs = require("fs");
+var zlib = require("zlib");
+
+fs.createReadStream("input.txt.zg")
+.pipe(zlib.createGunzip())
+.pipe(zlib.createWriteStream("input.txt"));
+
+console.log("文件解压完成");
+```
+
+    压缩或者解压数据流通过 zlib流将源数据流传输到目标流中来完成.
+```js
+const gzip = zlib.createGzip();
+const fs = require("fs");
+const input = fs.createReadStream("input.txt");
+const output = fs.createWriteStream("input.txt.gz");
+
+input.pipe(gzip).pipe(output);
+```
+
+    zlib.Gunzip
+    解压缩gzip流
+
+    
+# 5. Node.js stream(流)
+
+    流在Node.js中是处理流数据的抽象接口.stream模块提供了基础的API.使用这些API可以很容易地来构建实现流接口的对象.
+    流可以是 可读的 可写的 或是可读写的.所有的流都是 EventEmitter 的实例.
+
+    stream模块可以通过以下方式引入:
+    
+        const stream = require("stream");
+
+    在Node.js中有四种基本的流类型:
+        Readable - 可读的流
+        Writable - 可写的流
+        Duplex   - 可读写的流
+        Transform - 在读写过程中可以修改和变换数据的Duplex流
+
+    所有的Stream对象都是EventEmitter的实例,常用的事件有:
+    data - 当有数据可读时触发
+    end  - 没有更多的数据可读时触发
+    error - 在接收和写入过程中发生错误时触发
+    finish - 所有数据已被写入到底层系统时触发
+
+    
+    error事件
+    error事件在写入数据出错或者使用管道出错时触发.事件发生时,回调函数仅会接收到一个Error参数.(error事件发生时,流不会关闭);
+    
+## 5.1. 从流中读取数据
+
+```js
+const fs = require("fs");
+var data = '';
+
+// 创建可读流
+var readerStream = fs.createReadStream("input.txt");
+
+readerStream.setEncoding("UTF8");
+readerStream.on("data",function(chunk){
+    data += chunk;
+});
+
+readerStream.on("end",function(){
+    console.log(data);
+});
+
+readerStream.on('error',function(err){
+    console.log(err.stack);
+})
+
+console.log("程序执行完毕");
+```
+
+## 5.2. 写入流
+
+```js
+var fs = require("fs");
+var data = "秋风清,秋月明.落叶聚还散,寒鸦栖复惊!相思相见知何日,此时此夜难为情!入我相思门,知我相思苦"
+
+// 创建可写入的流
+const writerStream = fs.createWriteStream("output.txt");
+
+// 使用UTF8编码写入数据
+writerStream.write(data,"UTF8");
+// 标记文件末尾
+writerStream.end();
+
+writerStream.on("finish",function(){
+    console.log("写入完成");
+})
+
+writerStream.on("error",function(err){
+    console.log(err.stack);
+})
+console.log("程序执行完毕");
+```
+
+## 5.3. 管道流
+
+    管道提供了一个输出流到输入流的机制.通常我们用于从一个流中获取数据并将数据传递到另外一个流中.
+
+    下面实现通过读取一个文件内容并将内容写入到另外一个文件中:
+    
+    
+    在可读流上调用stream.pipe()方法,并在目标流向中添加当前可写流时,将会在可写流上触发'pipe'事件.
+```js
+const fs = require("fs");
+
+// 创建一个可读流
+const readerStream = fs.createReadStream("output.txt");
+
+// 创建一个可写流
+const writerStream = fs.createWriteStream("input.txt");
+
+readerStream.pipe(writerStream);
+
+console.log("程序执行完毕");
+```
+
+## 5.4. 可读流
+
+    可读流是对提供数据的 源头(source)的抽象. 可读流的例子包括:
+        
+        > HTTP responses
+        > HTTP requests
+        > fs read streams
+        > zlib streams
+        > crypto streams
+        > child process stdout and stderr
+        
+    所有的 Readable都实现了stream.Readable类定义的接口.
+
+
+
+    data 事件:
+    如果调用readable.setEncoding()方法明确为流指定了默认编码,回调函数将接收到一个字符串,否则接收到的数据将是一个Buffer实例.
+
+    end 事件:
+    end 事件将在流中再没有数据可供消费时触发.
+    注意:end事件只有在数据被完全消费后才会触发.可以在数据被完全消费后,通过将流转换到flowing模式,或反复调用 stream.read()方法
+    来实现这一点.
+
+    error事件:
+    error 事件可以在任何时候在可读流实现上触发.通常,这会在底层系统内部出错从而不能产生数据.或当流的实现试图传递错误数据时发生.

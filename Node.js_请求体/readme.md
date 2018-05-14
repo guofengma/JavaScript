@@ -3,8 +3,8 @@
 - [1. HTTP请求体解析中间件](#1-http请求体解析中间件)
     - [1.1. 请求体解析](#11-请求体解析)
     - [1.2. body-parser 模块的API](#12-body-parser-模块的api)
-- [2. Node.js中间件 - Multer](#2-nodejs中间件---multer)
-    - [2.1. 文件信息](#21-文件信息)
+- [2. Multer中间件](#2-multer中间件)
+    - [2.1. 用法](#21-用法)
 
 <!-- /TOC -->
 
@@ -116,33 +116,91 @@ var urlencodedParser = bodyParser.urlencoded({extended:false})
         extended - 当设置为false时,会使用querystring库解析URL编码的数据;当设置为true时,会使用qs库解析URL编码的数据
 
 
-# 2. Node.js中间件 - Multer
+# 2. Multer中间件
 
-    Multer是Node.js中处理multipart/form-data数据格式(主要用在上传功能中) 的中间件.该中间件不处理 multipart/form-data数据格式以外
-    的任何形式的数据.
+    Multer是一个用于处理的node.js中间件 multipart/form-data,主要用于上传文件.它写在busbody顶部以获得最大效率.
+    
+    注意: Multer不会处理任何不是multipart(multipart/form-data)的表单.
 
-    multipart/form-data是用来指定传输数据的特殊类型的,主要就是我们上传的非文本的内容,比如图片 或者 mp3等
+    $ npm install --save multer
 
-## 2.1. 文件信息
 
-    fieldname       上传文件标签在表单中的name
-    originalname    文件在用户电脑上的文件名
-    Encoding        该文件的编码
-    mimetype        该文件的Mime type
-    size            该文件的字节数
-    destination     该文件要保存的文件夹
-    filename        在保存的文件夹下的文件名
-    path            文件上传后保存的完整路径
-    buffer          完整文件的buffer
+## 2.1. 用法
 
-    multer可以传入一个可选参数,一般该参数为 dest 属性,规定上传文件存放的位置.如果省略该参数,上传的文件将一直保存在内存中.永远不会
-    写进磁盘.
+    Multer增加了一个body对象和一个file或files对象的request对象.该body对象包含表单文本字段的值,file或者files对象包含通过表单
+    上传的文件.
 
-    .single(fieldname)
-    该方法接收单个上传的文件 filedname为上传文件所用的标签name属性
+    文件信息：
 
-    .array(fieldname)
-    该方法接收多个文件,参数为所有的上传文件所用标签的name属性
+    fieldname       在表单中指定的字段名称
+    originalname    用于计算机上文件的名称
+    encoding        编码文件的类型
+    mimetype        文件的MIME类型
+    size            文件大小(以字节为单位)
+    destination     该文件已被保存到的文件夹
+    filename        文件中的文件名称destination
+    path            上传文件的完整路径
+    buffer          __Bbuffer整个文件
 
-    .fields(fields)
-    该方法可以接收由fields指定的不同类型的文件,多个文件对象被保存在req.files中.
+
+    multer(opts)
+    Multer接收一个选项对象,其中最基本的是dest属性,它告诉Multer在哪里上传文件.如果省略选项对象,这些文件将保存在内存中,
+    永远不会写入磁盘.
+
+
+    下面的实例创建一个用于上传文件的表单,使用POST方法,表单enctype属性设置为 multipart/form-data:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文件上传</title>
+</head>
+<body>
+    <h3>上传文件</h3>
+    <form action="/file_upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" size="50">
+        <input type="submit" value="上传文件">
+    </form>
+</body>
+</html>
+```
+```js
+// main.js
+
+var express = require("express");
+var app = express();
+var fs = require("fs");
+
+var bodyParser = require("body-parser");
+var multer = require("multer");
+
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(multer({dest:'/tmp/'}).array("image"));
+
+app.get("/index.html",(req,res) => {
+    res.sendFile(__dirname + '/' + 'index.html');
+})
+
+app.post("/file_upload",(req,res) => {
+    console.log(req.files[0]);
+    var des_file = __dirname + '/' + req.files[0].originalname;
+    fs.writeFile(des_file,data,function(err){
+        if(err){
+            console.log(err);
+        }else{
+            response = {
+                message:"File uploaded successful",
+                filename:req.files[0].originalname
+            }
+        }
+        console.log(response);
+        res.end(JSON.stringify(response));
+    })
+})
+
+app.listen(8000,'localhost');
+```

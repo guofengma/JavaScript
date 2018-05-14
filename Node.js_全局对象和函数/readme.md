@@ -12,18 +12,17 @@
     - [1.9. 退出状态码](#19-退出状态码)
     - [1.10. Process属性](#110-process属性)
     - [1.11. Process方法参考手册](#111-process方法参考手册)
-- [2. Node.js常用工具](#2-nodejs常用工具)
-    - [2.1. util.inherits](#21-utilinherits)
-    - [2.2. util.inspect](#22-utilinspect)
-    - [2.3. util.isArray(object)](#23-utilisarrayobject)
-    - [2.4. util.isRegExp(object)](#24-utilisregexpobject)
-    - [2.5. util.isDate(object)](#25-utilisdateobject)
-    - [2.6. util.isError(object)](#26-utiliserrorobject)
 
 <!-- /TOC -->
 
 # 1. Node.js全局对象
     
+    全局变量在所有模块中均可使用.但以下变量的作用域只在模块内.
+        > __dirname
+        > __filename
+        > exports
+        > module
+        > require
     
     Node提供以下几个全局变量,它们是所有模块都可以调用的.
     
@@ -307,135 +306,3 @@ console.log('当前程序所花的时间为:' + process.uptime());
 console.log(process.memoryUsage()); // 当前Node进程所用的内存状态
 ```
 
-# 2. Node.js常用工具
-
-    util是一个Node.js核心模块,提供常用函数的集合,用于弥补核心JavaScript的功能过于精简的不足.
-
-## 2.1. util.inherits
-
-    util.inherits(constructor,superConstructor)是一个实现对象间原型继承的函数.
-    JavaScript的面向对象特性是基于原型的,与常见的基于类的不同.JavaScript没有提供对象继承的语言级别特性,而是通过原型
-    复制来实现的.
-
-```js
-var util = require('util');
-
-function Base(){
-    this.name = 'Kyrie';
-    this.base = 1991;
-    this.sayHello = function(){
-        console.log("Hello" + this.name);
-    };
-}
-
-Base.prototype.showName = function(){
-    console.log(this.name);
-}
-
-function Sub(){
-    this.name = 'sub';
-}
-
-util.inherits(Sub,Base);
-
-var objBase = new Base();
-objBase.showName();     // kyrie
-objBase.sayHello();     // HelloKyrie
-console.log(objBase);   // Base {name:'kyrie',age:1991,sayHello:[Function]}
-
-var objSub = new Sub();
-objSub.showName();      // sub
-console.log(objSub);    // Sub {name:'sub'}
-```
-    上面定义了一个基础对象Base和一个继承自Base 的 Sub,Base有三个在构造函数内定义的属性和一个原型中定义的函数,通过util.inherits
-    实现继承.
-
-    注意:Sub仅仅继承了Base在原型中定义的函数,而构造函数内部创造的base属性和sayHello函数都没有被 Sub 继承.
-    同时,在原型中定义的属性不会被 console.log 作为对象的属性输出.
-
-## 2.2. util.inspect
-
-    util.inspect(object,[showHidden],[depth],[colors])是一个将任意对象转换为 字符串的方法,通常用于调试和错误输出.它至少接受一个
-    参数object,即要转换的对象.
-    showHidden 是一个可选参数,如果值为true,将会输出更多隐藏信息.
-    depth表示最大递归的层数,如果对象很复杂,你可以指定层数以控制输出信息的多少.如果不指定depth,默认会递归2层,指定为null表示将不限
-    递归层数完整遍历对象.如果color值为true,输出格式将会以ANSI颜色编码,通常用于在终端显示更漂亮的效果.
-
-```js
-var util = require('util');
-
-function Person(){
-    this.name = 'byvoid';
-    this.toString = function(){
-        return this.name;
-    };
-}
-
-var obj = new Person();
-console.log(util.inspect(obj));
-// Person {name:'byvoid',toString:[Function]}
-
-console.log(util.inspect(obj),true);
-// Person {
-    // name:'byvoid'
-    // toString:
-    // {
-    //     [Function]
-    //     [length]:0,
-    //     [name]:'',
-    //     [arguments]:null,
-    //     [caller]:null,
-    //     [prototype]:{[constructor]:[Circular]}
-    // }
-}
-```
-
-## 2.3. util.isArray(object)
-
-    如果给定的参数 'object' 是一个数组返回true,否则返回false.
-
-```js
-var util = require('util');
-
-util.isArray([]);   // true
-util.isArray({});   // false
-util.isArray(new Array);    // true
-```
-    这也是一种判断 数组 和 对象的 方法.
-
-
-## 2.4. util.isRegExp(object)
-
-    如果给定的参数 'object' 是一个正则表达式返回 true,否则返回 false
-
-```js
-var util = require('util');
-
-console.log( util.isRegExp(/some regexp/) );    // true
-console.log( util.isRegExp(/\d/) ); // true
-console.log( util.isRegExp({}) )    // false
-```
-
-## 2.5. util.isDate(object)
-
-    如果给定的参数 'object' 是一个日期返回true,否则返回 false.
-
-```js
-var util = require('util');
-
-util.isDate(new Date());  // true
-util.isDate(Date());    // false
-util.isDate({});        // true
-```
-
-## 2.6. util.isError(object)
-
-    如果给定的参数 'object' 是一个错误对象返回 true,否则返回 false.
-
-```js
-var util = require('util');
-
-util.isError(new Error());  // true
-util.isError(new TypeError());  // true
-util.isError({name:'Error',message:'an error occurred'});   // false
-```

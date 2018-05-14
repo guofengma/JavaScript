@@ -700,7 +700,13 @@ fs.rmdir("./style",function(err){
     删除目录
     fs.rmdir(path,callback)
 
+    返回ReadStream对象
+    fs.createReadStream()
 
+    返回writeStream
+    fs.createWriteStream()
+
+    
 ## 2.1. 同步还是异步
 
     在fs模块中,提供同步方法是为了方便使用.由于Node环境执行的JavaScript代码是服务端代码,所以绝大部分需要在服务器运行期反复执行业务
