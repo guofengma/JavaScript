@@ -5,6 +5,9 @@
     - [1.2. body-parser 模块的API](#12-body-parser-模块的api)
 - [2. Multer中间件](#2-multer中间件)
     - [2.1. 用法](#21-用法)
+    - [2.2. GET方法](#22-get方法)
+    - [2.3. POST方法](#23-post方法)
+    - [2.4. form表单的 enctype属性](#24-form表单的-enctype属性)
 
 <!-- /TOC -->
 
@@ -204,3 +207,85 @@ app.post("/file_upload",(req,res) => {
 
 app.listen(8000,'localhost');
 ```
+
+## 2.2. GET方法
+
+    以下实例使用express服务器传输内容
+```html
+<!-- index.html -->
+
+<form action="http://127.0.0.1:3000/process_get" method="GET">
+    First Name: <input type="text" name="first_name">
+    Last Name: <input type="text" name="last_name">
+    <input type="submit" value="Submit">
+</form>
+```
+```js
+// server.js
+var express = require("express");
+var app =  express();
+
+app.use(express.static("public"));
+
+app.get("/index.html",(req,res) => {
+    res.sendFile(__dirname + '/' + 'index.html');
+})
+
+app.get('/process_get',(req,res) => {
+    var response = {
+        "first_name":req.query.first_name,
+        "last_name":req.query.last_name
+    }
+    console.log(response);
+    res.write( JSON.stringify(response) );
+})
+
+app.listen(3000);
+```
+
+## 2.3. POST方法
+
+```html
+<!-- index.html -->
+<form action="http://127.0.0.1:2000/process_post" method="POST">
+    <p>first name:<input type="text" name="first_name"></p>
+    <p>last name:<input type="text" name="last_name"></p>
+    <p><input type="submit" value="submit"></p>
+</form>
+```
+```js
+<!-- server.js -->
+
+var express = require("express");
+var app = express();
+var bodyParser = require("body-parser");
+var urlencodedParser = bodyParser.urlencoded({extended:false});
+
+app.get("/index.html",(req,res) => {
+    res.sendFile(__dirname + '/' + index.html);
+})
+
+app.post("/process_post",urlencodedParser,(req,res) => {
+    var response = {
+        "first_name":req.body.first_name,
+        "last_name":req.body.last_name
+    };
+    console.log(response);
+    res.end( JSON.stringify(response) );
+})
+app.listen(2000);
+```
+    
+## 2.4. form表单的 enctype属性
+
+    enctype属性规定在发送到服务器之前应该如何对表单数据进行编码.
+    默认地,表单数据会编码为 'application/x-www-form-urlencoded'.就是说,在发送到服务器之前,所有字符都会进行编码
+    (空格转换为 '+' 号,特殊符号转换为ASCII HEX值).
+
+
+    值
+    application/x-www-form-urlencoded               在发送前编码所有字符
+    multipart/form-data                             不对字符编码,在使用包含文件上传控件的表单时,必须使用该值.
+    text/plain                                      空格转换为 '+' 加号,但不对特殊字符编码
+
+
