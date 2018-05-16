@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>amaze-UI</title>
+    <link rel="stylesheet" href="./amazeui.min.css">
+    <style>
+        .no{
+            height:40px;
+            border:1px solid #f00;
+        }
+        .am-g-fixed{
+            max-width:1000px;
+        }
+        .am-container{
+            height:40px;
+            border:1px solid blue;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="am-g">
+        <div class="am-u-sm-4 no">4</div>
+        <div class="am-u-sm-8 no">8</div>
+    </div>
+
+    <div class="am-g am-g-fixed">
+        <div class="am-u-sm-6 am-u-md-4 am-u-lg-3 no">sm-6 md-4 lg-3</div>
+        <div class="am-u-sm-6 am-u-md-8 am-u-lg-9 no">sm-6 md-8 lg-9</div>
+    </div>
+
+    <div class="am-g am-g-fixed">
+        <div class="am-u-sm-12 no">全宽限制最大宽度的行</div>
+    </div>
+
+
+    <div class="am-container">
+        I am in the .am-container
+    </div>
+
+    <!-- 网格行限制宽度 -->
+    <div class="am-g am-g-fixed">
+        <div class="am-u-sm-6 no">.am-u-sm-6</div>
+        <div class="am-u-sm-6 no">.am-u-sm-6</div>
+    </div>
+
+    <div class="am-container">
+        <div class="am-g am-g-fixed">
+            <div class="am-u-sm-6 no">.am-u-sm-6</div>
+            <div class="am-u-sm-6 no">.am-u-sm-6</div>
+        </div>
+    </div>
+
+
+    <div class="am-g">
+        <div class="am-u-sm-6">am-u-sm-6</div>
+        <div class="am-u-sm-6">am-u-sm-6</div>
+    </div>
+    <div class="am-g">
+        <div class="am-u-sm-6">.am-u-sm-6</div>
+        <div class="am-u-sm-6">.am-u-sm-6</div>
+    </div>
+    <div class="am-g">
+        <div class="am-u-sm-6">am-u-sm</div>
+        <div class="am-u-sm-6">am-u-sm</div>
+    </div>
+
+    <div class="am-g">
+        <div class="am-u-sm-3 no">3</div>
+        <div class="am-u-sm-3 no">3</div>
+        <div class="am-u-sm-3 no">3</div>
+    </div>
+
+    <div class="am-g">
+        <div class="am-u-sm-3 no">3</div>
+        <div class="am-u-sm-3 no">3</div>
+        <div class="am-u-sm-3 no am-u-end">3</div>
+    </div>
+
+    <div class="am-g">
+        <div class="am-u-sm-3 no"></div>
+        <div class="am-u-sm-6 am-u-sm-offset-1 no"></div>
+    </div>
+
+    <div class="am-g">
+        <div class="am-u-sm-3 am-u-sm-centered no">3</div>
+    </div>
+
+    <div class="am-g">
+        <div class="am-u-sm-6 am-u-lg-centered no">6 centered</div>
+    </div>
+
+    <div class="am-g">
+        <div class="am-u-sm-6 am-u-sm-centered am-u-lg-uncentered no">1024 uncentered</div>
+    </div>
+
+
+    <div class="am-g">
+        <div class="am-u-sm-11 am-u-sm-centered no">11 centered</div>
+    </div>
+
+    <h1>标题1</h1>
+    <h2>标题2</h2>
+    <h3>标题3</h3>
+    <h4>标题4</h4>
+    <h5>标题5</h5>
+    <h6>标题6</h6>
+
+    <blockquote>
+        <p>无论走到哪里，都应该记住，过去都是假的，回忆是一条没有尽头的路，一切以往的春天都不复存在，就连那最坚韧而又狂乱的爱情归根结底也不过是一种转瞬即逝的现实。</p>
+        <small>马尔克斯 - 《百年孤独》</small>
+    </blockquote>
+
+    <img class="am-img-responsive" src="http://s.amazeui.org/media/i/demos/bing-1.jpg" alt="">
+    <img class="am-img-responsive" src="http://s.amazeui.org/media/i/demos/bing-2.jpg" alt="">
+    <img class="am-img-responsive" src="http://s.amazeui.org/media/i/demos/bing-3.jpg" alt="">
+    <img class="am-img-responsive" src="http://s.amazeui.org/media/i/demos/bing-4.jpg" alt="">
+
+
+    <img src="./jay.jpg" class="am-img-responsive" alt="">
+
+
+    <a href="http://www.baidu.com">baidu</a>
+    <abbr title="http://www.baidu.com">baidu</abbr>
+
+
+    <div class="am-print-hide"><button type="button" class="am-btn am-btn-primary am-btn-block">浏览器可见,打印机不可见</button></div>
+    <div class="am-print-block"><button type="button" class="am-btn am-btn-primary am-btn-block">打印机可见,浏览器不可见</button></div>
+
+
+    <ul class="am-avg-sm-4 am-thumbnails">
+        <li><img src="http://s.amazeui.org/media/i/demos/bing-1.jpg" alt="" class="am-thumbnail"></li>
+        <li><img src="http://s.amazeui.org/media/i/demos/bing-2.jpg" alt="" class="am-thumbnail"></li>
+        <li><img src="http://s.amazeui.org/media/i/demos/bing-3.jpg" alt="" class="am-thumbnail"></li>
+        <li><img src="http://s.amazeui.org/media/i/demos/bing-4.jpg" alt="" class="am-thumbnail"></li>
+    </ul>
+
+
+    <ol class="am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-thumbnails">
+        <li><img class="am-thumbnail" src="http://s.amazeui.org/media/i/demos/bing-1.jpg" alt="" /></li>
+        <li><img class="am-thumbnail" src="http://s.amazeui.org/media/i/demos/bing-2.jpg" alt="" /></li>
+        <li><img class="am-thumbnail" src="http://s.amazeui.org/media/i/demos/bing-3.jpg" alt="" /></li>
+        <li><img class="am-thumbnail" src="http://s.amazeui.org/media/i/demos/bing-4.jpg" alt="" /></li>
+        <li><img class="am-thumbnail" src="http://s.amazeui.org/media/i/demos/bing-1.jpg" alt="" /></li>
+        <li><img class="am-thumbnail" src="http://s.amazeui.org/media/i/demos/bing-2.jpg" alt="" /></li>
+        <li><img class="am-thumbnail" src="http://s.amazeui.org/media/i/demos/bing-3.jpg" alt="" /></li>
+        <li><img class="am-thumbnail" src="http://s.amazeui.org/media/i/demos/bing-4.jpg" alt="" /></li>        
+    </ol>
+
+    <script src="./jquery.3.3.1.js"></script>
+    <script src="./amazeui.min.js"></script>
+    <script>
+        
+    
+    </script>
+</body>
+</html>
