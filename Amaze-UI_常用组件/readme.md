@@ -3,6 +3,8 @@
 - [1. 小徽章Badge](#1-小徽章badge)
 - [2. 面包屑导航](#2-面包屑导航)
 - [3. 按钮组](#3-按钮组)
+- [4. 输入框组](#4-输入框组)
+- [5. 导航](#5-导航)
 
 <!-- /TOC -->
 
@@ -83,3 +85,57 @@
 
     自适应宽度:
     添加 .am-btn-group-justify class 让按钮组例的按钮平均分布,填满容器宽度.
+
+
+# 4. 输入框组
+
+    input group基于form组件和button组件扩展,依赖这两个组件.
+    在容器上添加 .am-input-group,在标签文字上添加 .am-input-group-label
+```html
+<div class="am-input-group">
+    <span class="am-input-group-label"></span>
+    <input type="text" class="am-input-field">
+</div>
+
+<div class="am-input-group">
+    <div class="am-input-group-label">$</div>
+    <div class="am-form-field"></div>
+    <span class="am-input-group-label">.00</span>
+</div>
+```
+
+# 5. 导航
+
+    垂直导航
+```html
+<ul class="am-nav">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">首页</a></li>
+    <li><a href="#">首页</a></li>    
+</ul>
+```
+
+    水平导航:
+    在 .am-nav的基础上再添加 .am-nav-pills,形成一个水平导航,激活的标签在 <li> 上添加 .am-active
+```html
+<ul class="am-nav am-nav-pills">
+    <li class="am-active"><a href="">文章</a></li>
+    <li><a href="">图片</a></li>
+    <li><a href="">音乐</a></li>
+</ul>
+```
+
+    导航状态
+    .am-disabled - 禁用
+    .am-active - 激活
+
+
+    tabs式
+```html
+<ul class="am-nav am-nav-tabs">
+    <li class="am-active"><a href="">文章</a></li>
+    <li><a href="">图片</a></li>
+    <li><a href="">音乐</a></li>
+</ul>
+```
+
