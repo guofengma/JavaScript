@@ -3,6 +3,10 @@
 - [1. 轮播图](#1-轮播图)
 - [2. 滚动监测](#2-滚动监测)
 - [3. 滚动侦测导航](#3-滚动侦测导航)
+- [4. 实用工具](#4-实用工具)
+    - [4.1. cookie](#41-cookie)
+    - [4.2. FastClick](#42-fastclick)
+    - [4.3. Fullscreen](#43-fullscreen)
 
 <!-- /TOC -->
 
@@ -79,3 +83,44 @@ $(function() {
     options.className.active    String,高亮导航条类名,默认为am-active
     options.smooth              Boolean,点击锚点时平滑滚动,默认为true
     options.offsetTop           Number,滚动时顶部偏移量,默认为0
+
+
+# 4. 实用工具
+
+## 4.1. cookie
+
+    cookie.set(name,value,expires,path,domain,secure)   - 设置cookie
+    cookie.get(name) - 获取cookie
+    cookie.unset(name,path,domain,secure) - 删除cookie
+
+## 4.2. FastClick
+
+    从点击屏幕上的元素到触发元素的click事件,移动浏览器会有大约300毫秒的等待事件.因为它想看看你是不是要进行双击(double tap)操作.
+
+## 4.3. Fullscreen
+
+    $.AMUI.fullscreen接口调用
+
+    .request()
+    使元素全屏.接收一个DOM元素作为参数,默认为html.
+
+    .exit()
+    退出全屏模式
+
+    .toggle()
+    全屏模式切换
+
+
+    属性:
+    .isFullscreen
+    布尔值,是否处于全屏模式
+
+    .element
+    返回当前处于全屏模式的元素,没有则返回null.
+
+    .enabled
+    是否允许全屏模式.
+
+    .raw
+    返回包含原始方法名称的对象,对象key包括: requestFullscreen exitFullscreen fullscreenElement fullscreenEnabled
+    fullscreenchange fullscreenerror

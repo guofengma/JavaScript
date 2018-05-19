@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Amaze-UI</title>
+    <link rel="stylesheet" href="./amazeui.min.css">
+</head>
+<body>
+    
+    <button type="button" class="am-btn am-btn-primary btn-loading-example">Submit</button>
+    <br>
+    <button class="am-btn am-btn-primary" data-am-collapse="{target:'#collapse-nav'}">Menu</button>
+    <nav>
+        <ul id="collapse-nav" class="am-nav am-collapse">
+            <li class="am-active"><a href="#">开始使用</a></li>
+            <li><a href="#">介绍</a></li>
+            <li><a href="#">JS介绍</a></li>
+            <li><a href="#">功能定制</a></li>
+        </ul>
+    </nav>  
+
+
+    <div>
+        <img id="demo-full-img" src="http://s.amazeui.org/media/i/demos/bing-1.jpg"
+        width="340"
+        height="142">
+        点击图片全屏显示
+        <span id="doc-fs-img"></span>
+    </div>
+
+    
+    <div class="am-panel am-panel-primary" id="scrollspy">
+        <div class="am-panel-hd">Scroll via JS</div>
+        <div class="am-panel-bd">
+            生命是一团欲望，欲望不满足便痛苦，满足便无聊。人生就在痛苦和无聊之间摇摆。——叔本华
+        </div>
+    </div>
+
+    <script src="./jquery.3.3.1.js"></script>
+    <script src="./amazeui.min.js"></script>
+    <script>
+        
+        $(".btn-loading-example").click(function(){
+            var $btn = $(this);
+            $btn.button('loading');
+            setTimeout(function(){
+                $btn.button('reset')
+            },5000);
+        })
+        
+        $(function(){
+            $("#scrollspy").scrollspy({
+                animation:'slide-left',
+                delay:500
+            })
+        })
+
+
+        var fullscreen = $.AMUI.fullscreen;
+        $("#demo-full-img").on("click",function(){
+            if(fullscreen.enabled){
+                fullscreen.request(this);
+            }
+        }).on(fullscreen.raw.fullscreenchange,function(){
+            // 监听图片全屏状态
+            var text = '图片状态:' + (fullscreen.isFullscreen? '全屏':'非全屏');
+            $("#doc-fs-img").html(text);
+        })
+        
+        if(fullscreen.enabled){
+            $(document).on($.AMUI.fullscreen.raw.fullscreenchange,function(){
+                console.log('Am i fullscreen?' + ($.AMUI.fullscreen.isFullscreen?'yes':'no'));
+            })
+        }
+    </script>
+</body>
+</html>
