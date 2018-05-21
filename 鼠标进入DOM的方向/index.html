@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title></title>
+    <style type="text/css">
+        *{
+            padding:0;
+            margin:0
+        }
+        img{
+            vertical-align:middle;
+        }
+        #box{
+            width:1250px;
+            height:360px;
+            margin:100px auto;
+            font-family:'Microsoft yahei';
+        }
+        #box ul li{
+            list-style:none;
+            float:left;
+            margin:0 10px;
+            position:relative;
+            overflow:hidden;
+        }
+        #box ul li a{
+            width:230px;
+            height:360px;
+            position:absolute;
+            left: 0;
+            top: 360px;
+            background:url(img/new-bg.png);
+            text-decoration:none;
+        }
+        #box ul li a p{
+            color:#fff;
+            font-size:14px;
+            text-align:center;
+        }
+        #box ul li a p.p1{
+            padding-top:160px;
+        }
+    </style>
+ </head>
+    <body>
+        <div id='box'>
+            <ul id="list">
+                <li>
+                    <img src='img/1.jpg'/>
+                    <a href='#'>
+                        <p class='p1'>秋冬上新 领券立减20</p>
+                        <p>点击进入</p>
+                    </a>
+                </li>
+                <li>
+                    <img src='img/2.jpg'/>
+                    <a href='#'>
+                        <p class='p1'>钜惠满138减15</p>
+                        <p>点击进入</p>
+                    </a>
+                </li>
+                <li>
+                    <img src='img/3.jpg'/>
+                    <a href='#'>
+                        <p class='p1'>冬装尖品 强势登陆</p>
+                        <p>点击进入</p>
+                    </a>
+                </li>
+                <li>
+                    <img src='img/4.jpg'/>
+                    <a href='#'>
+                        <p class='p1'>十一国庆除出游季</p>
+                        <p>购新衣才够【型】</p>
+                    </a>
+                </li>
+                <li>
+                    <img src='img/5.jpg'/>
+                    <a href='#'>
+                        <p class='p1'>秋上新</p>
+                        <p>点击进入</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <script>       
+        // 思路：     
+        // 原生系列永远是最好的方法
+        // 1. 获取要交互的DOM  (get系列  query系列)
+        // 2. 判断鼠标进入DOM的方位 ()
+        // 3. 遮罩层的运动动画  
+        // 考虑到性能优化问题
+            
+            // 获取元素
+            var Box = document.getElementById("box");
+            var Li = Box.getElementsByTagName("li");
+            
+            for(let i = 0; i < Li.length; i++){
+                Li[i].onmouseenter = function(e){
+                    var x = e.clientX;
+                    var y = e.clientY;
+                    var oT = this.offsetTop;
+                    var oH = oT + this.offsetHeight;
+                    var oL = this.offsetLeft;
+                    var oW = oL + this.offsetWidth;
+
+                    var diffT = Math.abs(y - oT);
+                    var diffB = Math.abs(y - oH);
+                    var diffL = Math.abs(x - oL);
+                    var diffR = Math.abs(x - oW);
+                    console.log(diffT,diffB,diffL,diffR);                    
+                    var minValue = Math.min(diffT,diffB,diffL,diffR);
+                }
+            }
+            
+        </script>
+    </body>
+</html>
