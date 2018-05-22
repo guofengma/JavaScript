@@ -5,6 +5,7 @@ var y = 0;
 var lock = true;
 
 $(document).ready(function(){
+    
     $("#container").mousewheel(function(event,delta){
         // 防止上一次动画没有完成的时候 继续 下一次动画
         if(!lock){
