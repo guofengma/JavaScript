@@ -8,6 +8,7 @@ ul li{
 #container{
     margin:0 auto;
     position:relative;
+    overflow:hidden;
 }
 #container,img,.carousel li{
     width: 800px;
@@ -49,6 +50,8 @@ i.iconfont{
     top:50%;
     font-size:50px;
     color:#333;
+    display:none;
+    margin-top:-25px;
 }
 i.iconfont:hover{
     color:#fff;
