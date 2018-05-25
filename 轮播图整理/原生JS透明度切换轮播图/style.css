@@ -16,6 +16,10 @@ ul li{
 img{
     top:0;
     left:0;
+    opacity:0;
+}
+img.first{
+    opacity:1;
 }
 img,.circle,i{
     position:absolute;

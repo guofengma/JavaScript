@@ -3,7 +3,6 @@ $(document).ready(function(){
     // 定义信号量
     var index = 0;
     var x = $(".banner li img").innerWidth();
-    
     // 设置运动的时间间隔
     var t = setInterval(move,2500);
     // 定义一个自右向左的运动

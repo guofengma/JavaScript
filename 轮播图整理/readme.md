@@ -2,6 +2,7 @@
 
 - [1. 原生JS以图片动画切换方式的轮播图功能](#1-原生js以图片动画切换方式的轮播图功能)
 - [2. 需要复习的内容](#2-需要复习的内容)
+- [3. 原生JS利用透明度切换图片](#3-原生js利用透明度切换图片)
 
 <!-- /TOC -->
 
@@ -72,5 +73,44 @@ Box.classList.remove("box");
 console.log(Box.classList.item(4)); // item5
 ```
 
+# 3. 原生JS利用透明度切换图片
 
+    1. 轮播图自动从第1到第4张图片通过透明度切换
+    2. 切换过程中图片对应的小按钮改变样式
+    3. 小按钮的mouseover事件显示对应小按钮的图标
+    4. 点击左右切换按钮切换图片
+    
+
+    opacity兼容性
+    所有浏览器都支持 opacity 属性.
+    
+    opacity:0.5
+        
+    注释:IE8以及更早的版本支持替代的filter属性. filter:alpha(opacity=50);
+    
+    
+    transition属性是一个简写属性,用于设置四个过渡属性:
+        transition-property:        过渡效果的CSS属性名称
+        transition-duration：       过渡效果时间
+        transition-timing-function: 过渡效果曲线
+        transition-delay:           过渡效果延迟时间
+    
+    
+    {
+        width:100px;
+        transition:width 2s;
+        -moz-transition:width 2s;   /* Firefox */
+        -webkit-transition:width 2s;    /*Safari 和 Chrome*/
+        -o-transition:width 2s;     /*Opera*/
+    }
+    
     cursor 常见的几种手势
+
+    default;    默认,通常是一个箭头
+    help;       一个问号
+    auto;       默认
+    crosshair;  十字线
+    pointer;    手势
+    text;       指示文本
+    move;       某对象可被移动
+    wait;       指示程序正忙(通常是一只表或沙漏)

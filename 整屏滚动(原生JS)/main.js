@@ -8,12 +8,10 @@ document.onmousewheel = function(event){
     var event = event || window.event;
     // 先定义一个 变量 保存 event.wheelDelta的值
     var y = event.wheelDelta;
+    event.preventDefault();
+    event.returnValue = false;
 
-    if(y > 0){
-        y = 1;
-    }else if(y < 0){
-        y = - 1
-    }
+    y = y > 0 ? 1:-1
     console.log(y);
 
     delta += y;
@@ -25,4 +23,7 @@ document.onmousewheel = function(event){
         delta = 0;
     }
     Container.style.top = delta*100 + "%";
+    Container.style.transition = 'top .8s';
+    Container.style.wetkitTransition = 'top .8s';    
+    Container.style.mozTransition = 'top .8s';      
 }

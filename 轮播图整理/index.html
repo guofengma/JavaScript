@@ -5,13 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>演示</title>
+    <style>
+        button{
+            cursor:default;
+            cursor:help;
+            cursor:auto;
+            cursor:crosshair;
+            cursor:pointer;
+            cursor:text;
+            cursor:move;
+            cursor:wait;
+        }
+    </style>
 </head>
 <body>
-    
     <div class="box"></div>
     <div class="box2 box3"></div>
-    <script>
+    <button>hover</button>
 
+    <script>
         for(let i = 1; i < 5; i ++){
             var Img = document.createElement("img");
             Img.src = 'http://s.amazeui.org/media/i/demos/bing-'+ i + '.jpg';
@@ -39,7 +51,8 @@
         Box.classList.remove("box");
 
         console.log(Box.classList.item(4));
-        
+    
+
     </script>
 </body>
 </html>
