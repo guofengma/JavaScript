@@ -1,0 +1,31 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.container{
+    width: 300px;
+    height: 300px;
+    border:1px solid #000;
+    position:relative;
+}
+.small-img{
+    width: 300px;
+    height: 300px;
+}
+.small-box{
+    width: 150px;
+    height: 150px;
+    background-color:#ccc;
+    opacity:0.5;
+    position:absolute;
+    left:0;
+    top:0;
+    border:1px solid #333;
+}
+.big-img{
+    width:450px;
+    height:450px;
+    position:absolute;
+    top:0;
+    left:350px;
+}
