@@ -21,11 +21,21 @@
     left:0;
     top:0;
     border:1px solid #333;
+    display:none;
+}
+.content{
+    width: 450px;
+    height: 450px;
+    overflow:hidden;
+    border:1px solid #000;
+    margin-left:310px;
+    margin-top:-450px;
+    position:relative;
+    overflow:hidden;
 }
 .big-img{
-    width:450px;
-    height:450px;
+    display:none;
     position:absolute;
+    left:0;
     top:0;
-    left:350px;
 }
