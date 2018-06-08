@@ -46,3 +46,5 @@ Btn2.onclick = function(){
     // 不设置为false时会出现bug.即随机排序后,点击按大小排序会有不正常显示的情况.
     flag = false;
 }
+
+

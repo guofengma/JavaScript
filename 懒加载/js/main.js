@@ -16,11 +16,10 @@ function showShop(page){
     })
 }
 
-
 $(window).scroll(function(){
 
-    var A = $(window).scrollTop();  // window高度
-    var B = $(window).height();     // 滚动条的高度
+    var A = $(window).scrollTop();  // 滚动条的高度
+    var B = $(window).height();     // window的高度
     var C = $(document).height();   // document高度
 
     var rate = A/(C-B);
