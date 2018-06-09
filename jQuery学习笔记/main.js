@@ -49,7 +49,19 @@ $(document).ready(function(){
 
     $("body").append( $(".box3").clone() ) ;
     $(".box1").empty();
+
+    $("form").map(function(index,value){
+        console.log(index,value);
+    })
+    
+    $(".box4").animate({left:'300px'},1000,function(){
+        console.log("动画完成了");
+    }).stop(true,true);
+
+    $(".list li").click(function(){
+        console.log( $(this).index() );
+    });
+
 })
 
-console.log( $(document).scrollTop() );
 
