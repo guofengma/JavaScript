@@ -15,7 +15,7 @@
 
 # 2. 复习内容
 
-    clientHeight    Height+上下padding
+    clientHeight    Height + 上下padding
     clientWidth     Width + 左右padding
 
     offsetWidth     Width + 左右border + 左右padding

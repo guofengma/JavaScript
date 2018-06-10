@@ -6,7 +6,6 @@ var smallImg = document.querySelector(".small-img");
 
 container.onmouseover = function(event){
 
-    smallBox.style.display = 'block';
     bigImg.style.display = 'block';
 
     document.onmousemove = function(event){
@@ -37,6 +36,5 @@ container.onmouseover = function(event){
     }
 }
 container.onmouseout = function(){
-    smallBox.style.display = 'none';
     bigImg.style.display = 'none';
 }

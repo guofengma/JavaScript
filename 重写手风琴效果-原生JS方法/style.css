@@ -35,7 +35,6 @@ ul{
 .list .hide{
     height:0px;
     overflow:hidden;
-    transition:all .5s;
 }
 .list{
     margin-bottom:5px;
@@ -55,13 +54,20 @@ i{
     top:13px;
     right:5px;
     transform-origin:2px 7px;
+    transform:rotateZ(0deg);
 }
-.active,.rotate{
-    transition:all 0.5s;
-}
-.active{
+div.active{
     background-color:#393c4a;
 }
 .rotate{
     transform:rotateZ(90deg);
+}
+.list .hide,i,.title{
+    transition:all 0.5s;            
+}
+.list .hide h5:hover,.list .hide h5.on{
+    background-color:#1acbfc!important;
+}
+.list .title:hover{
+    background-color:#3d8332;
 }

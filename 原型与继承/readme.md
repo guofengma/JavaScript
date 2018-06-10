@@ -224,7 +224,6 @@ console.log(Array.prototype.constructor === {}.constructor);    // false
 
 
 # 5. 判断一个对象是数组与对象的方法
-
     
 ```js
 1. instanceof 运算符
