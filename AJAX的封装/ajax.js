@@ -1,11 +1,11 @@
-// 封装ajax请求的函数
-// 参数: obj 是一个对象,包含如下属性:
-        // method   请求方式:GET/POST
-        // url      请求数据的地址
-        // data     请求的数据
-        // async    true 异步, false 同步
-        // success  成功的回调函数
-        // failture 失败的回调函数
+/**
+ * @param method {String} 请求方式
+ * @param url    {String} 请求数据地址
+ * @param data   {Object} 请求的数据
+ * @param async  {Boolean} 是否异步
+ * @method success  请求成功的回调函数
+ * @method failture 请求失败时回调函数
+*/
 
 function ajax(obj){
     // 创建对象
@@ -48,7 +48,6 @@ function params(obj){
     var arr = [];
     for(var key in obj){
         var str = '';
-
         str += key;
         str += '=';
         str += encodeURIComponent( obj[key] );
