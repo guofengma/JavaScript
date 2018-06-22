@@ -1,0 +1,49 @@
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.container li img {
+  width: 100%;
+  height: 100%;
+}
+.container {
+  width: 418px;
+  height: 418px;
+  border: 1px solid #f2f2f2;
+  position:relative;
+}
+.container li {
+  width: 418px;
+  height: 418px;
+  position:absolute;
+  left:0;
+  top:0;
+}
+.scan {
+  width: 216px;
+  height: 216px;
+  background-color: #3d6ece;
+  opacity: 0.3;
+  position:absolute;
+  left:0;
+  top:0;
+  z-index:100;
+}
+.small-img{
+  width: 420px;
+  height:58px;
+  margin-top:10px;
+}
+.small-img li,.small-img li img{
+  width: 56px;
+  height: 56px;
+}
+.small-img li{
+  margin:0 22px;
+  float:left;
+  border:2px solid #fff;
+}
+.active{
+  border:2px solid #000;
+}

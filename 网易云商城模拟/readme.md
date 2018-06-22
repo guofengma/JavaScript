@@ -15,3 +15,9 @@
 
     <meta name="applicable-device" content="pc,mobile">
     表示页面同时适合在移动设备和PC上进行浏览
+
+
+# background-image合并写法
+
+    background:background-color/background-image/background-repeat/background-attachment
+    /background-position
