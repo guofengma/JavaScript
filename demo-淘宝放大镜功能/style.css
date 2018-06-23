@@ -19,6 +19,13 @@ ul {
   position:absolute;
   left:0;
   top:0;
+  z-index:1;
+}
+/* .container li.visible{
+  display:block;
+} */
+.container li.visible{
+  z-index:100;
 }
 .scan {
   width: 216px;
@@ -29,6 +36,7 @@ ul {
   left:0;
   top:0;
   z-index:100;
+  display:none;
 }
 .small-img{
   width: 420px;
@@ -44,6 +52,29 @@ ul {
   float:left;
   border:2px solid #fff;
 }
-.active{
+.small-img li.active{
   border:2px solid #000;
+}
+
+.right-box{
+  width: 418px;
+  height: 418px;
+  position:absolute;
+  left:450px;
+  top:8px;
+  border:1px solid #000;
+  overflow:hidden;
+}
+.right-box li,.right-box li img{
+  width: 600px;
+  height: 600px;
+}
+.right-box li{
+  display:none;
+  position:absolute;
+  left:0;
+  top:0;
+}
+.right-box li.seen{
+  display:block;
 }
