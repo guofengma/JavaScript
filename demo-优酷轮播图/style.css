@@ -1,0 +1,79 @@
+ul{
+    padding: 0;
+    margin: 0;
+    list-style:none;
+}
+.container{
+    width: 1190px;
+    height: 291px;
+    position:relative;
+    margin:51px auto 0;
+}
+.container li,.container li img{
+    width: 640px;
+    height: 269px;
+}
+.container li{
+    position:absolute;
+    transform-origin:0% 50%;
+    transition:all 0.5s;
+}
+/*  怎么排列后面看不见的图片部分 每张图片的位移分别是多少 */
+.container .list1{
+    transform:translateX(216px);
+    transform-origin:50% 50%;
+    z-index:10;
+}
+.container .list2{
+    transform:translateX(0) scale(0.83);
+    z-index:2;
+}
+.container .list3{
+    transform:translateX(164px) scale(0.83);
+}
+.container .list4{
+    transform:translateX(328px) scale(0.83);
+}
+.container .list5{
+    transform:translateX(492px) scale(0.83);
+}
+.container .list6{
+    transform:translateX(658px) scale(0.83);
+    z-index:2;
+}
+.left-btn,.right-btn{
+    width: 45px;
+    height: 45px;
+    position:absolute;
+    top:50%;
+    margin-top:-22px;
+    z-index:100;
+    cursor:pointer;
+}
+.left-btn{
+    background-image:url("./imgs/left-btn.png");
+    left:0;
+}
+.right-btn{
+    background-image:url("./imgs/right-btn.png");
+    right:0;
+}
+.buttons{
+    width: 1190px;
+    height:10px;
+    position:absolute;
+    bottom:0;
+    text-align:center;
+    line-height:10px;
+}
+.buttons span.active{
+    background-color:#69aaec;
+}
+span{
+    display:inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius:50%;
+    background-color:#c3c3c3;
+    cursor:pointer;
+}

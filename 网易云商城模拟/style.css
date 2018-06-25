@@ -49,14 +49,152 @@ ul, ol {
 
 .top-nav .m-search {
   width: 300px;
-  height: 70px;
   float: left;
+  height: 70px;
   margin-left: 334px;
+  position: relative;
 }
 
 .top-nav .search-box {
+  margin-top: 15px;
+  width: 297px;
+  border-radius: 20px;
+  height: 32px;
+  border: 2px solid #d9d9d9;
+}
+
+.top-nav .search-box input {
+  border-width: 0;
+  outline: none;
+  width: 80%;
+  margin: 10px 0 0 34px;
+}
+
+.top-nav .search-box form {
+  width: 100%;
+  height: 38px;
+  background: url("./images/modules.png") no-repeat -1px -2px;
+}
+
+.m-search .wrap {
   width: 300px;
-  height: 48px;
-  border: 2px solid #dfdfdf;
-  border-radius: 5px;
+  height: auto;
+  background-color: #fff;
+  position: absolute;
+  top: 56px;
+  box-shadow: 0 1px 1px #000;
+  display: none;
+}
+
+.m-search ul li {
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  text-indent: 2em;
+  color: #888;
+  cursor: pointer;
+}
+
+.m-search ul li:hover {
+  background-color: whitesmoke;
+}
+
+.m-search p.title {
+  font-weight: bold;
+  color: #000;
+  line-height: 30px;
+  height: 30px;
+  text-indent: 2em;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.m-shopcar {
+  width: 36px;
+  margin: 36px;
+  margin: 17px 0 0 41px;
+  float: left;
+  position: relative;
+}
+
+.m-shopcar a {
+  width: 36px;
+  height: 36px;
+  display: inline-block;
+  cursor: pointer;
+  background: url("./images/modules.png") -108px -160px;
+}
+
+.m-shopcar span {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: url("./images/modules.png") -156px -158px;
+  position: absolute;
+  left: 26px;
+  top: -8px;
+  text-align: center;
+  color: #fff;
+}
+
+.m-user {
+  width: 62px;
+  height: 70px;
+  margin-left: 37px;
+  float: left;
+  position: relative;
+}
+
+.m-user .login {
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+  text-align: center;
+  line-height: 36px;
+  margin-top: 17px;
+}
+
+.m-user .arrow {
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-top-color: #000;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
+.m-user .login-box {
+  width: 160px;
+  height: auto;
+  position: absolute;
+  top: 65px;
+  left: -56px;
+  box-shadow: 0 1px 1px #000;
+  display: none;
+  z-index: 100;
+  background-color: #fff;
+}
+
+.m-user li {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-indent: 2em;
+  cursor: pointer;
+}
+
+.m-user li:hover {
+  background-color: #f8f8f8;
+}
+
+.m-user:hover .login-box {
+  display: block;
+}
+
+.m-user:hover .arrow {
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-bottom-color: #000;
+  top: 40%;
 }

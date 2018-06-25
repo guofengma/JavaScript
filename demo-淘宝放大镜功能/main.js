@@ -18,10 +18,9 @@ var length = aBigImg.length;
 var oRightBox = document.querySelector(".right-box");
 // 获取里面要展示的图片
 var aLi = oRightBox.getElementsByTagName("li");
-// 右边大图移动的速率
-var rate = parseInt(getValue(oScan,"width"))/parseInt(getValue(oRightBox,"width"));
+// 放大倍数,不要弄反了
+var rate = parseInt(getValue(oRightBox,"width"))/parseInt(getValue(oScan,"width"));
 console.log(rate);
-
 // 当前显示的是第几张图片
 var number = 0;
 
@@ -39,7 +38,6 @@ var number = 0;
 // }
 
 // 通过设置 z-index 实现  同样的效果
-
 for(let i = 0; i < length; i++){
     aSmallImg[i].index = i;
     aSmallImg[i].onmouseover = function(){
@@ -54,6 +52,8 @@ for(let i = 0; i < length; i++){
 }
 oContainer.onmouseover = function(){
     oScan.style.display = "block";
+    oRightBox.style.display = "block";
+
     for(let i = 0; i < length; i++){
         aLi[i].className = "";
     }
@@ -77,8 +77,8 @@ oContainer.onmouseover = function(){
         oScan.style.left = x  + 'px';
         oScan.style.top = y + 'px';
 
-        aLi[number].style.left = -rate*getValue(aLi[0],'width') + 'px';
-        aLi[number].style.top = -rate*getValue(aLi[0],'height') + 'px';
+        aLi[number].style.left = -rate * x + 'px';
+        aLi[number].style.top = -rate * y + 'px';
     }
 }
 oContainer.onmouseout = function(){
@@ -87,7 +87,6 @@ oContainer.onmouseout = function(){
         aLi[i].className = "";
     }
 };
-
 function getValue(ele,attr){
     if(window.getComputedStyle){
         return getComputedStyle(ele)[attr]

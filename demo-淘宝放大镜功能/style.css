@@ -62,12 +62,12 @@ ul {
   position:absolute;
   left:450px;
   top:8px;
-  border:1px solid #000;
   overflow:hidden;
+  display:none;
 }
 .right-box li,.right-box li img{
-  width: 600px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
 }
 .right-box li{
   display:none;
