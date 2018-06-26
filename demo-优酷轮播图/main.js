@@ -64,5 +64,18 @@ function setColor(){
     aSpan[index].className = "active";
 }
 
-
+// 点击左右两边的图片也可以切换轮播图,利用事件委托
+// 把某一类事件绑定在其父级上
+document.querySelector("ul").addEventListener("click",function(event){
+    var event = event || window.event;
+    console.log(event);
+    switch(event.target.parentNode.classList[0]){
+        case 'list2':
+        rightCheck();
+        break;
+        case "list6":
+        leftCheck();
+        break;
+    }
+},false);
 
