@@ -86,3 +86,33 @@ var Box = document.querySelector(".box");
 Box.onclick = function(){
     Box.style.backgroundColor = '#00f';
 }
+
+function m(){
+    var array = [];
+    for(var i = 0; i < 3; i++){
+        array[i] = function(){
+            console.log(i);
+        }
+    }
+    return array;
+}
+var a = m();
+console.log(a);
+a[0](); // 3
+a[1](); // 3
+a[2](); // 3
+
+function m(){
+    var array = [];
+    for(let i = 0; i < 3; i++){
+        array[i] = function(){
+            console.log(i);
+        }
+    }
+    return array;
+}
+var a = m();
+console.log(a);
+a[0](); // 0
+a[1](); // 1
+a[2](); // 2

@@ -16,17 +16,30 @@ function drag(event){
         case "drop":
         event.preventDefault();
         var imgFiles = event.dataTransfer.files;
-        console.log(event.dataTransfer.files.length);   // 拖进来的图片数量
+        // console.log(event.dataTransfer.files.length);   // 拖进来的图片数量
 
-        var reader = new FileReader();
+        // var reader = new FileReader();
+        // reader.readAsDataURL(imgFiles[0]);
+        // reader.onload = function(){
+        //     console.log("读取完成");
+        //     var img = new Image();
+        //     img.src = reader.result;   //  URL数据
+        //     img.style.width = "100px";
+        //     oContainer.appendChild(img);
+        // }
 
-        reader.readAsDataURL(imgFiles[0]);
-        reader.onload = function(){
-            console.log("读取完成");
-            var img = new Image();
-            img.src = reader.result;   //  URL数据
-            img.style.width = "100px";
-            oContainer.appendChild(img);
+        for(let i = 0; i < imgFiles.length; i++){
+            var reader = new FileReader();
+            reader.readAsDataURL(imgFiles[i]);
+            reader.onload = function(){
+                console.log(i);
+                console.log(reader);
+                var img = new Image();
+                img.src = reader.result;
+                img.style.width = "100px";
+                img.style.height = '100px';
+                oContainer.appendChild(img);
+            }
         }
         break;
     }
@@ -145,3 +158,5 @@ function drop(event){
 //         event.target.appendChild(document.getElementById(data));
 //     }
 // })
+
+
