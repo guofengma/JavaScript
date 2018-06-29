@@ -46,7 +46,6 @@ function drag(event){
 }
 // TODO 实现拖拽多张图片的功能
 
-
 document.addEventListener("dragstart",pdrop,false);
 document.addEventListener("drag",pdrop,false);
 document.addEventListener("dragend",pdrop,false);
