@@ -28,7 +28,6 @@ var canvas3 = document.getElementById("canvas3");
 
 function Puzzle(){
     this.ctx = canvas3.getContext("2d");
-    this.imgList = document.querySelector("img");
 }
 
 Puzzle.prototype = {
@@ -52,4 +51,38 @@ var puzzle = new Puzzle();
 puzzle.init('./img/1.jpg');
 
 
-// 对双重for循环进行优化
+
+var canvas4 = document.getElementById("canvas4");
+
+if(canvas4.getContext){
+    var ctx4 = canvas4.getContext("2d");
+    var img = new Image();
+    img.src = "./img/1.jpg";
+    img.onload = function(){
+        ctx4.drawImage(img,0,0,663,663,0,0,300,300);
+    }
+    // 取得图像的数据URI
+    var imgURI = canvas4.toDataURL("image/jpeg");   
+    // 显示图像
+    var image = document.createElement("img");
+    image.src = imgURI;
+    document.body.appendChild(image);
+}
+
+// TODO 报错,待解决
+// function getBase64(url){
+//     var Img = new Image();
+//     dataURL = '';
+//     Img.src = url;
+//     Img.onload = function(){
+//         var canvas = document.createElement("canvas");
+//         width = Img.width;
+//         height = Img.height;
+//         canvas.height = height;
+//         canvas.width = width;
+//         canvas.getContext('2d').drawImage(Img,0,0,663,663,0,0,300,300);
+//         dataURL = canvas.toDataURL("image/png");
+//     }
+//     return dataURL
+// }
+// getBase64("./img/1.jpg");

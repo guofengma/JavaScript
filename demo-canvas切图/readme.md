@@ -2,6 +2,7 @@
 
 - [1. tips & bugs](#1-tips--bugs)
 - [2. drawImage](#2-drawimage)
+- [3. toDataURL](#3-todataurl)
 
 <!-- /TOC -->
 
@@ -31,3 +32,27 @@
         y:          在画布上放置图像的y坐标
         width:      要使用的图像的宽度(伸展或缩小图像)
         height:     要使用的图像的高度(伸展或缩小图像)
+
+# 3. toDataURL
+
+    可以导出在<canvas>元素上绘制的图像
+    
+```js
+var canvas = document.getElementById("canvas");
+
+if(canvas.getContext){
+    var ctx = canvas.getContext("2d");
+    var imgURI = canvas.toDataURL("image/png");
+    var image = document.createElement("img");
+    image.src = imgURI;
+    document.body.appendChild(image);
+}
+```
+    默认情况下,浏览器会将图像编码为png格式.
+
+    dataURL语法:一个完整的dataURI是下面这样的:
+        data:[<mediatype>][;base64],<data>
+
+    mediatype声明了文件类型,遵循MIME规则,如'image/png','text/plain';之后是编码类型,这里只涉及base64;后面就是
+    文件编码后的内容.
+    
