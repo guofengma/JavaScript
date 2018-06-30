@@ -10,3 +10,14 @@ searchBox.onblur = function(){
     oWrap.style.display = 'none';
 }
 
+// 获取轮播图左右按钮
+var oLeft = document.querySelector(".left");
+var oRight = document.querySelector(".right");
+// 获取下方的小原点
+var oCircles = document.querySelector(".circles");
+var aSpan = oCircles.getElementsByTagName("span");
+// 获取轮播图父级
+var Banner = document.getElementById("banner");
+// 获取所有图片
+var aLi = Banner.getElementsByTagName("li");
+
