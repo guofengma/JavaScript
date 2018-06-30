@@ -24,21 +24,19 @@
         video{
             width:100%;
             height:330px;
+            object-fit:fill;
         }
         .box{
             width:100%;
             height:35px;
             font-size:12px;
+            text-align:center;
         }
-        .box p{
+        .box span{
             cursor:pointer;
-            padding:0 10px;
-        }
-        .box .left-open{
-            float:left;
-        }
-        .box .right-close{
-            float:right;
+            line-height:35px;
+            padding:0 20px;
+            color:#f00;
         }
     </style>
 </head>
@@ -47,8 +45,10 @@
         <h2>H5 - 视频直播</h2>
         <video class="video" poster="./images/1.jpg"></video>
         <div class="box">
-            <p class="left-open">打开摄像头</p>
-            <p class="right-close">关闭摄像头</p>
+            <span class="left-open">打开摄像头</span>
+            <span class="fair">美颜</span>
+            <span class="photograph">拍照</span>
+            <span class="right-close">关闭摄像头</span>
         </div>
     </div>
     <script src="./main.js"></script>
