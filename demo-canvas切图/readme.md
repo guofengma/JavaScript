@@ -2,6 +2,8 @@
 
 - [1. tips & bugs](#1-tips--bugs)
 - [2. drawImage](#2-drawimage)
+    - [2.1. javaScript2](#21-javascript2)
+    - [2.2. javaScript3](#22-javascript3)
 - [3. toDataURL](#3-todataurl)
 
 <!-- /TOC -->
@@ -32,6 +34,16 @@
         y:          在画布上放置图像的y坐标
         width:      要使用的图像的宽度(伸展或缩小图像)
         height:     要使用的图像的高度(伸展或缩小图像)
+
+## 2.1. javaScript2
+
+    在画布上定位图像:
+        ctx.drawImage(image,x,y);
+
+## 2.2. javaScript3
+
+    在画布上定位图像并规定图像的宽高:
+        ctx.drawImage(image,x,y,width,height);
 
 # 3. toDataURL
 
