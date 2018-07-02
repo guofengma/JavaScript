@@ -18,8 +18,6 @@ function wrap(event){
         break;
     }
 }
-
-
 // 获取轮播图左右按钮
 var oLeft = document.querySelector(".left");
 var oRight = document.querySelector(".right");

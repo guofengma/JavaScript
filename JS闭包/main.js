@@ -87,6 +87,8 @@ Box.onclick = function(){
     Box.style.backgroundColor = '#00f';
 }
 
+
+
 function m(){
     var array = [];
     for(var i = 0; i < 3; i++){
