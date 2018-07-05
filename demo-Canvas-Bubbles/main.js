@@ -15,7 +15,7 @@
 
 4. 采用面向对象的写法,先画一个圆,出现在画布上的随机地方,随机颜色,随机大小
     可以先定义一个函数 random (min,max);
-    4.1  颜色不要太多,可以先选几个颜色 保存在一个数组里
+    4.1  颜色随机,颜色不要太多,可以先选几个颜色 保存在一个数组里
     4.2  圆心位置随机,(要保证在画布范围内)
     4.3  圆的大小随机
 
@@ -50,7 +50,7 @@ setInterval(function(){
 },1000/60);
 */
 
-// TODO  让小球运动起来
+// TODO  让300个小球运动起来
 
 // 对上面的写法优化
 var canvas = document.getElementById("canvas");
@@ -90,12 +90,13 @@ Bubble.prototype = {
     init:function(){
         this.x = random(0,w);
         this.y = random(0,h);
-        this.r = random(2,5);
+        this.r = random(1,3);
         this.color = colors[Math.floor(random(0,len))];
         this.vx = random(-1,1);
         this.vy = random(-1,2);
     },
     draw:function(){
+        // ctx.clearRect(0,0,w,h);
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.arc(this.x,this.y,this.r,0,2*Math.PI,false);
@@ -114,18 +115,17 @@ Bubble.prototype = {
         this.draw();
     }
 }
+
+var aBubbles = [];
 function createBubble(num){
-    var bubble = new Bubble();
     for(let i = 0; i < num; i++){
+        var bubble = new Bubble();
         bubble.init();
         bubble.draw();
         aBubbles.push(bubble);
     }
 }
-createBubble(300);
+createBubble(400);
 
-setInterval(function(){
-    for(item of aBubbles){
-        console.log(item);
-    }
-},1000/60);
+
+
