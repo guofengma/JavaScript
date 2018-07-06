@@ -16,18 +16,7 @@ function drag(event){
         case "drop":
         event.preventDefault();
         // console.log(event.dataTransfer.files.length);   // 拖进来的图片数量
-        
-        // var reader = new FileReader();
-        // reader.readAsDataURL(imgFiles[0]);
-        // reader.onload = function(){
-            //     console.log("读取完成");
-            //     var img = new Image();
-            //     img.src = reader.result;   //  URL数据
-            //     img.style.width = "100px";
-            //     oContainer.appendChild(img);
-            // }
         var imgFiles = event.dataTransfer.files;
-
         for(let i = 0; i < imgFiles.length; i++){
             var reader = new FileReader();
             reader.readAsDataURL(imgFiles[i]);

@@ -108,3 +108,17 @@ Banner.addEventListener("mouseover",function(){
 Banner.addEventListener("mouseout",function(){
     changeImage();
 },false);
+
+// 点击下方的小按钮,显示对应的图片
+for(let i = 0; i < aSpan.length; i++){
+    aSpan[i].index = i;
+    aSpan[i].onclick = function(){
+        for(let j = 0; j < len; j++){
+            aLi[j].className = "";
+        }
+        aLi[this.index].className = "active";
+        index = this.index;
+        changeBannerColor();
+        changeDotColor();
+    }
+}
