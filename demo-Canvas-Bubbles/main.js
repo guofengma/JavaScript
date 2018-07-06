@@ -35,23 +35,6 @@ window.onresize = function(){
     canvas.height = window.innerHeight;
 }
 */
-
-/* 小球自由落体运动
-var y = 10;
-setInterval(function(){
-    ctx.clearRect(0,0,600,600);
-    ctx.beginPath();
-    ctx.fillStyle="#f00";
-    ctx.arc(100,y,20,0,2*Math.PI);
-    // 注意要抬起画笔 才能让小球自由落体
-    ctx.closePath();
-    ctx.fill();
-    y += 1;
-},1000/60);
-*/
-
-// TODO  让300个小球运动起来
-
 // 对上面的写法优化
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
@@ -90,13 +73,12 @@ Bubble.prototype = {
     init:function(){
         this.x = random(0,w);
         this.y = random(0,h);
-        this.r = random(1,3);
+        this.r = random(2,4);
         this.color = colors[Math.floor(random(0,len))];
         this.vx = random(-1,1);
-        this.vy = random(-1,2);
+        this.vy = random(-1,1);
     },
     draw:function(){
-        // ctx.clearRect(0,0,w,h);
         ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.arc(this.x,this.y,this.r,0,2*Math.PI,false);
@@ -115,7 +97,7 @@ Bubble.prototype = {
         this.draw();
     }
 }
-
+// 创建一个空数组,用来保存生成的每个bubble.
 var aBubbles = [];
 function createBubble(num){
     for(let i = 0; i < num; i++){
@@ -125,7 +107,28 @@ function createBubble(num){
         aBubbles.push(bubble);
     }
 }
-createBubble(400);
+createBubble(350);
+
+clearInterval(timer);
+var timer = setInterval(function(){
+    ctx.clearRect(0,0,w,h);
+    for(let item of aBubbles){
+        item.move();
+        console.log(item);
+    }
+},1000/60);
 
 
-
+/* 小球自由落体运动
+var y = 10;
+setInterval(function(){
+    ctx.clearRect(0,0,600,600);
+    ctx.beginPath();
+    ctx.fillStyle="#f00";
+    ctx.arc(100,y,20,0,2*Math.PI);
+    // 注意要抬起画笔 才能让小球自由落体
+    ctx.closePath();
+    ctx.fill();
+    y += 1;
+},1000/60);
+*/

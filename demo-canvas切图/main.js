@@ -41,7 +41,6 @@ Puzzle.prototype = {
             for(let i = 0; i < 3; i++){
                 for(let j = 0; j < 3; j++){
                     that.ctx.drawImage(img,j*221,i*221,221,221,j*101,i*101,100,100);
-                    
                 }
             }
         }
@@ -51,38 +50,19 @@ var puzzle = new Puzzle();
 puzzle.init('./img/1.jpg');
 
 
-
 var canvas4 = document.getElementById("canvas4");
-
 if(canvas4.getContext){
     var ctx4 = canvas4.getContext("2d");
     var img = new Image();
     img.src = "./img/1.jpg";
     img.onload = function(){
-        ctx4.drawImage(img,0,0,663,663,0,0,300,300);
+        ctx4.drawImage(img,0,0,300,300,0,0,300,300);
     }
     // 取得图像的数据URI
-    var imgURI = canvas4.toDataURL("image/jpeg");   
+    var imgURI = canvas4.toDataURL("image/png");   
     // 显示图像
     var image = document.createElement("img");
     image.src = imgURI;
     document.body.appendChild(image);
 }
 
-// TODO 报错,待解决
-// function getBase64(url){
-//     var Img = new Image();
-//     dataURL = '';
-//     Img.src = url;
-//     Img.onload = function(){
-//         var canvas = document.createElement("canvas");
-//         width = Img.width;
-//         height = Img.height;
-//         canvas.height = height;
-//         canvas.width = width;
-//         canvas.getContext('2d').drawImage(Img,0,0,663,663,0,0,300,300);
-//         dataURL = canvas.toDataURL("image/png");
-//     }
-//     return dataURL
-// }
-// getBase64("./img/1.jpg");
