@@ -18,9 +18,9 @@ function drag(event){
         // dataTransfer drop drag 拖拽时产生的对象,数据载体
         // 属性 dataTransfer.files  
         var imgFiles = event.dataTransfer.files;
-        for(let i = 0; i < imgFiles.length; i++){
+        for(let i = 0,imgFile;imgFile=imgFiles[i++]; ){
             var reader = new FileReader();
-            reader.readAsDataURL(imgFiles[i]);
+            reader.readAsDataURL(imgFile);
             console.log(reader);
             reader.onload = function(){
                 var oImg = new Image();
