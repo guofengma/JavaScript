@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>File API</title>
+    <style>
+        #fileEle{
+            display:none;
+        }
+        #fileSelect{
+            color:#f00;
+            cursor:pointer;
+        }
+        #dropbox{
+            width: 300px;
+            height: 300px;
+            border:1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <input type="file" id="input" multiple>
+    <form action="" name="uploadForm">
+        <p>
+            <input type="file" name="myFiles" id="File" multiple>
+            selected files : <span id="fileNum">0</span>
+            total size: <span id="fileSize">0</span>
+        </p>
+        <p><input type="submit" value="send file"></p>
+    </form>
+    <input type="file" id="fileEle" multiple accept="image/*"/>
+    <label for="fileEle" id="fileSelect">选择文件</label>
+
+    <div id="dropbox"></div>
+    
+    <script src="./main.js"></script>
+</body>
+</html>

@@ -5,10 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>H5 - 音频流</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
+        #canvas{
+            background-color:#000;
+        }
+    </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
-    <audio src="./mp3/jay.mp3" id="audio"></audio>
+    <audio src="./mp3/jay.mp3" autoplay="true" controls></audio>
+
     <script src="./main.js"></script>
 </body>
 </html>

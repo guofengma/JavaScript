@@ -15,24 +15,25 @@ function drag(event){
         break;
         case "drop":
         event.preventDefault();
-        // console.log(event.dataTransfer.files.length);   // 拖进来的图片数量
+        // dataTransfer drop drag 拖拽时产生的对象,数据载体
+        // 属性 dataTransfer.files  
         var imgFiles = event.dataTransfer.files;
         for(let i = 0; i < imgFiles.length; i++){
             var reader = new FileReader();
             reader.readAsDataURL(imgFiles[i]);
+            console.log(reader);
             reader.onload = function(){
-                console.log(reader);
-                var img = new Image();
-                img.src = reader.result;
-                img.style.width = "100px";
-                img.style.height = '100px';
-                oContainer.appendChild(img);
+                var oImg = new Image();
+                oImg.style.width = "100px";
+                oImg.style.height = "100px";
+                // 注意: 此时不要用 reader.result  要用 this.result
+                oImg.src = this.result;
+                oContainer.appendChild(oImg);
             }
-        }
+        }       
         break;
     }
 }
-// TODO 实现拖拽多张图片的功能
 
 document.addEventListener("dragstart",pdrop,false);
 document.addEventListener("drag",pdrop,false);
