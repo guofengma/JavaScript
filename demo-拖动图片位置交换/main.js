@@ -40,110 +40,105 @@ for(let i = 0; i < len; i++){
     },0);
 }
 // 给页面的元素设置事件监听
-// oContainer.addEventListener("mousedown",drag,false);
-// document.addEventListener("mousemove",drag,false);
-// document.addEventListener("mouseup",drag,false);
+oContainer.addEventListener("mousedown",drag,false);
+document.addEventListener("mousemove",drag,false);
+document.addEventListener("mouseup",drag,false);
 
-// var x1,y1,startX,startY,x2,y2;
-// // 设置事件分流,默认没有点中元素
-// var toggle = false;
-// // 设置一个变量用于保存点击下去的目标图片的父级,初始值为null
-// var ele = null;
-
-// function drag(event){
-//     var event = event || window.event;
-//     switch(event.type){
-//         case "mousedown" :
-//         toggle = true;
-//         if(event.target.parentNode.tagName == "LI"){
-//             ele = event.target.parentNode;
-//             console.log(ele);
-//             startX = ele.offsetLeft;
-//             startY = ele.offsetTop;
-//             x1 = event.clientX;
-//             y1 = event.clientY;
-//             ele.style.zIndex = 100;
-//         }
-//         break;
-//         case "mousemove" :
-//         if(toggle){
-//             event.preventDefault();
-//             x2 = event.clientX;
-//             y2 = event.clientY;
-//             ele.style.left = startX + x2 - x1 + "px";
-//             ele.style.top = startY + y2 - y1 + "px";
-//         }
-//         break;
-//         case "mouseup" :
-//         if(event.target.parentNode.tagName == "LI"){
-//             ele.style.zIndex = 1;
-//         }
-//         toggle = false;
-//         if( (x2 - oContainer.offsetLeft > ele.offsetLeft) && (x2 - oContainer.offsetLeft < ele.offsetLeft + ele.offsetWidth) 
-//         && (y2 - oContainer.offsetTop > ele.offsetTop) && (y2 - oContainer.offsetTop) < (ele.offsetTop + ele.offsetHeight)
-//         && (event.target.parentNode != ele) ){
-//             console.log("进入了");
-//         }
-//         break;
-//     }
-// }
-
-
-// 下面是以两张图片为例(第一张和第二张), 判断一张图片进入另一张图片的临界点
-
-var Img1 = document.querySelector(".img1");
-var Img2 = document.querySelector(".img2");
-
-Img1.addEventListener("mousedown",drag,false);
-Img1.addEventListener("mousemove",drag,false);
-Img1.addEventListener("mouseup",drag,false);
-
-var x1,y1,x2,y2,startX,startY;
-var flag = false;
+var x1,y1,startX,startY,x2,y2;
+// 设置事件分流,默认没有点中元素
+var toggle = false;
+// 设置一个变量用于保存点击下去的目标图片的父级,初始值为null
 var ele = null;
 
 function drag(event){
     var event = event || window.event;
-    var target = event.type;
-    switch(target){
+    switch(event.type){
         case "mousedown" :
-        flag = true;
-        x1 = event.clientX;
-        y1 = event.clientY;
-        startX = Img1.offsetLeft;
-        startY = Img1.offsetTop;
-        console.log(startX,startY,x1,y1);
-        Img1.style.zIndex = 100; 
-        console.log("鼠标按下");
+        toggle = true;
+        if(event.target.parentNode.tagName == "LI"){
+            ele = event.target.parentNode;
+            console.log(ele);
+            startX = ele.offsetLeft;
+            startY = ele.offsetTop;
+            x1 = event.clientX;
+            y1 = event.clientY;
+            ele.style.zIndex = 100;
+        }
         break;
         case "mousemove" :
-        if(flag){
+        if(toggle){
             event.preventDefault();
             x2 = event.clientX;
             y2 = event.clientY;
-            Img1.style.left = startX + x2 - x1 + "px";
-            Img1.style.top = startY + y2 - y1 + "px";
+            ele.style.left = startX + x2 - x1 + "px";
+            ele.style.top = startY + y2 - y1 + "px";
         }
         break;
         case "mouseup" :
         if(event.target.parentNode.tagName == "LI"){
-            Img2.style.zIndex = 1;
+            ele.style.zIndex = 1;
         }
-        if(x2 - oContainer.offsetLeft > Img2.offsetLeft && x2 -oContainer.offsetLeft < Img2.offsetLeft + 180
-            && y2 - oContainer.offsetTop > Img2.offsetTop && y2 -oContainer.offsetTop < Img2.offsetTop + 150 ){
-                console.log("进入了");
-                Img1.style.left = Img2.offsetLeft + 'px';
-                Img1.style.top = Img2.offsetTop + 'px';
-                Img2.style.left = startX + 'px';
-                Img2.style.top = startY + 'px';
-                Img2.style.transform = "scale(1.05)";
-                Img2.style.transition = "all .2s";
-            }else{
-                Img1.style.left = startX + "px";
-                Img1.style.top = startY + "px";
-        }
-        console.log("鼠标抬起");
-        flag = false;
+        toggle = false;
         break;
     }
 }
+
+
+// 下面是以两张图片为例(第一张和第二张), 判断一张图片进入另一张图片的临界点
+
+// var Img1 = document.querySelector(".img1");
+// var Img2 = document.querySelector(".img2");
+
+// Img1.addEventListener("mousedown",drag,false);
+// Img1.addEventListener("mousemove",drag,false);
+// Img1.addEventListener("mouseup",drag,false);
+
+// var x1,y1,x2,y2,startX,startY;
+// var flag = false;
+// var ele = null;
+
+// function drag(event){
+//     var event = event || window.event;
+//     var target = event.type;
+//     switch(target){
+//         case "mousedown" :
+//         flag = true;
+//         x1 = event.clientX;
+//         y1 = event.clientY;
+//         startX = Img1.offsetLeft;
+//         startY = Img1.offsetTop;
+//         console.log(startX,startY,x1,y1);
+//         Img1.style.zIndex = 100; 
+//         console.log("鼠标按下");
+//         break;
+//         case "mousemove" :
+//         if(flag){
+//             event.preventDefault();
+//             x2 = event.clientX;
+//             y2 = event.clientY;
+//             Img1.style.left = startX + x2 - x1 + "px";
+//             Img1.style.top = startY + y2 - y1 + "px";
+//         }
+//         break;
+//         case "mouseup" :
+//         if(event.target.parentNode.tagName == "LI"){
+//             Img2.style.zIndex = 1;
+//         }
+//         if(x2 - oContainer.offsetLeft > Img2.offsetLeft && x2 -oContainer.offsetLeft < Img2.offsetLeft + 180
+//             && y2 - oContainer.offsetTop > Img2.offsetTop && y2 -oContainer.offsetTop < Img2.offsetTop + 150 ){
+//                 console.log("进入了");
+//                 Img1.style.left = Img2.offsetLeft + 'px';
+//                 Img1.style.top = Img2.offsetTop + 'px';
+//                 Img2.style.left = startX + 'px';
+//                 Img2.style.top = startY + 'px';
+//                 Img2.style.transform = "scale(1.05)";
+//                 Img2.style.transition = "all .2s";
+//             }else{
+//                 Img1.style.left = startX + "px";
+//                 Img1.style.top = startY + "px";
+//         }
+//         console.log("鼠标抬起");
+//         flag = false;
+//         break;
+//     }
+// }

@@ -2,6 +2,7 @@
 
 - [1. File](#1-file)
 - [2. dataTransfer](#2-datatransfer)
+- [3. window.URL.createObjectURL()/window.URL.revokeObjectURL()](#3-windowurlcreateobjecturlwindowurlrevokeobjecturl)
 
 <!-- /TOC -->
 
@@ -16,7 +17,7 @@
 
 # 2. dataTransfer
 
-    在进行拖放操作时,DataTransfer对象用来保存,通过拖放动作,拖动到浏览器的数据.它可以保存一项或多项数据,一种或多种数据类型.
+    在进行拖放操作时,DataTransfer对象用来保存通过拖放动作,拖动到浏览器的数据.它可以保存一项或多项数据,一种或多种数据类型.
     这个对象在所有的拖动事件属性 dataTransfer 都是可用的.
 
     属性概述            类型(Type)
@@ -34,3 +35,14 @@
     setData()
     为一个给定的类型设置数据.
     obj.setData(type,data);
+
+# 3. window.URL.createObjectURL()/window.URL.revokeObjectURL()
+
+    objectURL = URL.createObjectURL(obj);
+    用来创建URL的File对象或者Blob对象
+
+    注意: 在每次调用 createObjectURL()方法时,都会创建一个新的URL对象,即使你用相同的对象作为参数创建过.
+
+    URL.revokeObjectURL()静态方法用来释放一个之前通过调用URL.createObjectURL()创建的已经存
+    在的URL对象.当你结束使用某个 URL 对象时，应该通过调用这个方法来让浏览器知道不再需要保持这
+    个文件的引用了.

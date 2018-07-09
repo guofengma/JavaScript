@@ -15,8 +15,12 @@
         }
         #dropbox{
             width: 300px;
-            height: 300px;
+            height:auto;
+            min-height: 300px;
             border:1px solid #000;
+        }
+        li{
+            list-style:none;
         }
     </style>
 </head>
@@ -34,7 +38,14 @@
     <label for="fileEle" id="fileSelect">选择文件</label>
 
     <div id="dropbox"></div>
-    
+    <button class="btn">清空所有图片</button>
+    <hr>
+
+    <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)">
+    <div id="fileList">
+        <p class="text">no files selected</p>
+    </div>
+
     <script src="./main.js"></script>
 </body>
 </html>

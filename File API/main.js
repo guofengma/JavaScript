@@ -47,32 +47,82 @@ fileSelect.addEventListener('click',function(){
 6. 把解析成的 base64格式的url 赋值给 Img, 就可以在 dropbox 里面展示被拖动图片的略缩图了
 */
 var dropbox = document.getElementById("dropbox");
+var oBtn = document.querySelector(".btn");
 dropbox.addEventListener("dragenter",drop,false);
 dropbox.addEventListener("dragover",drop,false);
 dropbox.addEventListener("drop",drop,false);
-dropbox.addEventListener("dragleave",drop,false);
+var size = 0;
 
 function drop(event){
     var event = event || window.event;
-    console.log(event);
     switch(event.type){
         case "dragenter" :
-        dropbox.innerHTML = "";
         break;
         case "dragover" :
         event.preventDefault();
         break;
         case "dragleave":
+        console.log("图片在离开");
         break;
         case "drop":
         event.preventDefault();
-
-        var imgList = event.dataTransfer.files;
-        var fileReader = new FileReader();
-
-        fileReader.readAsDataURL(imgList[0]);
-
-        
+        var imgfiles = event.dataTransfer.files;
+        var len = imgfiles.length;
+        size += len;
+        console.log(size);
+        // 设置一个判断,当选择的图片大于9张时显示提示框，最多只能选择9张
+        if(size > 9){
+            alert("最多选择9张图片");
+        }else{
+            for(let i = 0; i < imgfiles.length; i++){
+                var fileReader = new FileReader();
+                fileReader.readAsDataURL(imgfiles[i]);
+                console.log(fileReader);
+                fileReader.onload = function(){
+                    var img = new Image();
+                    img.style.width = "100px";
+                    img.style.height = "100px";
+                    img.src = this.result;
+                    dropbox.appendChild(img);
+                }
+            }
+        }
         break;
+    }
+};
+oBtn.addEventListener("click",function(){
+    dropbox.innerHTML = "";
+});
+
+// MDN官网上的例子
+var fileElem = document.getElementById("fileElem");
+var fileList = document.getElementById("fileList");
+var oText = document.querySelector(".text");
+console.log(oText);
+
+window.URL = window.URL || window.webkitURL
+
+function handleFiles(files){
+    if(!files.length){
+        oText.innerHTML = "<p>no files selected</p>";
+    }else{
+        var list = document.createElement("ul");
+        oText.innerHTML = "";
+        fileList.appendChild(list);
+        for(let i = 0; i < files.length; i++){
+            var li = document.createElement("li");
+            list.appendChild(li);
+            var img = document.createElement("img");
+            img.src = window.URL.createObjectURL(files[i]);
+            img.height = 100;
+            img.width = 100;
+            img.onload = function(){
+                window.URL.revokeObjectURL(this.src);
+            }
+            li.appendChild(img);
+            var info = document.createElement("span");
+            info.innerHTML = "name:" + files[i].name + ", size:" + files[i].size + "bytes";
+            li.appendChild(info);
+        }
     }
 }
