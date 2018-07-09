@@ -17,6 +17,7 @@
 3. 碰撞检测
     3.1 当鼠标进入到了某个元素的 范围内, 这是碰撞检测的临界点
     3.2 互相交换两个元素的 left 和 top 值.
+    3.3 TODO 怎么判断当前进入了哪个元素?然后进行位置交换
 */
 // 获取所有图片的父元素
 var oContainer = document.getElementById("container");
@@ -38,56 +39,58 @@ for(let i = 0; i < len; i++){
         aLi[i].style.margin = "0";
     },0);
 }
-// // 给页面的元素设置事件监听
-// oContainer.addEventListener("mousedown",drag,false);
-// document.addEventListener("mousemove",drag,false);
-// document.addEventListener("mouseup",drag,false);
+// 给页面的元素设置事件监听
+oContainer.addEventListener("mousedown",drag,false);
+document.addEventListener("mousemove",drag,false);
+document.addEventListener("mouseup",drag,false);
 
-// var x1,y1,startX,startY,x2,y2,deltaX,deltaY;
-// // 设置事件分流,默认没有点中元素
-// var toggle = false;
-// // 设置一个变量用于保存点击下去的目标图片的父级,初始值为null
-// var ele = null;
+var x1,y1,startX,startY,x2,y2;
+// 设置事件分流,默认没有点中元素
+var toggle = false;
+// 设置一个变量用于保存点击下去的目标图片的父级,初始值为null
+var ele = null;
 
-// function drag(event){
-//     var event = event || window.event;
-//     switch(event.type){
-//         case "mousedown" :
-//         toggle = true;
-//         if(event.target.parentNode.tagName == "LI"){
-//             ele = event.target.parentNode;
-//             console.log(ele);
-//             startX = ele.offsetLeft;
-//             startY = ele.offsetTop;
-//             x1 = event.clientX;
-//             y1 = event.clientY;
-//             ele.style.zIndex = 100;
-//         }
-//         break;
-//         case "mousemove" :
-//         if(toggle){
-//             event.preventDefault();
-//             x2 = event.clientX;
-//             y2 = event.clientY;
-//             ele.style.left = startX + x2 - x1 + "px";
-//             ele.style.top = startY + y2 - y1 + "px";
+function drag(event){
+    var event = event || window.event;
+    switch(event.type){
+        case "mousedown" :
+        toggle = true;
+        if(event.target.parentNode.tagName == "LI"){
+            ele = event.target.parentNode;
+            console.log(ele);
+            startX = ele.offsetLeft;
+            startY = ele.offsetTop;
+            x1 = event.clientX;
+            y1 = event.clientY;
+            ele.style.zIndex = 100;
+        }
+        break;
+        case "mousemove" :
+        if(toggle){
+            event.preventDefault();
+            x2 = event.clientX;
+            y2 = event.clientY;
+            ele.style.left = startX + x2 - x1 + "px";
+            ele.style.top = startY + y2 - y1 + "px";
+        }
+        break;
+        case "mouseup" :
+        if(event.target.parentNode.tagName == "LI"){
+            ele.style.zIndex = 1;
+        }
+        toggle = false;
+        if( (x2 - oContainer.offsetLeft > ele.offsetLeft) && (x2 - oContainer.offsetLeft < ele.offsetLeft + ele.offsetWidth) 
+        && (y2 - oContainer.offsetTop > ele.offsetTop) && (y2 - oContainer.offsetTop) < (ele.offsetTop + ele.offsetHeight)
+        && (event.target.parentNode != ele) ){
+            console.log("进入了");
+        }
+        break;
+    }
+}
 
-//             // 在移动的时候进一步判断,当鼠标的位置 达到了某个元素的范围内的时候 进行位置交换
-//             deltaX = x2 - oContainer.offsetLeft;
-//             deltaY = y2 - oContainer.offsetTop;
-//             console.log(deltaX,deltaY);
-//         }
-//         break;
-//         case "mouseup" :
-//         if(event.target.parentNode.tagName == "LI"){
-//             ele.style.zIndex = 1;
-//         }
-//         toggle = false;
-//         break;
-//     }
-// }
 
 // 下面是以两张图片为例(第一张和第二张), 判断一张图片进入另一张图片的临界点
+
 var Img1 = document.querySelector(".img1");
 var Img2 = document.querySelector(".img2");
 
@@ -120,25 +123,26 @@ function drag(event){
             y2 = event.clientY;
             Img1.style.left = startX + x2 - x1 + "px";
             Img1.style.top = startY + y2 - y1 + "px";
-            // if(x2 - oContainer.offsetLeft > Img2.offsetLeft && x2 -oContainer.offsetLeft < Img2.offsetLeft + 180
-            //     && y2 - oContainer.offsetTop > Img2.offsetTop && y2 -oContainer.offsetTop < Img2.offsetTop + 150 ){
-            //         console.log("进入了");
-            //         Img1.style.left = Img2.offsetLeft + 'px';
-            //         Img1.style.top = Img2.offsetTop + 'px';
-            //         Img2.style.left = startX + 'px';
-            //         Img2.style.top = startY + 'px';
-            // }else{
-            //     Img1.style.left = startX + "px";
-            //     Img1.style.top = startY + "px";
-            // }
         }
         break;
         case "mouseup" :
         if(event.target.parentNode.tagName == "LI"){
             Img2.style.zIndex = 1;
         }
+        if(x2 - oContainer.offsetLeft > Img2.offsetLeft && x2 -oContainer.offsetLeft < Img2.offsetLeft + 180
+            && y2 - oContainer.offsetTop > Img2.offsetTop && y2 -oContainer.offsetTop < Img2.offsetTop + 150 ){
+                console.log("进入了");
+                Img1.style.left = Img2.offsetLeft + 'px';
+                Img1.style.top = Img2.offsetTop + 'px';
+                Img2.style.left = startX + 'px';
+                Img2.style.top = startY + 'px';
+                Img2.style.transform = "scale(1.05)";
+                Img2.style.transition = "all .2s";
+            }else{
+                Img1.style.left = startX + "px";
+                Img1.style.top = startY + "px";
+        }
         console.log("鼠标抬起");
-        Img2.style.transform = "scale(1)";
         flag = false;
         break;
     }
