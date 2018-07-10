@@ -16,7 +16,6 @@ File.addEventListener("change",function(){
     }
     var FileNumber = document.getElementById("fileNum");
     var FileSize = document.getElementById("fileSize");
-
     FileNumber.innerHTML = nFiles;
     FileSize.innerHTML = bytes;
 },false);
@@ -126,3 +125,69 @@ function handleFiles(files){
         }
     }
 }
+/*
+业务逻辑: 要在两个矩形框内拖动p元素
+1. 先要获取p元素和矩形框,然后设置p元素可拖动 draggable=true
+2. 在拖动的时候设置当前p元素的拖动状态,并设置成p元素的内容
+3. 拖动的事件
+    dragstart
+    drag
+    dragend
+    drop 放置
+
+    dragenter
+    dragover
+    dragleave
+*/
+var dragtarget = document.getElementById("dragtarget");
+var demo = document.getElementById("demo");
+
+dragtarget.addEventListener("dragstart",drag,false);
+dragtarget.addEventListener("drag",drag,false);
+dragtarget.addEventListener("dragend",drag,false);
+
+function drag(event){
+    var event = event || window.event;
+    var target = event.type;
+    switch(target){
+        case "dragstart" :
+        demo.innerHTML = "开始拖动p元素";
+        event.dataTransfer.setData("Text",event.target.id);
+        event.target.style.opacity = "0.4";
+        break;
+        case "drag" :
+        demo.innerHTML = "正在拖动p元素";
+        demo.style.color = "#f00";
+        break;
+        case "dragend" :
+        demo.innerHTML = "结束p元素的拖动";
+        event.target.style.opacity = 1;
+        break;
+    }
+}
+
+document.addEventListener("dragenter",function(event){
+    if(event.target.className == "droptarget"){
+        event.target.style.border = "3px dotted #f00";
+    }
+},false);
+
+document.addEventListener("dragover",function(event){
+    event.preventDefault();
+    event.returnValue = false;
+},false);
+
+document.addEventListener("dragleave",function(event){
+    if(event.target.className == "droptarget"){
+        event.target.style.border = "";
+    }
+},false);
+
+document.addEventListener("drop",function(){
+    event.preventDefault();
+    if(event.target.className == "droptarget"){
+        var data = event.dataTransfer.getData("Text");
+        event.target.style.border = "";
+        event.target.appendChild(document.getElementById(data));
+    }
+},false);

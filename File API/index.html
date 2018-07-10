@@ -22,6 +22,16 @@
         li{
             list-style:none;
         }
+        .droptarget{
+            width: 100px;
+            height: 61.8px;
+            border:1px solid #000;
+            float:left;
+            margin:0 10px;
+        }
+        .content{
+            color:#f00;
+        }
     </style>
 </head>
 <body>
@@ -45,6 +55,13 @@
     <div id="fileList">
         <p class="text">no files selected</p>
     </div>
+    <hr>
+    <p class="content">在两个矩形内来回拖动p元素</p>
+    <div class="droptarget">
+        <p id="dragtarget" draggable="true">拖动我</p>
+    </div>
+    <div class="droptarget"></div>
+    <p id="demo"></p>
 
     <script src="./main.js"></script>
 </body>
