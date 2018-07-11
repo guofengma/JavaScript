@@ -1,0 +1,125 @@
+/*
+业务逻辑:
+1. 要让所有图片都能够拖动,需要先设置所有图片的排列方式为绝对定位.
+    1.1 首先获取所有的图片
+    1.2 再获取每张图片当前的 left top值 保存在一个数组里
+        tips:
+        1. left 和 top 值用 二维数组的方式保存
+        2. 让li相对于 container 定位,而不要相对浏览器来设置定位.这样不论浏览器窗口大小是否改变,left 和 top 始终为定值.
+    1.3 修改所有图片的排序方式,设为绝对定位
+    1.4 把之前获取到的每张图片的 top 和 left 值 再赋值给 每张图片.
+2. 让每张图片可以拖动
+    2.1 按下鼠标时,鼠标在图片上的点为  x1,y1
+    2.2 鼠标松开时,鼠标在图片上的点为  x2,y2
+    2.3 图片被拖动后, 图片的left 为 图片的初始x值 + x2 - x1
+                           top 为 图片的初始y值 + y2 - y1
+    2.4 图片点击后设置其 z-index 最大, 被拖动的元素总是在最上层,鼠标松开后返回为原值.
+3. 碰撞检测
+    3.1 当鼠标进入到了某个元素的 范围内, 这是碰撞检测的临界点
+    3.2 互相交换两个元素的 left 和 top 值.
+    3.3 TODO 怎么判断当前进入了哪个元素?然后进行位置交换
+*/
+// 获取所有图片的父元素
+var oContainer = document.getElementById("container");
+// 获取所有图片的父级li
+var aLi = document.querySelectorAll("li");
+// 声明一个数组,用来保存 left 和 top
+var array = [];
+var len = aLi.length;
+
+// 获取每张图片的left 和 top 值
+// ? 这里的i 用 var 声明会报错
+
+// TODO 无法确定点击的元素进入到的是哪个图片, 无法进行两张图片的位置交换！
+for(let i = 0; i < len; i++){
+    array.push([aLi[i].offsetLeft,aLi[i].offsetTop]);
+    setTimeout(function(){
+        aLi[i].style.position = "absolute";
+        aLi[i].style.left = array[i][0] + "px";
+        aLi[i].style.top = array[i][1] + "px";
+        // 初始状态的图片间距是用 margin 来设置的, 后改用 position 设置图片间距后需要清除 margin
+        aLi[i].style.margin = "0";
+    },0);
+}
+
+var x1,x2,y1,y2,startX,startY;
+var zIndex = 2;
+
+for(let i = 0; i < len; i++){
+    aLi[i].index = i;
+    drag(aLi[i]);
+}
+function drag(obj){
+    obj.onmousedown = function(event){
+        var event = event || window.event;
+        x1 = event.clientX;
+        y1 = event.clientY;
+        startX = obj.offsetLeft;
+        startY = obj.offsetTop;
+        obj.style.zIndex = zIndex++;
+        document.onmousemove = function(event){
+            event.preventDefault();
+            x2 = event.clientX;
+            y2 = event.clientY;
+            obj.style.left = startX + x2 - x1 + "px";
+            obj.style.top = startY + y2 - y1 + "px";
+            obj.style.transition = "0s all";
+        };
+        document.onmouseup = function(){
+            document.onmousemove = null;
+            var nearLi = near(obj);
+            if(nearLi){
+                var oldX = nearLi.offsetLeft;
+                var oldY = nearLi.offsetTop;
+                nearLi.style.left = startX + "px";
+                nearLi.style.top = startY + "px";
+                obj.style.left = oldX + 'px';
+                obj.style.top = oldY + 'px';
+                nearLi.style.transition = ".2s all";
+            }else{
+                obj.style.left = startX + "px";
+                obj.style.top = startY + "px";
+            }
+        }
+    }
+}
+
+// 碰撞检测
+function getHit(obj1,obj2){
+    var L1 = obj1.offsetLeft;
+    var R1 = obj1.offsetLeft + obj1.offsetWidth;
+    var T1 = obj1.offsetTop;
+    var B1 = obj1.offsetTop + obj1.offsetHeight;
+    var L2 = obj2.offsetLeft;
+    var R2 = obj2.offsetLeft + obj2.offsetWidth;
+    var T2 = obj2.offsetTop;
+    var B2 = obj2.offsetTop + obj2.offsetHeight;
+
+    if (L2 > R1 || T2 > B1 || R2 < L1 || B2 < T1) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+// 当两个元素发生碰撞时,输出与拖动元素发生碰撞的那个
+function near(obj){
+    var tmp = 5000;
+    var oLi = "";
+    for(let i = 0; i < aLi.length; i++){
+        if(getHit(obj,aLi[i]) && (obj != aLi[i])){
+            var c = disCalc(obj,aLi[i]);
+            if(tmp > c){
+                tmp = c;
+                oLi = aLi[i];
+            }
+        }
+    }
+    return oLi;
+}
+
+function disCalc(obj1,obj2){
+    var x = obj1.offsetLeft - obj2.offsetLeft;
+    var y = obj1.offsetTop - obj2.offsetTop;
+    return Math.sqrt( Math.pow(x,2) + Math.pow(y,2) );
+}

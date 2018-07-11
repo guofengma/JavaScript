@@ -23,18 +23,17 @@ function random(min,max){
     return Math.random()*(max-min) + min;
 }
 // 定义一个数组表示星星的颜色
-var colors = ["#2d256b","#e9f1f7","#776592"];
-
-function Star(){
-}
+// 定义一个数组,用于保存星星.
+var stars = [];
+function Star(){}
 
 Star.prototype = {
+    constructor:Star,
     // 初始化星星
     init:function(){
         this.x = random(0,w);
         this.y = random(0,h);
-        this.r = random(0.5,2);
-        this.color = colors[Math.floor(random(0,3))];
+        this.r = random(0.5,1);
     },
     draw:function(){
         ctx.beginPath();
@@ -42,6 +41,15 @@ Star.prototype = {
         ctx.arc(this.x,this.y,this.r,0,2*Math.PI,false);
         ctx.fill();
         ctx.closePath();
+    },
+    shake:function(){
+        var randomNumber = Math.random();
+        if(randomNumber < 0.5){
+            this.color = "gray";
+        }else{
+            this.color = "white";
+        }
+        this.draw();
     }
 }
 
@@ -50,6 +58,23 @@ function createStars(num){
         var star = new Star();
         star.init();
         star.draw();
+        stars.push(star);
     }
 }
-createStars(300);
+createStars(520);
+
+clearInterval(timer);
+var timer = setInterval(function(){
+    ctx.clearRect(0,0,w,h);
+    for(let item of stars){
+        item.shake();
+    }
+},500);
+
+// 绘制流星雨
+/*
+业务逻辑 
+*/
+function Meteor(){
+    
+}

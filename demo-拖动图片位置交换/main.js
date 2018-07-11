@@ -85,60 +85,58 @@ function drag(event){
 
 
 // 下面是以两张图片为例(第一张和第二张), 判断一张图片进入另一张图片的临界点
+var Img1 = document.querySelector(".img1");
+var Img2 = document.querySelector(".img2");
 
-// var Img1 = document.querySelector(".img1");
-// var Img2 = document.querySelector(".img2");
+Img1.addEventListener("mousedown",drag,false);
+Img1.addEventListener("mousemove",drag,false);
+Img1.addEventListener("mouseup",drag,false);
 
-// Img1.addEventListener("mousedown",drag,false);
-// Img1.addEventListener("mousemove",drag,false);
-// Img1.addEventListener("mouseup",drag,false);
+var x1,y1,x2,y2,startX,startY;
+var flag = false;
+var ele = null;
 
-// var x1,y1,x2,y2,startX,startY;
-// var flag = false;
-// var ele = null;
-
-// function drag(event){
-//     var event = event || window.event;
-//     var target = event.type;
-//     switch(target){
-//         case "mousedown" :
-//         flag = true;
-//         x1 = event.clientX;
-//         y1 = event.clientY;
-//         startX = Img1.offsetLeft;
-//         startY = Img1.offsetTop;
-//         console.log(startX,startY,x1,y1);
-//         Img1.style.zIndex = 100; 
-//         console.log("鼠标按下");
-//         break;
-//         case "mousemove" :
-//         if(flag){
-//             event.preventDefault();
-//             x2 = event.clientX;
-//             y2 = event.clientY;
-//             Img1.style.left = startX + x2 - x1 + "px";
-//             Img1.style.top = startY + y2 - y1 + "px";
-//         }
-//         break;
-//         case "mouseup" :
-//         if(event.target.parentNode.tagName == "LI"){
-//             Img2.style.zIndex = 1;
-//         }
-//         if(x2 - oContainer.offsetLeft > Img2.offsetLeft && x2 -oContainer.offsetLeft < Img2.offsetLeft + 180
-//             && y2 - oContainer.offsetTop > Img2.offsetTop && y2 -oContainer.offsetTop < Img2.offsetTop + 150 ){
-//                 console.log("进入了");
-//                 Img1.style.left = Img2.offsetLeft + 'px';
-//                 Img1.style.top = Img2.offsetTop + 'px';
-//                 Img2.style.left = startX + 'px';
-//                 Img2.style.top = startY + 'px';
-//                 Img2.style.transform = "scale(1.05)";
-//                 Img2.style.transition = "all .2s";
-//             }else{
-//                 Img1.style.left = startX + "px";
-//                 Img1.style.top = startY + "px";
-//         }
-//         console.log("鼠标抬起");
-//         flag = false;
-//         break;
-//     }
-// }
+function drag(event){
+    var event = event || window.event;
+    var target = event.type;
+    switch(target){
+        case "mousedown" :
+        flag = true;
+        x1 = event.clientX;
+        y1 = event.clientY;
+        startX = Img1.offsetLeft;
+        startY = Img1.offsetTop;
+        console.log(startX,startY,x1,y1);
+        Img1.style.zIndex = 100; 
+        console.log("鼠标按下");
+        break;
+        case "mousemove" :
+        if(flag){
+            event.preventDefault();
+            x2 = event.clientX;
+            y2 = event.clientY;
+            Img1.style.left = startX + x2 - x1 + "px";
+            Img1.style.top = startY + y2 - y1 + "px";
+        }
+        break;
+        case "mouseup" :
+        if(event.target.parentNode.tagName == "LI"){
+            Img2.style.zIndex = 1;
+        }
+        if(x2 - oContainer.offsetLeft > Img2.offsetLeft && x2 -oContainer.offsetLeft < Img2.offsetLeft + 180
+            && y2 - oContainer.offsetTop > Img2.offsetTop && y2 -oContainer.offsetTop < Img2.offsetTop + 150 ){
+                console.log("进入了");
+                Img1.style.left = Img2.offsetLeft + 'px';
+                Img1.style.top = Img2.offsetTop + 'px';
+                Img2.style.left = startX + 'px';
+                Img2.style.top = startY + 'px';
+                Img2.style.transition = "all .2s";
+            }else{
+                Img1.style.left = startX + "px";
+                Img1.style.top = startY + "px";
+        }
+        console.log("鼠标抬起");
+        flag = false;
+        break;
+    }
+}

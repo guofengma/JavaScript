@@ -118,17 +118,3 @@ var timer = setInterval(function(){
     }
 },1000/60);
 
-
-/* 小球自由落体运动
-var y = 10;
-setInterval(function(){
-    ctx.clearRect(0,0,600,600);
-    ctx.beginPath();
-    ctx.fillStyle="#f00";
-    ctx.arc(100,y,20,0,2*Math.PI);
-    // 注意要抬起画笔 才能让小球自由落体
-    ctx.closePath();
-    ctx.fill();
-    y += 1;
-},1000/60);
-*/
