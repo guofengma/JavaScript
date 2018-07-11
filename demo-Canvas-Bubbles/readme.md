@@ -13,4 +13,4 @@
 
 
 # 效果图
-![image]()
+![image](https://github.com/JayK0720/JavaScript/blob/master/demo-Canvas-Bubbles/2.gif)
