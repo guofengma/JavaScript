@@ -266,6 +266,7 @@ if(canvas16.getContext){
 }
 
 var box1 = document.getElementById("box1");
+
 if(box1.getContext){
     const ctx = box1.getContext("2d");
     var lingrad = ctx.createLinearGradient(0,0,0,150);
@@ -294,4 +295,100 @@ if(box2.getContext){
     ctx.beginPath();
     ctx.arc(75,75,75,0,2*Math.PI,false);
     ctx.fill();
+}
+
+var box3 = document.getElementById("box3");
+if(box3.getContext){
+    const ctx = box3.getContext("2d");
+    const gradient1 = ctx.createRadialGradient(45,45,10,52,50,30);
+    gradient1.addColorStop(0,"#a7d30c");
+    gradient1.addColorStop(0.9,"#019f62");
+    gradient1.addColorStop(1,"rgba(1,159,98,0)");
+
+    const gradient2 = ctx.createRadialGradient(105,105,20,112,120,50);
+    gradient2.addColorStop(0,"#ff5f98");
+    gradient2.addColorStop(0.75,"#ff0188");
+    gradient2.addColorStop(1,"rgba(255,1,136,0)");
+
+    const gradient3 = ctx.createRadialGradient(95,15,15,102,20,40);
+    gradient3.addColorStop(0,"#00c9ff");
+    gradient3.addColorStop(0.8,"#00b5e2");
+    gradient3.addColorStop(1,"rgba(0,201,255,0)");
+
+    const gradient4 = ctx.createRadialGradient(0,150,50,0,140,90);
+    gradient4.addColorStop(0,"#f4f201");
+    gradient4.addColorStop(0.8,"#e4c700");
+    gradient4.addColorStop(1,"rgba(288,199,0,0)");
+
+    // 画图,起点稍微偏离终点,这样可以达到一种球状3D效果。
+    ctx.fillStyle = gradient4;
+    ctx.fillRect(0,0,150,150);
+    ctx.fillStyle = gradient3;
+    ctx.fillRect(0,0,150,150);
+    ctx.fillStyle = gradient2;
+    ctx.fillRect(0,0,150,150);
+    ctx.fillStyle = gradient1;
+    ctx.fillRect(0,0,150,150);
+}
+
+var box4 = document.getElementById("box4");
+if(box4.getContext){
+    const ctx = box4.getContext("2d");
+    var img = new Image();
+    img.src = "./imgs/jay.png";
+    img.onload = function(){
+        var ptrn = ctx.createPattern(img,"repeat");
+        ctx.fillStyle = ptrn;
+        ctx.fillRect(0,0,150,150);
+    }
+}
+
+var box5 = document.getElementById("box5");
+if(box5.getContext){
+    const ctx = box5.getContext("2d");
+    ctx.shadowOffsetX = 2;
+    ctx.shadowOffsetY = 2;
+    ctx.shadowColor = "rgba(0,0,0,0.5)";
+    ctx.shadowBlur = 2;
+
+    ctx.font = "20px Times New Roman";
+    ctx.fillStyle = "Black";
+    ctx.textAlign = "start";
+    ctx.textBaseline="bottom";
+    ctx.fillText("Sample String",0,75);
+}
+
+var box6 = document.getElementById("box6");
+if(box6.getContext){
+    const ctx = box6.getContext("2d");
+    var jay = document.getElementById("jay");
+    jay.onload = function(){
+        var patrn = ctx.createPattern(jay,"no-repeat");
+        ctx.fillStyle = patrn;
+        ctx.fillRect(0,0,150,150);
+    }
+}
+
+var box7 = document.getElementById("box7");
+if(box7.getContext){
+    const ctx = box7.getContext("2d");
+    var jay = document.getElementById("jay");
+    jay.onload = function(){
+        var ptn = ctx.createPattern(jay,"no-repeat");
+        ctx.fillStyle = ptn;
+        ctx.fillRect(0,0,350,281);
+    }
+}
+
+var item1 = document.getElementById("item1");
+if(item1.getContext){
+    const ctx = item1.getContext("2d");
+    ctx.font = "20px serif";
+    ctx.fillText("Hello World",10,20);
+
+    ctx.font = "22px serif";
+    ctx.fillText("Kyrie Irving",10,60);
+
+    ctx.font = "30px 宋体";
+    ctx.strokeText("Lebron James",10,100);
 }

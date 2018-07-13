@@ -6,6 +6,8 @@
 - [4. 透明度Transparency](#4-透明度transparency)
 - [5. 线型 Line styles](#5-线型-line-styles)
 - [6. CanvasGradient](#6-canvasgradient)
+- [7. Patterns](#7-patterns)
+- [8. Shadows](#8-shadows)
 
 <!-- /TOC -->
 
@@ -55,3 +57,15 @@
     径向渐变 createRadialGradient(x1,y1,r1,x2,y2,r2);
 
     创建渐变后通过 addColorStop(x,color)来指定色标.
+
+# 7. Patterns
+
+    createPattern(image,type)
+    image可以是一个image对象的引用,或者另一个canvas对象.type必须是下面的字符串值之一: repeat repeat-x repeat-y
+    和 no-repeat.
+
+# 8. Shadows
+
+    shadowOffsetX  shadowOffsetY 用来设定阴影在X和Y轴的延伸距离,
+    shadowBlur 用于设定阴影的模糊程度
+    shadowColor 用于设定阴影颜色效果.
