@@ -254,3 +254,44 @@ if(canvas15.getContext){
         ctx.stroke();
     }
 }
+
+var canvas16 = document.getElementById("canvas16");
+if(canvas16.getContext){
+    const ctx = canvas16.getContext("2d");
+    let lingrad = ctx.createLinearGradient(0,0,0,150);
+    lingrad.addColorStop(0,"white");
+    lingrad.addColorStop(1,"black");
+    ctx.fillStyle = lingrad;
+    ctx.fillRect(0,0,150,150);
+}
+
+var box1 = document.getElementById("box1");
+if(box1.getContext){
+    const ctx = box1.getContext("2d");
+    var lingrad = ctx.createLinearGradient(0,0,0,150);
+    lingrad.addColorStop(0,"#00abeb");
+    lingrad.addColorStop(0.5,"#fff");
+    lingrad.addColorStop(0.5,"#26c000");
+    lingrad.addColorStop(1,"#fff");
+    ctx.fillStyle = lingrad;
+    ctx.fillRect(0,0,150,150);
+
+    var lingrad1 = ctx.createLinearGradient(0,50,0,95);
+    lingrad1.addColorStop(0.5,"#000");
+    lingrad1.addColorStop(1,"rgba(0,0,0,0)");
+    ctx.strokeStyle = lingrad1;
+    ctx.strokeRect(50,50,50,50);
+}
+
+var box2 = document.getElementById("box2");
+if(box2.getContext){
+    const ctx = box2.getContext("2d");
+    var gradient = ctx.createRadialGradient(75,75,10,75,75,75);
+    gradient.addColorStop(0,"red");
+    gradient.addColorStop(1,"skyblue");
+    ctx.fillStyle = gradient;
+    // ctx.fillRect(0,0,150,150);
+    ctx.beginPath();
+    ctx.arc(75,75,75,0,2*Math.PI,false);
+    ctx.fill();
+}
