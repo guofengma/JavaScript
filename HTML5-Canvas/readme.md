@@ -8,6 +8,12 @@
 - [6. CanvasGradient](#6-canvasgradient)
 - [7. Patterns](#7-patterns)
 - [8. Shadows](#8-shadows)
+- [9. 绘制文本](#9-绘制文本)
+- [10. Using Images](#10-using-images)
+    - [10.1. drawImage()](#101-drawimage)
+- [11. 被污染的canvas](#11-被污染的canvas)
+- [12. sava() / restore()](#12-sava--restore)
+- [13. Scaling](#13-scaling)
 
 <!-- /TOC -->
 
@@ -69,3 +75,45 @@
     shadowOffsetX  shadowOffsetY 用来设定阴影在X和Y轴的延伸距离,
     shadowBlur 用于设定阴影的模糊程度
     shadowColor 用于设定阴影颜色效果.
+
+
+# 9. 绘制文本
+
+    当使用 strokeText时, 用 strokeStyle 来修改文本颜色
+    当使用 fillText时,用fillStyle来修改文本颜色
+
+# 10. Using Images
+
+    document.images 返回当前文档中所有 image 元素的集合。
+    var htmlCollection = document.images
+
+## 10.1. drawImage()
+
+```js
+var img = new Image();
+img.onload = function(){
+    ctx.drawImage();
+}
+img.src = "./xxx/jpg";
+```
+    drawImage(img,x,y)                  x y 表示在canvas里绘制的起始坐标
+    drawImage(image,x,y,width,height)   width height 控制向canvas画入时应该缩放的大小
+    drawImage(image,sx,sy,swidth,sheight,dx,dy,dwidth,dheight);
+    
+    前4个定义图像源的切片位置和大小,后四个则是定义切片的目标显示位置和大小。
+
+# 11. 被污染的canvas
+
+    一旦画布被污染,你就无法读取其数据.例如,不能再使用画布的 toBlob() toDataURL() 或getImageData()方法,
+    调用他们会抛出安全错误.
+
+# 12. sava() / restore()
+
+    Canvas状态存储在栈中,每当sava()方法被调用后,当前的状态就被推动到栈中保存.每一次调用 restore方法,上一个保存
+    的状态就从栈中弹出,所有设定都恢复。
+
+    restore() 是一层层的跳出栈.
+    
+# 13. Scaling
+
+    scale(x,y)方法接受两个参数,x,y分别是横轴和纵轴的缩放因子.他们都必须是正值.

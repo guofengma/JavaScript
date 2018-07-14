@@ -13,7 +13,7 @@ function init(){
 }
 
 function draw(){
-    ctx.globalCompositeOperation = 'destination-over';
+    ctx.globalCompositeOperation = "destination-over";
     ctx.clearRect(0,0,300,300);
     ctx.fillStyle = "rgba(0,0,0,0.4)";
     ctx.strokeStyle = "rgba(0,153,255,0.4)";
@@ -25,11 +25,11 @@ function draw(){
     ctx.rotate( (2*Math.PI/60)*time.getSeconds() + (2*Math.PI/60000)*time.getMilliseconds() );
     ctx.translate(105,0);
     ctx.fillRect(0,-12,50,24);
-    ctx.drawImage(earth,-12,12);
+    ctx.drawImage(earth,-12,-12);
 
-    // Moom
+    // Moon
     ctx.save();
-    ctx.rotate( (2*Math.PI/6)*time.getSeconds() + (2*Math.PI/6000)*time.getMilliseconds() );
+    ctx.rotate( (2*Math.PI)/6*time.getSeconds() + (2*Math.PI/6000)*time.getMilliseconds() );
     ctx.translate(0,28.5);
     ctx.drawImage(moon,-3.5,-3.5);
     ctx.restore();
@@ -40,6 +40,7 @@ function draw(){
     ctx.stroke();
 
     ctx.drawImage(sun,0,0,300,300);
+
     window.requestAnimationFrame(draw);
 }
 init();
