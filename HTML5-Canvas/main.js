@@ -392,3 +392,105 @@ if(item1.getContext){
     ctx.font = "30px 宋体";
     ctx.strokeText("Lebron James",10,100);
 }
+
+var item2 = document.getElementById("item2");
+var item3 = document.getElementById("item3");
+var item4 = document.getElementById("item4");
+
+
+if(item2.getContext){
+    const ctx = item2.getContext("2d");
+    ctx.font = "24px serif";
+    ctx.strokeStyle = "#f00";
+    ctx.strokeText("Hello world", 10, 50);
+}
+
+if(item3.getContext){
+    const ctx = item3.getContext("2d");
+    var img = new Image();
+    img.onload = function(){
+        for(let i = 0; i < 2; i++){
+            for(let j = 0; j < 2; j++){
+                ctx.drawImage(img,200*j,200*i,200,200);
+            }
+        }
+    }
+    img.src = "./imgs/jay.jpg";
+}
+
+
+if(item4.getContext){
+    const ctx = item4.getContext("2d");
+    ctx.fillRect(0,0,150,150);
+    ctx.save();
+    ctx.fillStyle = "#f00";
+    ctx.fillRect(15,15,120,120);
+    ctx.save();
+    ctx.fillStyle = "#fff";
+    ctx.globalAlpha = 0.5;
+    ctx.fillRect(30,30,90,90);
+    ctx.restore();
+    ctx.fillRect(45,45,60,60);
+    ctx.restore();
+    ctx.fillRect(60,60,30,30);
+}
+
+// 判断每层圆 每层圆的个数  颜色 角度之间的关系 跟什么参数挂钩
+var item5 = document.getElementById("item5");
+if(item5.getContext){
+    const ctx = item5.getContext("2d");
+    ctx.translate(75,75);
+    for(let i = 1; i < 6; i++ ){
+        ctx.save();
+        ctx.fillStyle = "rgb("+ (51*i) + "," + (255-51*i) +",255)";
+        for(let j = 0; j < i*6; j++){
+            ctx.beginPath();
+            ctx.rotate(Math.PI*2 / (i*6));
+            ctx.arc(0,i*12.5,5,0,Math.PI*2,true);
+            ctx.fill();
+        }
+        ctx.restore();
+    }
+}
+
+var item6 = document.getElementById("item6");
+if(item6.getContext){
+    const ctx = item6.getContext("2d");
+    ctx.fillRect(0,0,150,150);
+    ctx.translate(75,75)
+    ctx.beginPath();
+    ctx.arc(0,0,60,0,Math.PI*2,false);
+    ctx.clip();
+
+    var lingrad = ctx.createLinearGradient(0,-75,0,75);
+    lingrad.addColorStop(0,"#232256");
+    lingrad.addColorStop(1,"#143778");
+    ctx.fillStyle = lingrad;
+    ctx.fillRect(-75,-75,150,150);
+
+    for (var j=1;j<50;j++){
+        ctx.save();
+        ctx.fillStyle = '#fff';
+        ctx.translate(75-Math.floor(Math.random()*150),
+                      75-Math.floor(Math.random()*150));
+        drawStar(ctx,Math.floor(Math.random()*4)+2);
+        ctx.restore();
+    }
+}
+// 画五角星
+function drawStar(ctx,r){
+    ctx.save();
+    ctx.beginPath()
+    ctx.moveTo(r,0);
+    for (var i=0;i<9;i++){
+        ctx.rotate(Math.PI/5);
+        if(i%2 == 0) {
+            ctx.lineTo((r/0.525731)*0.200811,0);
+        } else {
+            ctx.lineTo(r,0);
+        }
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+}
