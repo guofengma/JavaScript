@@ -15,6 +15,8 @@
 - [12. sava() / restore()](#12-sava--restore)
 - [13. Scaling](#13-scaling)
 - [14. globalCompositeOperation](#14-globalcompositeoperation)
+- [15. ImageData](#15-imagedata)
+    - [15.1. 得到场景像素数据](#151-得到场景像素数据)
 
 <!-- /TOC -->
 
@@ -122,3 +124,20 @@ img.src = "./xxx/jpg";
 # 14. globalCompositeOperation
 
     不仅可以在已有图形后面再画新图形,还可以用来遮盖指定区域,清除画布中的某些部分.
+
+# 15. ImageData
+
+    ImageData对象中存储着canvas对象真实的像素数据,它包含以下几个只读属性:
+
+    width:  图片宽度
+    height: 图片高度
+    data:   Unit8ClampedArray类型的一维数组,包含着RGBA格式的整型数据,范围在0-255之间
+
+    Uint8ClampedArray  包含高度 × 宽度 × 4 bytes数据，索引值从0到(高度×宽度×4)-1
+
+## 15.1. 得到场景像素数据
+
+    var myImageData = ctx.createImageData(left,top,width,height);
+
+    这个方法会返回一个ImageData对象,它代表了画布区域的对象数据。
+![image]()
