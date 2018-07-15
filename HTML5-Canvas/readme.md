@@ -14,6 +14,7 @@
 - [11. 被污染的canvas](#11-被污染的canvas)
 - [12. sava() / restore()](#12-sava--restore)
 - [13. Scaling](#13-scaling)
+- [14. globalCompositeOperation](#14-globalcompositeoperation)
 
 <!-- /TOC -->
 
@@ -117,3 +118,7 @@ img.src = "./xxx/jpg";
 # 13. Scaling
 
     scale(x,y)方法接受两个参数,x,y分别是横轴和纵轴的缩放因子.他们都必须是正值.
+
+# 14. globalCompositeOperation
+
+    不仅可以在已有图形后面再画新图形,还可以用来遮盖指定区域,清除画布中的某些部分.

@@ -34,6 +34,7 @@ cancelAnimationFrame(globalID);
 ```
     cancelAnimationFrame()  取消事件
 
+
 # 2. requestAnimationFrame优势
 
     CPU节能: 使用setTimeout实现的动画,当页面被隐藏或最小化时,setTimeout仍然在后台执行动画任务.由于此时页面处于不可见或不可用

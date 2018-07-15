@@ -494,3 +494,11 @@ function drawStar(ctx,r){
     ctx.fill();
     ctx.restore();
 }
+
+// imageData
+var item7 = document.getElementById("item7");
+if(item7.getContext){
+    const ctx = item7.getContext("2d");
+    var myImageData = ctx.getImageData(0,0,item7.width,item7.height);
+    console.log(myImageData);
+}
