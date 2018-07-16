@@ -17,6 +17,7 @@
 - [14. globalCompositeOperation](#14-globalcompositeoperation)
 - [15. ImageData](#15-imagedata)
     - [15.1. 得到场景像素数据](#151-得到场景像素数据)
+    - [15.2. 在场景中写入像素数据](#152-在场景中写入像素数据)
 
 <!-- /TOC -->
 
@@ -140,4 +141,11 @@ img.src = "./xxx/jpg";
     var myImageData = ctx.createImageData(left,top,width,height);
 
     这个方法会返回一个ImageData对象,它代表了画布区域的对象数据。
-![image]()
+    
+![image](https://github.com/JayK0720/JavaScript/blob/master/HTML5-Canvas/imgs/ImageData.png)
+
+
+## 15.2. 在场景中写入像素数据
+
+    你可以用 putImageData()方法去对场景进行像素数据的写入.
+    ctx.putImageData(myImageData,dx,dy);

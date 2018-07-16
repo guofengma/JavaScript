@@ -496,9 +496,12 @@ function drawStar(ctx,r){
 }
 
 // imageData
+// 数组的长度等于 画布的 长*宽*4
 var item7 = document.getElementById("item7");
 if(item7.getContext){
     const ctx = item7.getContext("2d");
     var myImageData = ctx.getImageData(0,0,item7.width,item7.height);
     console.log(myImageData);
+    console.log(myImageData.data);
 }
+
