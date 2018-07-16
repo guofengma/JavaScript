@@ -23,7 +23,7 @@ img.onload = function(){
             data[i+1] = 255 - data[i+1]; // green
             data[i+2] = 255 - data[i+2]; // blue
         }
-        ctx.putImageData(img,0,0);
+        ctx.putImageData(imageData,0,0);
     },false);
 
     gray.addEventListener("click",function(){
@@ -33,6 +33,6 @@ img.onload = function(){
             data[i+1] = avg;
             data[i+2] = avg;
         }
-        ctx.putImageData(img,0,0);
+        ctx.putImageData(imageData,0,0);
     })
 }
