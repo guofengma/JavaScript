@@ -13,8 +13,7 @@
     devDenpendencies 和 denpendencies
     
     devDenpendencies下列出的模块,是我们开发时用到的,比如我们安装 js 的压缩包gulp-uglify时采用的是 npm install --save-dev 
-    gulp-gulify 命令安装,因为我们在发布后用不到它,而只是在开发时我们才用到它.dependencies下的模块,则是我们发布后还需要依赖的
-    模块,譬如像jQuery库或者 Angular 框架类似的.我们在开发后肯定还需要依赖它们.
+    gulp-gulify 命令安装,因为我们在发布后用不到它,而只是在开发时我们才用到它.dependencies下的模块,则是我们发布后还需要依赖的模块,譬如像jQuery库或者 Angular 框架类似的.我们在开发后肯定还需要依赖它们.
 
 
     -D (--save-dev的缩写)   下载时会下载到 devDenpendencies下  开发依赖,只在开发阶段需要
@@ -40,3 +39,5 @@
     
 
 # 5. 浏览器内核
+
+    

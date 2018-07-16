@@ -2,6 +2,7 @@
 
 - [1. requestAnimationFrame](#1-requestanimationframe)
 - [2. requestAnimationFrame优势](#2-requestanimationframe优势)
+- [3. 兼容性](#3-兼容性)
 
 <!-- /TOC -->
 
@@ -44,3 +45,10 @@ cancelAnimationFrame(globalID);
     函数节流: 在高频率事件(resize,scroll等)中，为了防止在一个刷新间隔内发生多次函数执行，使用requestAnimationFrame可保
     证每个刷新间隔内，函数只被执行一次，这样既能保证流畅性，也能更好的节省函数执行的开销。一个刷新间隔内函数执行多次时没有
     意义的,因为显示器每16.7ms刷新一次，多次绘制并不会在屏幕上体现出来.
+
+# 3. 兼容性
+
+    var requestAnimationFrame = window.requestAnimationFrame ||
+                                window.mozRequestAnimationFrame||
+                                window.webkitRequestAnimationFrame||
+                                window.msRequestAnimationFrame
