@@ -114,7 +114,7 @@ var timer = setInterval(function(){
     ctx.clearRect(0,0,w,h);
     for(let item of aBubbles){
         item.move();
-        console.log(item);
     }
 },1000/60);
+
 

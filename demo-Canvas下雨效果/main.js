@@ -38,6 +38,7 @@ Rain.prototype = {
         this.h = random(8,12);
         this.color = "#3ff";
         this.y = 0; 
+        this.yv = 3,
         this.rv = random(0.5,1.5);
         this.x = random(0,w);
         this.land = random(h*0.8,h*0.9);
@@ -58,7 +59,7 @@ Rain.prototype = {
     },
     move:function(){
         if(this.y < this.land){
-            this.y++;
+            this.y += this.yv;
         }else{
             if(this.r < 80){
                 this.r+=this.rv;
@@ -91,3 +92,5 @@ function draw(){
     window.requestAnimationFrame(draw);
 }
 window.requestAnimationFrame(draw);
+
+

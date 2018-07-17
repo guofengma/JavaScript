@@ -8,6 +8,8 @@
 
 // 获取到 video元素
 var video = document.querySelector(".video");
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
 // 允许授权 获取音频和视频许可
 var constraints = {audio:false,video:true}
 // 给页面元素监听事件
@@ -40,9 +42,10 @@ function videoStream(event){
     }
     // 点击拍照,并将照片导入到 canvas 
     if(event.target.className = "snap"){
-        var canvas = document.getElementById("canvas");
-        var ctx = canvas.getContext("2d");
         // 注意参数的选择
         ctx.drawImage(video,0,0,500,300);
     }
 }
+
+
+
