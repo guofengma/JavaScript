@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo - jsonp</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #bd,#text{
+            display:block;
+            margin:0 auto;
+        }
+        #bd{
+            width:270px;
+        }
+        #text{
+            width:536px;
+            height:40px;
+            margin-top:10px;
+        }
+        .list{
+            width: 536px;
+            height:auto;
+            margin:0 auto;
+            display:none;
+        }
+        ul{
+            width:100%;
+            border:1px solid #000;
+        }
+        ul li{
+            list-style:none;
+            width:100%;
+        }
+        ul li:hover{
+            background-color:#ccc;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <img src="./bd_logo.png" alt="" id='bd'>
+    <input type="text" id="text">
+    <div class="list">
+        <ul class="url-list">
+        </ul>
+    </div>
+    <script src="./index.js"></script>
+</body>
+</html>
