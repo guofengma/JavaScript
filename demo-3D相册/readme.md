@@ -3,7 +3,8 @@
 - [1. 景深 perspective](#1-景深-perspective)
 - [2. 旋转方式](#2-旋转方式)
 - [3. backface-visibility](#3-backface-visibility)
-- [4. 效果](#4-效果)
+- [4. -webkit-box-reflect](#4--webkit-box-reflect)
+- [5. 效果](#5-效果)
 
 <!-- /TOC -->
 
@@ -15,7 +16,6 @@
         perspective:500px;
     }
 
-
 # 2. 旋转方式
 
     transform:preserve-3d | flat;
@@ -25,6 +25,15 @@
 # 3. backface-visibility
 
     背面是否可见 visibility(默认) hidden
+
+# 4. -webkit-box-reflect
+
+    box-reflect:none|direction
+    <direction> = above(倒影在上方) below(倒影在下方) left(左边) right(右边)
+    offset : 图片与倒影间隔. length/percentage
+    linear-gradient : 使用线性渐变创建遮罩图像.
+    radial-gradient : 使用径向渐变创建遮罩图像.
     
-# 4. 效果
+# 5. 效果
+
 ![效果](https://github.com/JayK0720/JavaScript/blob/master/demo-3D%E7%9B%B8%E5%86%8C/imgs/1.gif)

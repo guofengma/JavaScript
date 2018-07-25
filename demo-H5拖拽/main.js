@@ -18,10 +18,10 @@ function drag(event){
         // dataTransfer drop drag 拖拽时产生的对象,数据载体
         // 属性 dataTransfer.files  
         var imgFiles = event.dataTransfer.files;
+
         for(let i = 0,imgFile;imgFile=imgFiles[i++]; ){
             var reader = new FileReader();
             reader.readAsDataURL(imgFile);
-            console.log(reader);
             reader.onload = function(){
                 var oImg = new Image();
                 oImg.style.width = "100px";
@@ -148,3 +148,72 @@ function drop(event){
 // })
 
 
+// setData getData
+var oText = document.getElementById("Text");
+var oImg = document.getElementById("img");
+var oBox = document.querySelector(".box");
+
+// 被拖动元素的三个事件
+oText.addEventListener('dragstart',textDrag,false);
+oText.addEventListener('drag',textDrag,false);
+oText.addEventListener('dragend',textDrag,false);
+
+function textDrag(event){
+    var event = event || window.event;
+    switch(event.type){
+        case 'dragstart':
+        event.dataTransfer.setData('Text',event.target.id);
+        break;
+        case 'drag' :
+        oText.style.backgroundColor = '#f00';
+        break;
+        case 'dragend' :
+        oText.style.backgroundColor = "skyblue";
+        break;
+    }
+};
+
+
+// 图片被拖动的三个事件
+oImg.addEventListener('dragstart',imgDrag,false);
+oImg.addEventListener('drag',imgDrag,false);
+oImg.addEventListener('dragend',imgDrag,false);
+
+function imgDrag(event){
+    var event = event || window.event;
+    switch(event.type){
+        case 'dragstart':
+        // event.dataTransfer.setData('Text',event.target.id);
+        event.dataTransfer.setData('URL',event.target.src);
+        break;
+        case 'drag' :
+        console.log("正在拖动");
+        break;
+        case 'dragend':
+        console.log('拖动结束');
+        break;
+    }
+}
+
+
+// 一个有效的放置目标元素的几个事件
+oBox.addEventListener('dragenter',textDrop,false);
+oBox.addEventListener('dragover',textDrop,false);
+oBox.addEventListener('drop',textDrop,false);
+
+function textDrop(event){
+    var event = event || window.event;
+    switch(event.type){
+        case 'dragenter' :
+        break;
+        case 'dragover':
+        event.preventDefault();
+        break;
+        case 'drop' :
+        event.preventDefault();
+        var data = event.dataTransfer.getData('Text');
+        oBox.appendChild(document.getElementById(data));
+        var src = event.dataTransfer.getData('URL');
+        console.log(src);
+    }
+}

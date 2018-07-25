@@ -3,6 +3,7 @@
 - [1. tips](#1-tips)
 - [2. demo](#2-demo)
 - [3. File API](#3-file-api)
+- [4. dataTransfer对象](#4-datatransfer对象)
 
 <!-- /TOC -->
 
@@ -18,12 +19,11 @@
         ondrag
         ondragend
 
-    目标元素事件:
+    被拖动元素拖动到一个有效的放置目标上时,下列事件会依次发生:
         ondropenter 
         ondropover  这里要清除浏览器的默认事件
-        ondropleave 
-
-    进行放置:
+        ondropleave 或 ondrop
+         
         ondrop  清除浏览器的默认事件
 
     
@@ -40,4 +40,8 @@
         readAsDataURL(file)         读取文件并将文件以数据URI的形式保存在result属性中.
         
 
-    
+# 4. dataTransfer对象
+
+    它是事件对象的一个属性,用于从被拖动元素向放置目标传递字符串格式的数据.
+
+    dataTransfer对象主要有两个方法 getData() 和 setData();
