@@ -39,25 +39,25 @@ var w,h;
     h = window.innerHeight;
     canvas.width = w;
     canvas.height = h;
+    var gradient = ctx.createLinearGradient(w/2,h/2,w/2,h/2-100);
+    gradient.addColorStop(0,'#000');
+    gradient.addColorStop(1,"rgba(0,0,255,0.7)");
+    ctx.fillStyle = gradient;
 }();
 
-var gradient = ctx.createLinearGradient(w/2,h/2,w/2,h/2-100);
-gradient.addColorStop(0,'#000');
-gradient.addColorStop(1,"rgba(0,0,255,0.7)");
-ctx.fillStyle = gradient;
 
 // 读取数据
 var dataArray = new Uint8Array(analyser.frequencyBinCount);
 // 定义一个信号量,每间隔一定的长度把数据渲染出来就可以了
-var count = 60;
+var count = 40;
 
 function draw(){
     analyser.getByteFrequencyData(dataArray);
     ctx.clearRect(0,0,w,h);
     for(let i = 0; i < count; i++){
         var data = Math.round(dataArray.length/count);
-        ctx.fillRect(w/2 + (i * 8),h/2,7,-dataArray[data*i]);
-        ctx.fillRect(w/2 - (i * 8),h/2,7,-dataArray[data*i]);
+        ctx.fillRect(w/2 + (i * 8),h/2,7,-dataArray[data*i]*0.8);
+        ctx.fillRect(w/2 - (i * 8),h/2,7,-dataArray[data*i]*0.8);
     }
     window.requestAnimationFrame(draw);
 }
