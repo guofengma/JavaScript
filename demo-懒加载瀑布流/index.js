@@ -30,28 +30,21 @@ var data = {
         {"src": '18.jpg'}
     ]
 }
+var oContainer = document.querySelector(".container");
 
 window.onload = function(){
-    waterfall('container','box');
+    waterfall();
     window.onscroll = function(){
         if(checkScroll()){
             render();
-            waterfall('container','box');
+            waterfall();
         }
     }
 }
 
-// 设置oContainer居中
-var num;
-var hArray = [];
-var minH;
-
-var oContainer = document.querySelector(".container");
-
-function waterfall(parent,box){
-    var oContainer = document.querySelector(parent);
-    var oBox = getByClass(oContainer,box);
-    num = Math.floor(window.innerWidth / oBox[0].offsetWidth);
+function waterfall(){
+    var oBox = getByClass(oContainer,'box');
+    var num = Math.floor(window.innerWidth / oBox[0].offsetWidth);
     var oWidth = num * oBox[0].offsetWidth;
     oContainer.style.cssText = "margin:0 auto; width:"+ oWidth + 'px';
     /*
@@ -60,12 +53,13 @@ function waterfall(parent,box){
     2. 求出第一排数组里高度最小的那张图片。
     3. 从第二排开始, 在上一排高度最小的那张开始排列图片.然后更新高度,再依次排列第二排第二张 第三张图片。
     */ 
+    var hArray = [];
    for(let i = 0; i < oBox.length; i++){
        // 如果图片序号小于 每列的图片个数
        if(i < num){
            hArray.push(oBox[i].offsetHeight);
         }else{
-            minH = Math.min.apply(null,hArray);
+            var minH = Math.min.apply(null,hArray);
             var index = getIndex(hArray,minH);
             oBox[i].style.position = 'absolute';
             oBox[i].style.top = minH + 'px';
@@ -92,7 +86,7 @@ function getIndex(array,val){
 
 // 确定页面滚动到什么时候再加载图片
 function checkScroll(){
-    var oBox = getByClass(oContainer,box);
+    var oBox = getByClass(oContainer,'box');
     // 最后一张图片的top值加上自身高度的一半
     var lastBox = oBox[oBox.length - 1].offsetTop + oBox[oBox.length - 1].offsetHeight / 2;
     // 下拉滚动条的高度
@@ -116,9 +110,10 @@ function render(){
         var oImg = document.createElement('img');
         oImg.src = 'images/' + data.img[i].src;
         BoxImg.appendChild(oImg);
-    }
+    };
 }
 
+// parent表示父级对象,clsName表示自己的类名, 所有的oBox在每次刷新后也要更新
 function getByClass(parent,clsName){
     var boxArr = [];
     oElements = parent.getElementsByTagName('*');
@@ -129,3 +124,4 @@ function getByClass(parent,clsName){
     }
     return boxArr;
 }
+
