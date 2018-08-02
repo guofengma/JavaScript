@@ -17,7 +17,6 @@
 3. 碰撞检测
     3.1 当鼠标进入到了某个元素的 范围内, 这是碰撞检测的临界点
     3.2 互相交换两个元素的 left 和 top 值.
-    3.3 TODO 怎么判断当前进入了哪个元素?然后进行位置交换
 */
 // 获取所有图片的父元素
 var oContainer = document.getElementById("container");
@@ -26,9 +25,7 @@ var aLi = document.querySelectorAll("li");
 // 声明一个数组,用来保存 left 和 top
 var array = [];
 var len = aLi.length;
-
 // // 获取每张图片的left 和 top 值
-// // ? 这里的i 用 var 声明会报错
 for(let i = 0; i < len; i++){
     array.push([aLi[i].offsetLeft,aLi[i].offsetTop]);
     setTimeout(function(){
@@ -49,6 +46,9 @@ var x1,y1,startX,startY,x2,y2;
 var toggle = false;
 // 设置一个变量用于保存点击下去的目标图片的父级,初始值为null
 var ele = null;
+// 设置一个元素表示碰撞的ele
+var globalEle = null;
+var zIndex = 1;
 
 function drag(event){
     var event = event || window.event;
@@ -62,7 +62,7 @@ function drag(event){
             startY = ele.offsetTop;
             x1 = event.clientX;
             y1 = event.clientY;
-            ele.style.zIndex = 100;
+            ele.style.zIndex = zIndex++;
         }
         break;
         case "mousemove" :
@@ -72,71 +72,38 @@ function drag(event){
             y2 = event.clientY;
             ele.style.left = startX + x2 - x1 + "px";
             ele.style.top = startY + y2 - y1 + "px";
+            for(let i = 0; i < aLi.length; i++){
+                aLi[i].style.transform = 'scale(1.0)';
+                if( 
+                    ele !== aLi[i] &&
+                    x2 - oContainer.offsetLeft > aLi[i].offsetLeft &&
+                    (x2 - oContainer.offsetLeft < aLi[i].offsetLeft + 180) &&
+                    y2 - oContainer.offsetTop > aLi[i].offsetTop &&
+                    (y2 - oContainer.offsetTop < aLi[i].offsetTop + 150)
+                ){
+                    console.log("碰撞成功");
+                    aLi[i].style.transform = 'scale(1.05)';
+                    globalEle = aLi[i];
+                }
+            }
         }
         break;
         case "mouseup" :
         if(event.target.parentNode.tagName == "LI"){
             ele.style.zIndex = 1;
         }
+        if(globalEle){
+            ele.style.left = globalEle.offsetLeft + 'px';
+            ele.style.top = globalEle.offsetTop + 'px';
+            globalEle.style.left = startX + 'px';
+            globalEle.style.top = startY + 'px';
+            globalEle = null;
+        }else{
+            ele.style.left = startX + 'px';
+            ele.style.top = startY + 'px';
+        }
         toggle = false;
         break;
     }
 }
 
-
-// 下面是以两张图片为例(第一张和第二张), 判断一张图片进入另一张图片的临界点
-var Img1 = document.querySelector(".img1");
-var Img2 = document.querySelector(".img2");
-
-Img1.addEventListener("mousedown",drag,false);
-Img1.addEventListener("mousemove",drag,false);
-Img1.addEventListener("mouseup",drag,false);
-
-var x1,y1,x2,y2,startX,startY;
-var flag = false;
-var ele = null;
-
-function drag(event){
-    var event = event || window.event;
-    var target = event.type;
-    switch(target){
-        case "mousedown" :
-        flag = true;
-        x1 = event.clientX;
-        y1 = event.clientY;
-        startX = Img1.offsetLeft;
-        startY = Img1.offsetTop;
-        console.log(startX,startY,x1,y1);
-        Img1.style.zIndex = 100; 
-        console.log("鼠标按下");
-        break;
-        case "mousemove" :
-        if(flag){
-            event.preventDefault();
-            x2 = event.clientX;
-            y2 = event.clientY;
-            Img1.style.left = startX + x2 - x1 + "px";
-            Img1.style.top = startY + y2 - y1 + "px";
-        }
-        break;
-        case "mouseup" :
-        if(event.target.parentNode.tagName == "LI"){
-            Img2.style.zIndex = 1;
-        }
-        if(x2 - oContainer.offsetLeft > Img2.offsetLeft && x2 -oContainer.offsetLeft < Img2.offsetLeft + 180
-            && y2 - oContainer.offsetTop > Img2.offsetTop && y2 -oContainer.offsetTop < Img2.offsetTop + 150 ){
-                console.log("进入了");
-                Img1.style.left = Img2.offsetLeft + 'px';
-                Img1.style.top = Img2.offsetTop + 'px';
-                Img2.style.left = startX + 'px';
-                Img2.style.top = startY + 'px';
-                Img2.style.transition = "all .2s";
-            }else{
-                Img1.style.left = startX + "px";
-                Img1.style.top = startY + "px";
-        }
-        console.log("鼠标抬起");
-        flag = false;
-        break;
-    }
-}

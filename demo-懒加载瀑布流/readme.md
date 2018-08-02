@@ -13,4 +13,4 @@
     这样就可以避免页面reflow,提高页面性能。但是会把原有的cssText清掉。
 
 # 效果
-![效果]()
+![效果](https://github.com/JayK0720/JavaScript/blob/master/demo-%E6%87%92%E5%8A%A0%E8%BD%BD%E7%80%91%E5%B8%83%E6%B5%81/images/1.gif)
